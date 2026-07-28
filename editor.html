@@ -209,8 +209,8 @@
     /* ── SLETT + FLYTT POST ── */
     .post { position:relative; transition:opacity 0.2s; }
     .post.dragging { opacity:0.35; }
-    .post-controls { position:absolute; top:12px; right:-4px; display:flex; flex-direction:column; gap:5px; opacity:0; pointer-events:none; transition:opacity 0.15s; z-index:20; }
-    .post:hover .post-controls { opacity:1; pointer-events:all; }
+    .post-controls { position:absolute; top:12px; right:-4px; display:flex; flex-direction:column; gap:5px; opacity:0.22; pointer-events:all; transition:opacity 0.15s; z-index:20; }
+    .post:hover .post-controls { opacity:1; }
     .post-ctrl-btn { background:rgba(26,28,36,0.92); border:1px solid rgba(229,228,227,0.12); border-radius:50%; width:24px; height:24px; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:13px; color:rgba(229,228,227,0.4); transition:color 0.15s,border-color 0.15s; }
     .post-ctrl-btn:hover { color:var(--light); border-color:rgba(229,228,227,0.35); }
     .post-ctrl-btn.drag-handle { cursor:grab; font-size:11px; letter-spacing:0; }
@@ -260,7 +260,7 @@
 <div id="progress"></div>
 <div class="edit-bar">
   <div class="edit-dot"></div>
-  <span>klikk for å redigere · slipp filer på bildefelt</span>
+  <span>klikk for å redigere · slipp filer på bildefelt · <span style="opacity:0.45">merk tekst + ⌘K = lenke</span></span>
   <button onclick="downloadPage()" style="background:rgba(229,228,227,0.12);color:#E5E4E3;border:1px solid rgba(229,228,227,0.18);border-radius:20px;padding:5px 14px;font-size:9px;letter-spacing:0.15em;text-transform:uppercase;cursor:pointer;font-family:inherit">last ned</button>
   <button id="_pub-btn" onclick="publishToGitHub()" style="background:#E5E4E3;color:#262830;border:none;border-radius:20px;padding:5px 14px;font-size:9px;letter-spacing:0.15em;text-transform:uppercase;cursor:pointer;font-family:inherit;font-weight:600">publiser til nett →</button>
 </div>
@@ -289,7 +289,7 @@
   </nav>
   <div class="hero-content">
     <p class="hero-eyebrow" contenteditable="true">Felix Green — en fortelling</p>
-    <h1 class="hero-title">Fra fullmektig<span class="hero-title-line2">til megler</span></h1>
+    <h1 class="hero-title" contenteditable="true">Fra fullmektig<span class="hero-title-line2">til megler</span></h1>
   </div>
 </header>
 
@@ -297,7 +297,7 @@
 <!-- ═══════════════════ EP 1 ═══════════════════ -->
 <div id="page-1" class="page-content">
 <main class="feed">
-  <div class="chapter-break post"><div class="break-line"></div><span class="break-label">episode 1 · september 2026</span><div class="break-line"></div></div>
+  <div class="chapter-break post"><div class="break-line"></div><span class="break-label" contenteditable="true">episode 1 · september 2026</span><div class="break-line"></div></div>
 
   <div class="post">
     <div class="post-stamp"><div class="stamp-icon"><svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="1"/><circle cx="6" cy="7.5" r="1.2" fill="#65666d" stroke="none"/><path d="M2 11.5l3.5-3 2 2 2.5-2.5L14 12"/></svg></div><span class="stamp-date" contenteditable="true">Onsdag 01.09.2026 kl 08.47</span></div>
@@ -411,7 +411,7 @@
 <!-- ═══════════════════ EP 2 ═══════════════════ -->
 <div id="page-2" class="page-content" style="display:none;">
 <main class="feed">
-  <div class="chapter-break post"><div class="break-line"></div><span class="break-label">episode 2 · 2026</span><div class="break-line"></div></div>
+  <div class="chapter-break post"><div class="break-line"></div><span class="break-label" contenteditable="true">episode 2 · 2026</span><div class="break-line"></div></div>
 
   <div class="post">
     <div class="post-stamp"><div class="stamp-icon"><svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="1"/><circle cx="6" cy="7.5" r="1.2" fill="#65666d" stroke="none"/><path d="M2 11.5l3.5-3 2 2 2.5-2.5L14 12"/></svg></div><span class="stamp-date" contenteditable="true">[ dato 2026 ]</span></div>
@@ -420,7 +420,7 @@
 
   <div class="post">
     <div class="post-stamp"><div class="stamp-icon"><svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="1"/><path d="M5 7h6M5 10h4"/></svg></div><span class="stamp-date" contenteditable="true">[ dato 2026 ]</span></div>
-    <div class="ep-number">episode 2</div><div class="ep-date-big">2026</div>
+    <div class="ep-number">episode 2</div>
     <h2 class="ep-title" contenteditable="true">Ingen forteller deg<br>hva det egentlig er</h2>
     <div class="text-body"><p contenteditable="true">[ Hverdagen som fullmektig. Det ingen sier på forhånd. ]</p><p contenteditable="true">[ Gode dager og tunge dager. Begge deler. ]</p></div>
   </div>
@@ -493,7 +493,7 @@
 <!-- ═══════════════════ EP 3 ═══════════════════ -->
 <div id="page-3" class="page-content" style="display:none;">
 <main class="feed">
-  <div class="chapter-break post"><div class="break-line"></div><span class="break-label">episode 3 · eksamen 2026</span><div class="break-line"></div></div>
+  <div class="chapter-break post"><div class="break-line"></div><span class="break-label" contenteditable="true">episode 3 · eksamen 2026</span><div class="break-line"></div></div>
 
   <div class="post">
     <div class="post-stamp"><div class="stamp-icon"><svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="1"/><circle cx="6" cy="7.5" r="1.2" fill="#65666d" stroke="none"/><path d="M2 11.5l3.5-3 2 2 2.5-2.5L14 12"/></svg></div><span class="stamp-date" contenteditable="true">[ dato 2026 ]</span></div>
@@ -502,7 +502,7 @@
 
   <div class="post">
     <div class="post-stamp"><div class="stamp-icon"><svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="1"/><path d="M5 7h6M5 10h4"/></svg></div><span class="stamp-date" contenteditable="true">[ dato 2026 ]</span></div>
-    <div class="ep-number">episode 3</div><div class="ep-date-big">2026</div>
+    <div class="ep-number">episode 3</div>
     <h2 class="ep-title" contenteditable="true">Den testen<br>som teller</h2>
     <div class="text-body"><p contenteditable="true">[ Eksamensperioden. Hva er det egentlig man testes på etter tre år i bransjen? ]</p></div>
   </div>
@@ -568,7 +568,7 @@
 <!-- ═══════════════════ EP 4 ═══════════════════ -->
 <div id="page-4" class="page-content" style="display:none;">
 <main class="feed">
-  <div class="chapter-break post"><div class="break-line"></div><span class="break-label">episode 4 · megler 2026</span><div class="break-line"></div></div>
+  <div class="chapter-break post"><div class="break-line"></div><span class="break-label" contenteditable="true">episode 4 · megler 2026</span><div class="break-line"></div></div>
 
   <div class="post">
     <div class="post-stamp"><div class="stamp-icon"><svg viewBox="0 0 16 16"><path d="M13 3H3a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h2v2l3-2h5a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1z"/></svg></div><span class="stamp-date" contenteditable="true">[ resultatdagen 2026 · tid ]</span></div>
@@ -590,7 +590,7 @@
 
   <div class="post">
     <div class="post-stamp"><div class="stamp-icon"><svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="1"/><path d="M5 7h6M5 10h4"/></svg></div><span class="stamp-date" contenteditable="true">[ dato 2026 ]</span></div>
-    <div class="ep-number">episode 4</div><div class="ep-date-big">2026</div>
+    <div class="ep-number">episode 4</div>
     <h2 class="ep-title" contenteditable="true">Nå er jeg<br>megler</h2>
     <div class="text-body"><p contenteditable="true">[ Ikke en oppsummering. Et øyeblikk. Hva er annerledes? Hva er det samme? ]</p></div>
   </div>
@@ -644,8 +644,8 @@
   <p class="cta-label">din tur</p>
   <h2 class="cta-title" contenteditable="true">Er dette veien din?</h2>
   <div class="cta-btns">
-    <a href="https://privatmegleren.no/stillinger" class="btn btn-fill">se ledige stillinger</a>
-    <a href="https://privatmegleren.no/megler/felix-green" class="btn btn-outline">les mer om felix</a>
+    <a href="https://privatmegleren.no/stillinger" class="btn btn-fill" contenteditable="true" data-href="https://privatmegleren.no/stillinger">se ledige stillinger</a>
+    <a href="https://privatmegleren.no/megler/felix-green" class="btn btn-outline" contenteditable="true" data-href="https://privatmegleren.no/megler/felix-green">les mer om felix</a>
   </div>
 </section>
 </div>
@@ -1502,6 +1502,67 @@ initPostControls();
   });
 })();
 
+
+// ── LENKE-INNSETTING (Cmd+K / Ctrl+K) ──
+document.addEventListener('keydown',e=>{
+  if((e.metaKey||e.ctrlKey)&&e.key==='k'){
+    const sel=window.getSelection();
+    if(!sel||!sel.rangeCount||sel.isCollapsed)return;
+    const active=document.activeElement;
+    if(!active||!active.isContentEditable)return;
+    e.preventDefault();
+    const existing=sel.anchorNode?.parentElement?.closest('a');
+    const currentUrl=existing?existing.href:'';
+    const url=prompt('Lim inn lenke:',currentUrl);
+    if(url===null)return;
+    if(url.trim()===''){
+      // Fjern lenke
+      document.execCommand('unlink');
+    } else {
+      const fullUrl=url.trim().startsWith('http')?url.trim():'https://'+url.trim();
+      document.execCommand('createLink',false,fullUrl);
+      // Sett target=_blank
+      const range=sel.getRangeAt(0);
+      const el=range.commonAncestorContainer?.parentElement?.closest('a')||sel.anchorNode?.parentElement?.closest('a');
+      if(el){el.target='_blank';el.rel='noopener';}
+    }
+    saveStructure();
+  }
+});
+
+// ── BILDE-LIMING (Ctrl+V) ──
+let _lastZone=null;
+function trackZone(z){z.addEventListener('mouseenter',()=>_lastZone=z);}
+document.querySelectorAll('.drop-zone').forEach(trackZone);
+document.addEventListener('paste',e=>{
+  if(!_isPublic){
+    const items=[...(e.clipboardData?.items||[])];
+    const imgItem=items.find(it=>it.type.startsWith('image/'));
+    if(imgItem){
+      const zone=_lastZone||document.querySelector('#page-'+currentPage+' .drop-zone:not(.has-media)');
+      if(zone){e.preventDefault();handleFile(zone,imgItem.getAsFile());return;}
+    }
+  }
+});
+// Koble til nye soner når de opprettes
+const _origBuildZones=buildZones;
+buildZones=function(){_origBuildZones();document.querySelectorAll('.drop-zone').forEach(z=>{if(!z.dataset.ztrk){z.dataset.ztrk='1';trackZone(z);}});};
+
+// ── SLETT-KNAPP PÅ SMS-RAMMER ──
+function initPhoneFrameDelete(){
+  document.querySelectorAll('.phone-frame').forEach(pf=>{
+    const post=pf.closest('.post');
+    if(!post||pf.dataset.delInit)return;
+    pf.dataset.delInit='1';
+    const btn=document.createElement('button');
+    btn.style.cssText='position:absolute;top:8px;right:8px;background:rgba(26,28,36,0.85);border:1px solid rgba(229,228,227,0.18);border-radius:50%;width:22px;height:22px;color:rgba(229,228,227,0.5);font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;line-height:1;';
+    btn.title='Slett melding';btn.textContent='×';
+    btn.onclick=()=>{post.remove();saveStructure();};
+    post.style.position='relative';
+    post.appendChild(btn);
+  });
+}
+initPhoneFrameDelete();
 
 // ── FADE IN ──
 function initObserver(){const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:0.05});document.querySelectorAll('.post:not(.visible)').forEach(p=>obs.observe(p));}

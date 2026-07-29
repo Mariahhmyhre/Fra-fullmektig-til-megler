@@ -80,10 +80,13 @@
     .drop-zone video.media-content { background:#000; }
 
     /* Media toolbar (zoom + bytt) */
-    .media-toolbar { position:absolute; bottom:0; left:0; right:0; z-index:10; display:flex; align-items:center; gap:10px; padding:8px 12px; background:rgba(26,28,36,0.82); backdrop-filter:blur(8px); opacity:0; transition:opacity 0.2s; pointer-events:none; }
+    .media-toolbar { position:absolute; bottom:0; left:0; right:0; z-index:10; display:flex; align-items:center; gap:8px; padding:7px 10px; background:rgba(26,28,36,0.88); backdrop-filter:blur(8px); opacity:0; transition:opacity 0.2s; pointer-events:none; }
     .drop-zone:hover .media-toolbar { opacity:1; pointer-events:all; }
-    .zoom-slider { flex:1; -webkit-appearance:none; height:2px; background:rgba(229,228,227,0.18); border-radius:2px; outline:none; cursor:pointer; }
-    .zoom-slider::-webkit-slider-thumb { -webkit-appearance:none; width:12px; height:12px; border-radius:50%; background:var(--light); cursor:pointer; }
+    .zoom-slider { flex:1; -webkit-appearance:none; height:2px; background:rgba(229,228,227,0.18); border-radius:2px; outline:none; cursor:pointer; min-width:60px; }
+    .zoom-slider::-webkit-slider-thumb { -webkit-appearance:none; width:14px; height:14px; border-radius:50%; background:var(--light); cursor:pointer; }
+    .zoom-step { width:22px; height:22px; border-radius:50%; background:rgba(229,228,227,0.08); border:1px solid rgba(229,228,227,0.15); color:var(--light); font-size:15px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:background 0.15s; padding:0; }
+    .zoom-step:hover { background:rgba(229,228,227,0.18); }
+    .zoom-pct { font-size:9px; letter-spacing:0.12em; color:var(--muted); min-width:32px; text-align:center; font-family:var(--sans); }
     .toolbar-label { font-size:8px; letter-spacing:0.18em; text-transform:uppercase; color:var(--muted); white-space:nowrap; }
     .toolbar-btn { font-size:8px; letter-spacing:0.15em; text-transform:uppercase; color:var(--muted); background:none; border:1px solid rgba(229,228,227,0.12); border-radius:4px; padding:3px 8px; cursor:pointer; font-family:var(--sans); transition:all 0.15s; white-space:nowrap; }
     .toolbar-btn:hover { color:var(--light); border-color:rgba(229,228,227,0.3); }
@@ -836,6 +839,10 @@ function qAdd(ep){
   const newTotal=slidesEl.querySelectorAll('.qc-slide:not(.qc-result)').length;
   const counter=document.getElementById('qcount-'+ep);
   if(counter)counter.textContent=(cur+1)+' / '+newTotal;
+  // Lagre + init nye felt
+  initContentEditable();
+  saveStructure();
+  newSlide.querySelector('[contenteditable]')?.focus();
 }
 
 // ── VERSJONSKONTROLL: forkast gammel localStorage ved filendring ──
@@ -957,6 +964,10 @@ async function selfSave(){
 }
 
 async function initSelfSave(){
+  // Alltid: be om persistent lagring for IndexedDB (hindrer at nettleser sletter bilder)
+  if(navigator.storage&&navigator.storage.persist){
+    navigator.storage.persist().catch(()=>{});
+  }
   try{
     const stored=await idbGet('_fh');
     if(stored&&stored.kind==='file'){
@@ -964,23 +975,34 @@ async function initSelfSave(){
       if(p==='granted'){_fh=stored;return;}
     }
   }catch(e){}
+  // Sjekk om persistent lagring allerede er innvilget
+  try{
+    const isPersisted=await navigator.storage.persisted();
+    if(isPersisted&&!await idbGet('_fh'))return; // bilder er sikret, ingen banner nødvendig
+  }catch(e){}
   // Vis banner
   if(document.getElementById('_perm-bar'))return;
   const b=document.createElement('div');
   b.id='_perm-bar';
   b.style.cssText='position:fixed;top:0;left:0;right:0;padding:11px 24px;background:rgba(38,40,48,0.98);color:#E5E4E3;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;display:flex;align-items:center;justify-content:center;gap:16px;z-index:10000;border-bottom:1px solid rgba(229,228,227,0.12);backdrop-filter:blur(10px)';
-  b.innerHTML='<span>Tillat permanent lagring av bilder og innhold</span><button id="_perm-btn" style="background:#E5E4E3;color:#262830;border:none;padding:5px 16px;border-radius:20px;font-size:9px;letter-spacing:0.12em;cursor:pointer;font-family:inherit">Tillat</button>';
+  b.innerHTML='<span>Tillat at bilder lagres permanent i nettleseren</span><button id="_perm-btn" style="background:#E5E4E3;color:#262830;border:none;padding:5px 16px;border-radius:20px;font-size:9px;letter-spacing:0.12em;cursor:pointer;font-family:inherit">Tillat</button>';
   document.body.prepend(b);
   document.getElementById('_perm-btn').onclick=async()=>{
+    // 1. Persistent IndexedDB-lagring (viktigst — hindrer at bilder slettes)
+    let persisted=false;
+    try{persisted=await navigator.storage.persist();}catch(e){}
+    // 2. Fil-lagring til disk (for selvlagring av HTML-filen)
     try{
       _fh=await window.showSaveFilePicker({
         suggestedName:'fra-fullmektig-til-megler.html',
         types:[{description:'HTML',accept:{'text/html':['.html']}}]
       });
       await idbSet('_fh',_fh);
-      document.getElementById('_perm-bar')?.remove();
       await selfSave();
-    }catch(e){}
+    }catch(e){
+      // Bruker avbrøt fil-dialog — OK, IndexedDB-lagring er likevel sikret
+    }
+    document.getElementById('_perm-bar')?.remove();
   };
 }
 
@@ -1640,6 +1662,7 @@ function renderRightPanel(post){
       <div class="_rp-sep"></div>
       <button class="_rp-btn" onclick="addMsg(_selectedPost.querySelector('.phone-frame'),'them')"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>legg til melding fra kontakt</button>
       <button class="_rp-btn" onclick="addMsg(_selectedPost.querySelector('.phone-frame'),'me')"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>legg til melding fra Felix</button>
+      <button class="_rp-btn danger" onclick="rpDeleteLastMsg()"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg>slett siste melding</button>
       <div class="_rp-sep"></div>${moveRow}`;
     document.getElementById('_rp-contact')?.addEventListener('input',e=>{if(contact)contact.textContent=e.target.value;saveStructure();});
     document.getElementById('_rp-smsdate')?.addEventListener('input',e=>{if(dateEl)dateEl.textContent=e.target.value;saveStructure();});
@@ -1677,8 +1700,15 @@ function renderRightPanel(post){
     document.getElementById('_rp-cite')?.addEventListener('input',e=>{if(cite)cite.textContent=e.target.value;saveStructure();});
   } else if(post.querySelector('.quiz-card')){
     typeEl.textContent='quiz';
+    const card=post.querySelector('.quiz-card');
+    const qid=card.id.replace('qcard-','');
+    const slideCount=card.querySelectorAll('.qc-slides .qc-slide:not(.qc-result)').length;
     body.innerHTML=`
-      <p style="font-size:11px;color:rgba(229,228,227,0.35);line-height:1.6;">Klikk direkte på spørsmål og svaralternativer i feedet for å redigere dem.</p>
+      <p style="font-size:11px;color:rgba(229,228,227,0.35);line-height:1.6;">Klikk direkte på tekst for å redigere. Marker riktig svar ved å klikke på alternativet.</p>
+      <div class="_rp-sep"></div>
+      <span class="_rp-label">spørsmål (${slideCount} totalt)</span>
+      <button class="_rp-btn" onclick="qAdd('${qid}');renderRightPanel(_selectedPost)"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>legg til spørsmål</button>
+      <button class="_rp-btn danger" onclick="rpDeleteLastQuizQ('${qid}')"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg>slett siste spørsmål</button>
       <div class="_rp-sep"></div>${moveRow}`;
   } else if(post.classList.contains('chapter-break')){
     typeEl.textContent='kapitteltittel';
@@ -1713,6 +1743,33 @@ function rpDelete(){
   _selectedPost.remove();
   closeRightPanel();
   saveStructure();
+}
+
+function rpDeleteLastMsg(){
+  if(!_selectedPost)return;
+  const msgs=[..._selectedPost.querySelectorAll('.phone-frame .msg')];
+  if(!msgs.length)return;
+  pushUndo();
+  msgs[msgs.length-1].remove();
+  saveStructure();
+}
+
+function rpDeleteLastQuizQ(qid){
+  const card=document.getElementById('qcard-'+qid);
+  if(!card)return;
+  const slides=[...card.querySelectorAll('.qc-slides .qc-slide:not(.qc-result)')];
+  if(slides.length<=1)return;
+  pushUndo();
+  slides[slides.length-1].remove();
+  const newCount=slides.length-1;
+  const counter=document.getElementById('qcount-'+qid);
+  if(counter)counter.textContent=`1 / ${newCount}`;
+  const dots=document.getElementById('qdots-'+qid);
+  if(dots){dots.innerHTML='';for(let i=0;i<newCount;i++){const d=document.createElement('div');d.className='qc-seg'+(i===0?' active':'');dots.appendChild(d);}}
+  card.dataset.cur='0';
+  const sl=card.querySelector('.qc-slides');if(sl)sl.style.transform='';
+  saveStructure();
+  renderRightPanel(_selectedPost);
 }
 
 function rpUploadImg(){

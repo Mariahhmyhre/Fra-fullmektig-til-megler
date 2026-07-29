@@ -298,6 +298,12 @@
     #_rp { position:fixed; right:0; top:0; bottom:0; width:260px; background:rgba(20,22,30,0.98); border-left:1px solid rgba(229,228,227,0.09); z-index:460; backdrop-filter:blur(24px); display:flex; flex-direction:column; overflow-y:auto; }
     #_rp-head { padding:18px 18px 12px; border-bottom:1px solid rgba(229,228,227,0.07); display:flex; align-items:center; flex-shrink:0; }
     ._rp-type { font-size:8px; letter-spacing:0.3em; text-transform:uppercase; color:rgba(229,228,227,0.3); }
+    ._rp-sublabel { font-size:9px; color:rgba(229,228,227,0.28); letter-spacing:0.2em; text-transform:uppercase; margin-top:2px; margin-bottom:1px; display:flex; justify-content:space-between; }
+    ._rp-sublabel span { color:rgba(237,189,242,0.55); letter-spacing:0; text-transform:none; font-size:9px; }
+    ._rp-select { width:100%; background:rgba(229,228,227,0.06); border:1px solid rgba(229,228,227,0.1); border-radius:6px; color:var(--light); font-size:11px; padding:7px 10px; outline:none; cursor:pointer; font-family:var(--sans); appearance:none; }
+    ._rp-select:focus { border-color:rgba(229,228,227,0.2); }
+    ._rp-range { width:100%; accent-color:rgba(229,228,227,0.45); cursor:pointer; height:2px; margin:4px 0 8px; }
+    ._rp-typo-group { display:flex; flex-direction:column; gap:3px; }
     #_rp-close { background:none; border:none; color:rgba(229,228,227,0.3); cursor:pointer; font-size:18px; line-height:1; padding:0; transition:color 0.15s; }
     #_rp-close:hover { color:var(--light); }
     #_rp-body { padding:16px 18px; flex:1; display:flex; flex-direction:column; gap:10px; }
@@ -784,7 +790,16 @@ window.addEventListener('scroll',updateStickyNav);
 // Kjør én gang etter at siden er lastet (i tilfelle allerede scrollet eller hero-høyde endret seg)
 setTimeout(updateStickyNav,120);
 function toggleMenu(){const o=dropdown.classList.toggle('open');burgerBtn.classList.toggle('open',o);}
-document.addEventListener('click',e=>{if(!stickyNav.contains(e.target)&&!dropdown.contains(e.target)){dropdown.classList.remove('open');burgerBtn.classList.remove('open');}});
+// Hover proximity: show dropdown when mouse enters nav or dropdown, hide on leave
+let _menuHideTimer=null;
+function _showMenu(){clearTimeout(_menuHideTimer);dropdown.classList.add('open');burgerBtn.classList.add('open');}
+function _hideMenu(){_menuHideTimer=setTimeout(()=>{dropdown.classList.remove('open');burgerBtn.classList.remove('open');},180);}
+stickyNav.addEventListener('mouseenter',_showMenu);
+stickyNav.addEventListener('mouseleave',_hideMenu);
+dropdown.addEventListener('mouseenter',_showMenu);
+dropdown.addEventListener('mouseleave',_hideMenu);
+// Keep click-outside close for mobile (no hover events)
+document.addEventListener('click',e=>{if(!stickyNav.contains(e.target)&&!dropdown.contains(e.target)){clearTimeout(_menuHideTimer);dropdown.classList.remove('open');burgerBtn.classList.remove('open');}});
 
 // ── SMS ──
 const DEL_BTN=`<button class="msg-delete" onclick="this.closest('.msg').remove()">×</button>`;
@@ -1348,7 +1363,12 @@ function initContentEditable(){
     if(!_isSaved){const saved=localStorage.getItem(el.dataset.ck);if(saved!==null)el.innerHTML=saved;}
     if(!el.dataset.ceInit){
       el.dataset.ceInit='1';
-      el.addEventListener('input',()=>{try{localStorage.setItem(el.dataset.ck,el.innerHTML);showSavedToast();}catch(e){}});
+      el.addEventListener('input',()=>{
+        try{localStorage.setItem(el.dataset.ck,el.innerHTML);}catch(e){}
+        showSavedToast();
+        // Also trigger structure save (belt+suspenders alongside MutationObserver)
+        if(typeof schedSave==='function')schedSave();else saveStructure();
+      });
     }
   });
 }
@@ -1428,6 +1448,8 @@ if(!_isPublic){
     if(!skip)schedSave();
   });
   document.querySelectorAll('.feed').forEach(f=>_feedObserver.observe(f,{childList:true,subtree:true,attributes:true,characterData:true}));
+  // Flush saves immediately on page close/refresh — prevents losing last edits
+  window.addEventListener('beforeunload',()=>{clearTimeout(_autoSaveTimer);saveStructure();});
 }
 
 // ── LEGG TIL INNHOLD ──
@@ -1642,6 +1664,44 @@ initRightPanelClicks();
 if(_isPublic){ document.getElementById('_rp')?.remove(); }
 let _selectedPost=null;
 
+// ── TYPOGRAFI-KONTROLLER ──
+function buildTypoSection(post){
+  const ff=post.style.fontFamily||'';
+  const lh=parseFloat(post.style.lineHeight)||1.7;
+  const op=Math.round((parseFloat(post.style.opacity)||1)*100);
+  const ffOpts=[
+    ['','standard (arvet)'],
+    ["'DomaineDisplay',Georgia,serif","Domaine Display — tittel"],
+    ["'DomaineText',sans-serif","Domaine Text — brødtekst"],
+  ];
+  const ffSelect=ffOpts.map(([v,l])=>`<option value="${v}" ${ff===v?'selected':''}>${l}</option>`).join('');
+  return `<div class="_rp-sep"></div>
+  <span class="_rp-label" style="font-size:8px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(229,228,227,0.3);">typografi</span>
+  <div class="_rp-typo-group">
+    <span class="_rp-sublabel">font</span>
+    <select class="_rp-select" id="_rp-ff">${ffSelect}</select>
+    <span class="_rp-sublabel">linjeavstand <span id="_rp-lh-v">${lh.toFixed(1)}</span></span>
+    <input type="range" class="_rp-range" id="_rp-lh" min="0.8" max="3.0" step="0.05" value="${lh}">
+    <span class="_rp-sublabel">gjennomsiktighet <span id="_rp-op-v">${op}%</span></span>
+    <input type="range" class="_rp-range" id="_rp-op" min="10" max="100" step="5" value="${op}">
+  </div>`;
+}
+function initTypoControls(post){
+  document.getElementById('_rp-ff')?.addEventListener('change',e=>{
+    post.style.fontFamily=e.target.value;saveStructure();
+  });
+  document.getElementById('_rp-lh')?.addEventListener('input',e=>{
+    post.style.lineHeight=e.target.value;
+    const v=document.getElementById('_rp-lh-v');if(v)v.textContent=parseFloat(e.target.value).toFixed(1);
+    saveStructure();
+  });
+  document.getElementById('_rp-op')?.addEventListener('input',e=>{
+    post.style.opacity=e.target.value/100;
+    const v=document.getElementById('_rp-op-v');if(v)v.textContent=e.target.value+'%';
+    saveStructure();
+  });
+}
+
 function openRightPanel(post){
   if(_isPublic)return;
   if(_selectedPost)_selectedPost.classList.remove('pm-selected');
@@ -1668,7 +1728,7 @@ function renderRightPanel(post){
   if(!body||!typeEl)return;
   body.innerHTML='';
 
-  const moveRow=`<div class="_rp-row">
+  const moveRow=`${buildTypoSection(post)}<div class="_rp-sep"></div><div class="_rp-row">
     <button class="_rp-btn" onclick="rpMove(-1)" title="Flytt opp"><svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>opp</button>
     <button class="_rp-btn" onclick="rpMove(1)" title="Flytt ned"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>ned</button>
   </div>
@@ -1761,6 +1821,8 @@ function renderRightPanel(post){
     typeEl.textContent='element';
     body.innerHTML=`<p class="_rp-empty">Klikk på et element i feedet for å redigere</p>`;
   }
+  // Hook up typography sliders (IDs injected via buildTypoSection above)
+  initTypoControls(post);
 }
 
 function rpMove(dir){
@@ -1844,10 +1906,30 @@ function initRightPanelClicks(){
   document.querySelectorAll('.post').forEach(p=>{
     if(p.dataset.rpInit)return;
     p.dataset.rpInit='1';
+
+    // PRIMARY: capture-phase mousedown — fires before any child stopPropagation.
+    // Waits for mouseup to confirm it was a click (not a drag).
+    p.addEventListener('mousedown',e=>{
+      if(e.button!==0)return;
+      // Ignore clicks on toolbar chrome and editor UI
+      if(e.target.closest('.media-toolbar,#_rp,#_toolbox,[class*="new-post-del"]'))return;
+      const sx=e.clientX,sy=e.clientY;
+      function onUp(mu){
+        document.removeEventListener('mouseup',onUp,true);
+        // Only confirm selection if mouse didn't travel (it was a click)
+        if(Math.abs(mu.clientX-sx)>8||Math.abs(mu.clientY-sy)>8)return;
+        // Allow text editing to continue when post is already selected
+        if(p===_selectedPost&&mu.target.closest('[contenteditable]'))return;
+        openRightPanel(p);
+      }
+      document.addEventListener('mouseup',onUp,true);
+    },{capture:true});
+
+    // FALLBACK: click event (covers keyboard-activated clicks etc.)
     p.addEventListener('click',e=>{
-      // Skip buttons (except the right-panel close) and quiz interactive areas
-      if(e.target.closest('button:not(#_rp-close)')||e.target.closest('.quiz-card'))return;
-      // If post already selected and clicking inside a contenteditable, let text editing happen
+      if(e.target.closest('#_rp-close'))return;
+      if(e.target.closest('.media-toolbar'))return;
+      if(e.target.closest('[class*="new-post-del"]'))return;
       if(p===_selectedPost&&e.target.closest('[contenteditable]'))return;
       openRightPanel(p);
     });

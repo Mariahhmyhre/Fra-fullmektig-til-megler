@@ -1090,7 +1090,7 @@ function showMedia(zone,src,isVideo,state){
   const tb=document.createElement('div');tb.className='media-toolbar';
   tb.innerHTML=`<span class="toolbar-label">zoom</span>
     <input type="range" class="zoom-slider" min="50" max="300" value="${Math.round(s.scale*100)}">
-    ${isVideo?`<button class="toolbar-btn" onclick="const v=this.closest('.drop-zone').querySelector('video');v.paused?v.play():v.pause();this.textContent=v.paused?'spill':'pause'">pause</button>`:''}
+    ${isVideo?`<button class="toolbar-btn" onclick="const v=this.closest('.drop-zone').querySelector('video');v.paused?v.play():v.pause();this.textContent=v.paused?'▶':'⏸'">⏸</button>`:''}
     <button class="toolbar-btn" onclick="triggerUpload(this.closest('.drop-zone'))">bytt</button>`;
   zone.appendChild(tb);
 
@@ -1115,7 +1115,13 @@ function showMedia(zone,src,isVideo,state){
     s.tx=baseX+(e.clientX-startX);s.ty=baseY+(e.clientY-startY);
     applyTransform(el,s.scale,s.tx,s.ty);
   });
-  document.addEventListener('mouseup',()=>{if(!dragging)return;dragging=false;el.classList.remove('dragging');saveMediaState(zone,s);});
+  document.addEventListener('mouseup',e=>{
+    if(!dragging)return;
+    const moved=Math.abs(e.clientX-startX)>5||Math.abs(e.clientY-startY)>5;
+    dragging=false;el.classList.remove('dragging');saveMediaState(zone,s);
+    // Kort klikk (ikke dratt) → velg elementet for redigering
+    if(!moved&&!_isPublic){const post=zone.closest('.post');if(post)openRightPanel(post);}
+  });
 
   // Click-to-upload only if NOT has-media (handled by toolbar "bytt" btn)
   zone.onclick=null;
@@ -1327,7 +1333,7 @@ function buildZones(){
     z.addEventListener('dragover',e=>{e.preventDefault();z.classList.add('drag-over');});
     z.addEventListener('dragleave',()=>z.classList.remove('drag-over'));
     z.addEventListener('drop',e=>{e.preventDefault();z.classList.remove('drag-over');const f=e.dataTransfer.files[0];if(f)handleFile(z,f);});
-    z.addEventListener('click',e=>{if(!z.classList.contains('has-media')){if(z.querySelector('.dz-pick-overlay')){z.querySelector('.dz-pick-overlay').remove();return;}showDzPicker(z);}});
+    z.addEventListener('click',e=>{if(!z.classList.contains('has-media')){if(z.querySelector('.dz-pick-overlay')){z.querySelector('.dz-pick-overlay').remove();return;}showDzPicker(z);}else{if(!_isPublic){const post=z.closest('.post');if(post&&post!==_selectedPost)openRightPanel(post);}}});
     ro.observe(z);
   });
 }

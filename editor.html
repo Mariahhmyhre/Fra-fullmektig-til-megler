@@ -55,8 +55,7 @@
     .post.visible { opacity:1; transform:translateY(0); }
     .post:last-child { border-bottom:none; }
     .post-stamp { display:flex; align-items:center; justify-content:center; gap:10px; margin-bottom:28px; }
-    .stamp-icon { width:24px; height:24px; border-radius:50%; background:var(--mid); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
-    .stamp-icon svg { width:12px; height:12px; stroke:var(--muted); fill:none; stroke-width:1.5; }
+    .stamp-icon { display:none; }
     .stamp-date { font-size:13px; letter-spacing:0.06em; color:rgba(229,228,227,0.45); font-weight:300; }
     .ep-number { font-size:9px; letter-spacing:0.4em; text-transform:uppercase; color:rgba(229,228,227,0.3); margin-bottom:8px; }
     .ep-date-big { font-family:var(--serif); font-size:clamp(52px,7vw,80px); font-weight:300; line-height:1; letter-spacing:-0.025em; color:rgba(229,228,227,0.05); margin-bottom:10px; }
@@ -209,8 +208,7 @@
     /* ── SLETT + FLYTT POST ── */
     .post { position:relative; transition:opacity 0.2s; }
     .post.dragging { opacity:0.35; }
-    .post-controls { position:absolute; top:12px; right:-4px; display:flex; flex-direction:column; gap:5px; opacity:0.22; pointer-events:all; transition:opacity 0.15s; z-index:20; }
-    .post:hover .post-controls { opacity:1; }
+    .post-controls { display:none !important; }
     .post-ctrl-btn { background:rgba(26,28,36,0.92); border:1px solid rgba(229,228,227,0.12); border-radius:50%; width:24px; height:24px; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:13px; color:rgba(229,228,227,0.4); transition:color 0.15s,border-color 0.15s; }
     .post-ctrl-btn:hover { color:var(--light); border-color:rgba(229,228,227,0.35); }
     .post-ctrl-btn.drag-handle { cursor:grab; font-size:11px; letter-spacing:0; }
@@ -227,8 +225,7 @@
     .add-post-btn:hover { border-color:rgba(229,228,227,0.25); color:rgba(229,228,227,0.6); background:rgba(229,228,227,0.03); }
     .add-post-btn svg { width:13px; stroke:currentColor; fill:none; stroke-width:1.5; }
     .new-post { position:relative; }
-    .new-post-del { position:absolute; top:16px; right:0; background:none; border:none; cursor:pointer; color:rgba(229,228,227,0.2); padding:4px; transition:color 0.15s; font-size:16px; line-height:1; }
-    .new-post-del:hover { color:rgba(229,228,227,0.7); }
+    .new-post-del { display:none !important; }
     .new-post-type-row { display:flex; gap:8px; margin-bottom:14px; flex-wrap:wrap; }
     .new-post-type-btn { flex:1; min-width:80px; padding:10px; border:1px solid rgba(229,228,227,0.09); border-radius:8px; background:none; color:var(--muted); font-family:var(--sans); font-size:10px; letter-spacing:0.12em; cursor:pointer; transition:all 0.18s; display:flex; align-items:center; justify-content:center; gap:7px; }
     .new-post-type-btn:hover { border-color:rgba(229,228,227,0.22); color:var(--light); }
@@ -269,6 +266,28 @@
     ._tb-undo { color:rgba(229,228,227,0.38); }
     ._tb-undo:hover { color:rgba(229,228,227,0.7); }
 
+    /* ── HØYRE PANEL ── */
+    #_rp { position:fixed; right:-280px; top:0; bottom:0; width:272px; background:rgba(20,22,30,0.98); border-left:1px solid rgba(229,228,227,0.09); z-index:460; backdrop-filter:blur(24px); display:flex; flex-direction:column; transition:right 0.32s cubic-bezier(0.22,1,0.36,1); overflow-y:auto; }
+    #_rp.open { right:0; }
+    #_rp-head { padding:18px 18px 12px; border-bottom:1px solid rgba(229,228,227,0.07); display:flex; align-items:center; justify-content:space-between; flex-shrink:0; }
+    ._rp-type { font-size:8px; letter-spacing:0.3em; text-transform:uppercase; color:rgba(229,228,227,0.3); }
+    #_rp-close { background:none; border:none; color:rgba(229,228,227,0.3); cursor:pointer; font-size:18px; line-height:1; padding:0; transition:color 0.15s; }
+    #_rp-close:hover { color:var(--light); }
+    #_rp-body { padding:16px 18px; flex:1; display:flex; flex-direction:column; gap:10px; }
+    ._rp-empty { font-size:11px; color:rgba(229,228,227,0.22); line-height:1.7; margin-top:12px; }
+    ._rp-label { font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:rgba(229,228,227,0.28); margin-bottom:4px; display:block; }
+    ._rp-input { width:100%; background:rgba(229,228,227,0.06); border:1px solid rgba(229,228,227,0.12); border-radius:8px; color:var(--light); font-family:var(--sans); font-size:12px; padding:9px 12px; outline:none; resize:vertical; min-height:36px; box-sizing:border-box; }
+    ._rp-input:focus { border-color:rgba(229,228,227,0.28); }
+    ._rp-btn { display:flex; align-items:center; gap:8px; width:100%; padding:9px 13px; border:1px solid rgba(229,228,227,0.1); border-radius:8px; background:none; color:rgba(229,228,227,0.65); font-family:var(--sans); font-size:11px; cursor:pointer; text-align:left; transition:all 0.15s; }
+    ._rp-btn:hover { border-color:rgba(229,228,227,0.25); color:var(--light); background:rgba(229,228,227,0.04); }
+    ._rp-btn svg { width:13px; stroke:currentColor; fill:none; stroke-width:1.5; flex-shrink:0; }
+    ._rp-btn.danger { color:rgba(229,80,80,0.65); border-color:rgba(229,80,80,0.15); }
+    ._rp-btn.danger:hover { color:rgba(255,100,100,1); border-color:rgba(229,80,80,0.4); background:rgba(229,80,80,0.05); }
+    ._rp-sep { height:1px; background:rgba(229,228,227,0.07); margin:4px 0; }
+    ._rp-row { display:flex; gap:6px; }
+    ._rp-row ._rp-btn { flex:1; justify-content:center; }
+    .post.pm-selected { outline:1.5px solid rgba(229,228,227,0.22); outline-offset:6px; border-radius:2px; }
+
     /* ── EPISODE KONTROLLER ── */
     #main-nav a { position:relative; }
     .ep-nav-del { position:absolute; top:-9px; right:-9px; background:rgba(26,28,36,0.95); border:1px solid rgba(229,228,227,0.22); border-radius:50%; width:16px; height:16px; display:flex; align-items:center; justify-content:center; cursor:pointer; color:rgba(229,228,227,0.6); font-size:11px; line-height:1; opacity:0; transition:opacity 0.15s; pointer-events:none; flex-shrink:0; }
@@ -277,10 +296,8 @@
     .ep-nav-add { background:none; border:1px solid rgba(229,228,227,0.18); border-radius:50%; width:22px; height:22px; color:rgba(229,228,227,0.4); font-size:16px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.15s; flex-shrink:0; line-height:1; padding:0; font-family:inherit; }
     .ep-nav-add:hover { color:var(--light); border-color:rgba(229,228,227,0.45); background:rgba(229,228,227,0.06); }
 
-    /* ── SLETT BILDEBOKS ── */
-    .dz-del { position:absolute; top:6px; right:6px; z-index:15; background:rgba(26,28,36,0.9); border:1px solid rgba(229,228,227,0.18); border-radius:50%; width:22px; height:22px; display:flex; align-items:center; justify-content:center; cursor:pointer; color:rgba(229,228,227,0.5); font-size:14px; line-height:1; opacity:0; transition:opacity 0.15s; pointer-events:none; }
-    .drop-zone:hover .dz-del { opacity:1; pointer-events:all; }
-    .dz-del:hover { color:var(--light); border-color:rgba(229,228,227,0.4); }
+    /* ── SLETT BILDEBOKS (skjult – høyre panel brukes) ── */
+    .dz-del { display:none !important; }
   </style>
 </head>
 <body>
@@ -300,6 +317,17 @@
     <button class="_tb-btn _tb-undo" onclick="tbUndo()"><svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.5"/></svg>angre</button>
   </div>
   <button id="_tb-tab" onclick="toggleToolbox()">›</button>
+</div>
+
+<!-- HØYRE PANEL (skjules i public) -->
+<div id="_rp">
+  <div id="_rp-head">
+    <span class="_rp-type" id="_rp-type">element</span>
+    <button id="_rp-close" onclick="closeRightPanel()">×</button>
+  </div>
+  <div id="_rp-body">
+    <p class="_rp-empty">Klikk på et element i feedet for å redigere det</p>
+  </div>
 </div>
 
 <div class="edit-bar">
@@ -1531,11 +1559,14 @@ function initPostControls(){
   });
 }
 initPostControls();
-
+initRightPanelClicks();
 
 // ── RE-INIT ETTER STRUKTURGJENOPPRETTING ──
 (function reInit(){
+  // Fjern ep-date-big som evt. er lagret i localStorage
+  document.querySelectorAll('.ep-date-big').forEach(el=>el.remove());
   initPostControls();
+  initRightPanelClicks();
   // Dato-label over bildebokser
   document.querySelectorAll('.drop-zone-wrap').forEach(wrap=>{
     if(wrap.previousElementSibling?.classList.contains('img-date'))return;
@@ -1549,6 +1580,180 @@ initPostControls();
   });
 })();
 
+
+// ── HØYRE PANEL ──
+if(_isPublic){ document.getElementById('_rp')?.remove(); }
+let _selectedPost=null;
+
+function openRightPanel(post){
+  if(_isPublic)return;
+  if(_selectedPost)_selectedPost.classList.remove('pm-selected');
+  _selectedPost=post;
+  post.classList.add('pm-selected');
+  const rp=document.getElementById('_rp');
+  rp.classList.add('open');
+  renderRightPanel(post);
+}
+
+function closeRightPanel(){
+  if(_selectedPost)_selectedPost.classList.remove('pm-selected');
+  _selectedPost=null;
+  document.getElementById('_rp')?.classList.remove('open');
+}
+
+function renderRightPanel(post){
+  const body=document.getElementById('_rp-body');
+  const typeEl=document.getElementById('_rp-type');
+  if(!body||!typeEl)return;
+  body.innerHTML='';
+
+  const moveRow=`<div class="_rp-row">
+    <button class="_rp-btn" onclick="rpMove(-1)" title="Flytt opp"><svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>opp</button>
+    <button class="_rp-btn" onclick="rpMove(1)" title="Flytt ned"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>ned</button>
+  </div>
+  <div class="_rp-sep"></div>
+  <button class="_rp-btn danger" onclick="rpDelete()"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg>slett element</button>`;
+
+  // Detect element type
+  if(post.querySelector('.drop-zone')){
+    typeEl.textContent='bildeboks';
+    const zone=post.querySelector('.drop-zone');
+    const dateEl=post.querySelector('.stamp-date');
+    body.innerHTML=`
+      <span class="_rp-label">dato</span>
+      <input class="_rp-input" id="_rp-date" value="${dateEl?.textContent||''}" placeholder="[ dato ]">
+      <div class="_rp-sep"></div>
+      <button class="_rp-btn" onclick="rpUploadImg()"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>last opp bilde / video</button>
+      <button class="_rp-btn" onclick="rpPasteImg()"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>lim inn bilde (⌘V)</button>
+      <div class="_rp-sep"></div>${moveRow}`;
+    document.getElementById('_rp-date')?.addEventListener('input',e=>{if(dateEl)dateEl.textContent=e.target.value;saveStructure();});
+  } else if(post.querySelector('.phone-frame')){
+    typeEl.textContent='sms-samtale';
+    const frame=post.querySelector('.phone-frame');
+    const contact=frame.querySelector('.contact-name');
+    const dateEl=post.querySelector('.stamp-date');
+    body.innerHTML=`
+      <span class="_rp-label">kontakt</span>
+      <input class="_rp-input" id="_rp-contact" value="${contact?.textContent||'Supermegleren'}" placeholder="Navn">
+      <span class="_rp-label">dato</span>
+      <input class="_rp-input" id="_rp-smsdate" value="${dateEl?.textContent||''}" placeholder="[ dato ]">
+      <div class="_rp-sep"></div>
+      <button class="_rp-btn" onclick="addMsg(_selectedPost.querySelector('.phone-frame'),'them')"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>legg til melding fra kontakt</button>
+      <button class="_rp-btn" onclick="addMsg(_selectedPost.querySelector('.phone-frame'),'me')"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>legg til melding fra Felix</button>
+      <div class="_rp-sep"></div>${moveRow}`;
+    document.getElementById('_rp-contact')?.addEventListener('input',e=>{if(contact)contact.textContent=e.target.value;saveStructure();});
+    document.getElementById('_rp-smsdate')?.addEventListener('input',e=>{if(dateEl)dateEl.textContent=e.target.value;saveStructure();});
+  } else if(post.querySelector('.video-embed-wrap')){
+    typeEl.textContent='video';
+    const dateEl=post.querySelector('.stamp-date');
+    body.innerHTML=`
+      <span class="_rp-label">dato</span>
+      <input class="_rp-input" id="_rp-vdate" value="${dateEl?.textContent||''}" placeholder="[ dato ]">
+      <div class="_rp-sep"></div>
+      <button class="_rp-btn" onclick="rpChangeEmbed()"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polygon points="10 8 16 12 10 16 10 8"/></svg>bytt YouTube / Vimeo</button>
+      <div class="_rp-sep"></div>${moveRow}`;
+    document.getElementById('_rp-vdate')?.addEventListener('input',e=>{if(dateEl)dateEl.textContent=e.target.value;saveStructure();});
+  } else if(post.querySelector('.text-body')){
+    typeEl.textContent='tekst';
+    const dateEl=post.querySelector('.stamp-date');
+    body.innerHTML=`
+      <span class="_rp-label">dato</span>
+      <input class="_rp-input" id="_rp-tdate" value="${dateEl?.textContent||''}" placeholder="[ dato ]">
+      <div class="_rp-sep"></div>
+      <p style="font-size:11px;color:rgba(229,228,227,0.35);line-height:1.6;">Klikk direkte på teksten i feedet for å redigere den.</p>
+      <div class="_rp-sep"></div>${moveRow}`;
+    document.getElementById('_rp-tdate')?.addEventListener('input',e=>{if(dateEl)dateEl.textContent=e.target.value;saveStructure();});
+  } else if(post.classList.contains('quote-block')){
+    typeEl.textContent='sitat';
+    const quote=post.querySelector('blockquote span');
+    const cite=post.querySelector('cite');
+    body.innerHTML=`
+      <span class="_rp-label">sitat</span>
+      <textarea class="_rp-input" id="_rp-quote" rows="3">${quote?.textContent||''}</textarea>
+      <span class="_rp-label">kilde</span>
+      <input class="_rp-input" id="_rp-cite" value="${cite?.textContent||'Felix Green'}">
+      <div class="_rp-sep"></div>${moveRow}`;
+    document.getElementById('_rp-quote')?.addEventListener('input',e=>{if(quote)quote.textContent=e.target.value;saveStructure();});
+    document.getElementById('_rp-cite')?.addEventListener('input',e=>{if(cite)cite.textContent=e.target.value;saveStructure();});
+  } else if(post.querySelector('.quiz-card')){
+    typeEl.textContent='quiz';
+    body.innerHTML=`
+      <p style="font-size:11px;color:rgba(229,228,227,0.35);line-height:1.6;">Klikk direkte på spørsmål og svaralternativer i feedet for å redigere dem.</p>
+      <div class="_rp-sep"></div>${moveRow}`;
+  } else if(post.classList.contains('chapter-break')){
+    typeEl.textContent='kapitteltittel';
+    const label=post.querySelector('.break-label');
+    body.innerHTML=`
+      <span class="_rp-label">tekst</span>
+      <input class="_rp-input" id="_rp-break" value="${label?.textContent||''}">
+      <div class="_rp-sep"></div>${moveRow}`;
+    document.getElementById('_rp-break')?.addEventListener('input',e=>{if(label)label.textContent=e.target.value;saveStructure();});
+  } else {
+    typeEl.textContent='element';
+    body.innerHTML=`<p class="_rp-empty">Klikk på et element i feedet for å redigere</p>`;
+  }
+}
+
+function rpMove(dir){
+  if(!_selectedPost)return;
+  pushUndo();
+  const feed=_selectedPost.parentNode;
+  const posts=[...feed.children];
+  const idx=posts.indexOf(_selectedPost);
+  const target=posts[idx+dir];
+  if(!target)return;
+  if(dir===-1)feed.insertBefore(_selectedPost,target);
+  else feed.insertBefore(target,_selectedPost);
+  saveStructure();
+}
+
+function rpDelete(){
+  if(!_selectedPost)return;
+  pushUndo();
+  _selectedPost.remove();
+  closeRightPanel();
+  saveStructure();
+}
+
+function rpUploadImg(){
+  if(!_selectedPost)return;
+  const zone=_selectedPost.querySelector('.drop-zone');
+  if(zone)triggerUpload(zone);
+}
+
+function rpPasteImg(){
+  if(!_selectedPost)return;
+  _lastZone=_selectedPost.querySelector('.drop-zone')||_lastZone;
+  navigator.clipboard.read().then(items=>{
+    for(const item of items){
+      const imgType=item.types.find(t=>t.startsWith('image/'));
+      if(imgType){item.getType(imgType).then(blob=>handleFile(_lastZone,new File([blob],'paste.png',{type:imgType})));return;}
+    }
+  }).catch(()=>{alert('Kopier et bilde først, så trykk Lim inn bilde');});
+}
+
+function rpChangeEmbed(){
+  if(!_selectedPost)return;
+  const url=prompt('Lim inn ny YouTube- eller Vimeo-link:');
+  if(!url)return;
+  const embedUrl=parseVideoEmbed(url.trim());
+  if(!embedUrl){alert('Ugyldig lenke');return;}
+  const iframe=_selectedPost.querySelector('iframe');
+  if(iframe)iframe.src=embedUrl;
+  saveStructure();
+}
+
+function initRightPanelClicks(){
+  if(_isPublic)return;
+  document.querySelectorAll('.post').forEach(p=>{
+    if(p.dataset.rpInit)return;
+    p.dataset.rpInit='1';
+    p.addEventListener('click',e=>{
+      if(e.target.closest('[contenteditable]')||e.target.closest('button:not(#_rp-close)')||e.target.closest('.quiz-card'))return;
+      openRightPanel(p);
+    });
+  });
+}
 
 // ── GARDIN-VERKTØYBOKS ──
 if(_isPublic){ document.getElementById('_toolbox')?.remove(); }
@@ -1652,9 +1857,11 @@ function tbAdd(type){
 
   if(insertBefore)feed.insertBefore(w,insertBefore);
   else feed.appendChild(w);
-  buildZones();initPostControls();initContentEditable();initPhoneFrameDelete();initDzDelete();
+  buildZones();initPostControls();initRightPanelClicks();initContentEditable();initPhoneFrameDelete();initDzDelete();
   saveStructure();
   w.scrollIntoView({behavior:'smooth',block:'center'});
+  // Auto-åpne høyre panel for ny post
+  setTimeout(()=>openRightPanel(w),80);
 }
 
 // ── EPISODE LEGG TIL / FJERN ──

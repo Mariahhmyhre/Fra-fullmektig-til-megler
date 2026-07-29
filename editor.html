@@ -268,8 +268,7 @@
     ._tb-undo:hover { color:rgba(229,228,227,0.7); }
 
     /* ── HØYRE PANEL ── */
-    #_rp { position:fixed; right:-280px; top:0; bottom:0; width:272px; background:rgba(20,22,30,0.98); border-left:1px solid rgba(229,228,227,0.09); z-index:460; backdrop-filter:blur(24px); display:flex; flex-direction:column; transition:right 0.32s cubic-bezier(0.22,1,0.36,1); overflow-y:auto; }
-    #_rp.open { right:0; }
+    #_rp { position:fixed; right:0; top:0; bottom:0; width:260px; background:rgba(20,22,30,0.98); border-left:1px solid rgba(229,228,227,0.09); z-index:460; backdrop-filter:blur(24px); display:flex; flex-direction:column; overflow-y:auto; }
     #_rp-head { padding:18px 18px 12px; border-bottom:1px solid rgba(229,228,227,0.07); display:flex; align-items:center; justify-content:space-between; flex-shrink:0; }
     ._rp-type { font-size:8px; letter-spacing:0.3em; text-transform:uppercase; color:rgba(229,228,227,0.3); }
     #_rp-close { background:none; border:none; color:rgba(229,228,227,0.3); cursor:pointer; font-size:18px; line-height:1; padding:0; transition:color 0.15s; }
@@ -298,6 +297,14 @@
     .ep-nav-del:hover { color:#fff; border-color:rgba(229,228,227,0.5); }
     .ep-nav-add { background:none; border:1px solid rgba(229,228,227,0.18); border-radius:50%; width:22px; height:22px; color:rgba(229,228,227,0.4); font-size:16px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.15s; flex-shrink:0; line-height:1; padding:0; font-family:inherit; }
     .ep-nav-add:hover { color:var(--light); border-color:rgba(229,228,227,0.45); background:rgba(229,228,227,0.06); }
+
+    /* ── EDITOR: offset innhold for alltid-synlige paneler ── */
+    body.editor-mode { padding-left:60px; padding-right:268px; }
+    body.editor-mode .hero, body.editor-mode #sticky-nav,
+    body.editor-mode #snav-dropdown, body.editor-mode footer,
+    body.editor-mode #progress { margin-left:-60px; margin-right:-268px; width:auto; }
+    body.editor-mode #sticky-nav { left:60px; right:268px; }
+    body.editor-mode #snav-dropdown { right:268px; }
 
     /* ── SLETT BILDEBOKS (skjult – høyre panel brukes) ── */
     .dz-del { display:none !important; }
@@ -869,6 +876,7 @@ function getToken(){return localStorage.getItem('pm-gh-token')||'';}
 const _isSaved=!!document.querySelector('meta[name="pm-saved"]');
 if(_isSaved)document.querySelector('meta[name="pm-saved"]')?.remove();
 const _isPublic=!!document.querySelector('meta[name="pm-public"]');
+if(!_isPublic) document.body.classList.add('editor-mode');
 if(_isPublic){document.querySelector('.edit-bar')?.remove();}
 
 // ── REDAKTØRGATE ──
@@ -1605,7 +1613,10 @@ function openRightPanel(post){
 function closeRightPanel(){
   if(_selectedPost)_selectedPost.classList.remove('pm-selected');
   _selectedPost=null;
-  document.getElementById('_rp')?.classList.remove('open');
+  const body=document.getElementById('_rp-body');
+  if(body)body.innerHTML='<p class="_rp-empty">Klikk på et element i feedet for å redigere det</p>';
+  const typeEl=document.getElementById('_rp-type');
+  if(typeEl)typeEl.textContent='egenskaper';
 }
 
 function renderRightPanel(post){

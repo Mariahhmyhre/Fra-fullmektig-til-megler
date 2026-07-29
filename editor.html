@@ -18,7 +18,7 @@
     #progress { position:fixed; top:0; left:0; height:1px; background:var(--light); z-index:999; width:0; opacity:0.3; }
 
     /* ── STICKY NAV ── */
-    #sticky-nav { position:fixed; top:0; left:0; right:0; z-index:300; height:56px; display:flex; align-items:center; justify-content:space-between; padding:0 28px; background:rgba(26,28,36,0.96); backdrop-filter:blur(24px); border-bottom:1px solid rgba(229,228,227,0.07); transform:translateY(-100%); transition:transform 0.38s cubic-bezier(0.22,1,0.36,1); }
+    #sticky-nav { position:fixed; top:0; left:0; right:0; z-index:300; height:56px; display:flex; align-items:center; justify-content:space-between; padding:0 28px; background:rgba(26,28,36,0.92); backdrop-filter:blur(24px); border-bottom:1px solid rgba(229,228,227,0.07); transform:translateY(-100%); transition:transform 0.38s cubic-bezier(0.22,1,0.36,1); }
     #sticky-nav.visible { transform:translateY(0); }
     .snav-logo img { height:44px; width:auto; display:block; opacity:0.95; }
     .snav-burger { background:none; border:none; cursor:pointer; display:flex; flex-direction:column; justify-content:space-between; width:28px; height:20px; padding:0; }
@@ -257,6 +257,15 @@
     [contenteditable]:hover { background:rgba(229,228,227,0.04); }
     [contenteditable]:focus { background:rgba(229,228,227,0.07); box-shadow:0 0 0 1px rgba(229,228,227,0.12); }
     @media(max-width:600px){.hero-nav{gap:20px}.feed{padding:0 16px 60px}.quote-block{margin:0 -16px}footer{padding:24px}}
+    @media(max-width:768px){
+      body.editor-mode{padding:0 !important;}
+      body.editor-mode .hero,body.editor-mode #sticky-nav,
+      body.editor-mode #snav-dropdown,body.editor-mode footer,
+      body.editor-mode #progress{margin-left:0 !important;margin-right:0 !important;}
+      body.editor-mode #sticky-nav{left:0 !important;right:0 !important;transform:translateY(0) !important;}
+      body.editor-mode #snav-dropdown{right:0 !important;}
+      #_toolbox,#_rp{display:none !important;}
+    }
 
     /* ── VERKTØYBOKS (alltid synlig, Adobe-stil) ── */
     #_toolbox { position:fixed; left:0; top:50%; transform:translateY(-50%); z-index:450; pointer-events:none; }
@@ -292,6 +301,8 @@
     ._rp-sep { height:1px; background:rgba(229,228,227,0.07); margin:4px 0; }
     ._rp-row { display:flex; gap:6px; }
     ._rp-row ._rp-btn { flex:1; justify-content:center; }
+    /* Subtle hover ring so users can see posts are clickable */
+    body.editor-mode .post:not(.chapter-break):hover:not(.pm-selected) { outline:1px solid rgba(229,228,227,0.12); outline-offset:4px; border-radius:3px; }
     .post.pm-selected { outline:2px solid rgba(229,228,227,0.65); outline-offset:5px; border-radius:3px; cursor:grab; }
     .post.pm-selected [contenteditable],.post.pm-selected button,.post.pm-selected input,.post.pm-selected .drop-zone,.post.pm-selected iframe,.post.pm-selected .quiz-card { cursor:auto; }
     .post.pm-selected.dragging { cursor:grabbing; }
@@ -883,7 +894,11 @@ function getToken(){return localStorage.getItem('pm-gh-token')||'';}
 const _isSaved=!!document.querySelector('meta[name="pm-saved"]');
 if(_isSaved)document.querySelector('meta[name="pm-saved"]')?.remove();
 const _isPublic=!!document.querySelector('meta[name="pm-public"]');
-if(!_isPublic) document.body.classList.add('editor-mode');
+if(!_isPublic){
+  document.body.classList.add('editor-mode');
+  // Vis sticky nav umiddelbart i editor (ikke vent på scroll)
+  document.getElementById('sticky-nav')?.classList.add('visible');
+}
 if(_isPublic){document.querySelector('.edit-bar')?.remove();}
 
 // ── REDAKTØRGATE ──
@@ -909,6 +924,8 @@ if(!_isPublic){
 }
 
 let _fh=null; // FileSystemFileHandle
+// Fjern evt. localStorage-data for episoder som ikke finnes i HTML
+for(let i=5;i<=10;i++){if(!document.getElementById('page-'+i))localStorage.removeItem('pm-struct-'+i);}
 
 function buildHTML(){
   const doc=document.documentElement.cloneNode(true);
@@ -1810,7 +1827,10 @@ function initRightPanelClicks(){
     if(p.dataset.rpInit)return;
     p.dataset.rpInit='1';
     p.addEventListener('click',e=>{
-      if(e.target.closest('[contenteditable]')||e.target.closest('button:not(#_rp-close)')||e.target.closest('.quiz-card'))return;
+      // Skip buttons (except the right-panel close) and quiz interactive areas
+      if(e.target.closest('button:not(#_rp-close)')||e.target.closest('.quiz-card'))return;
+      // If post already selected and clicking inside a contenteditable, let text editing happen
+      if(p===_selectedPost&&e.target.closest('[contenteditable]'))return;
       openRightPanel(p);
     });
   });
@@ -2000,10 +2020,21 @@ function addEpisode(){
   const pb=document.createElement('a');pb.className='page-btn';pb.id='pb-'+n;
   pb.setAttribute('onclick',`goToPage(${n})`);pb.textContent=n;
   lastArrow.before(pb);
+  // Oppdater pb-last-knapp til ny siste side
+  const pbLast=document.getElementById('pb-last');
+  if(pbLast)pbLast.onclick=()=>goToPage(totalPages());
   initPostControls();initContentEditable();
   goToPage(n);saveStructure();
 }
 initEpisodeControls();
+
+// ── TOUCH SWIPE (mobil episodenavigasjon) ──
+let _tX=0,_tY=0;
+document.addEventListener('touchstart',e=>{_tX=e.touches[0].clientX;_tY=e.touches[0].clientY;},{passive:true});
+document.addEventListener('touchend',e=>{
+  const dx=e.changedTouches[0].clientX-_tX, dy=e.changedTouches[0].clientY-_tY;
+  if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)*1.4){changePage(dx<0?1:-1);}
+},{passive:true});
 
 // ── SLETT-KNAPP PÅ INDIVIDUELLE BILDEBOKSER ──
 function initDzDelete(){

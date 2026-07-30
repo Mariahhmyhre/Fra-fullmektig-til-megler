@@ -246,7 +246,9 @@
     .add-post-btn:hover { border-color:rgba(229,228,227,0.25); color:rgba(229,228,227,0.6); background:rgba(229,228,227,0.03); }
     .add-post-btn svg { width:13px; stroke:currentColor; fill:none; stroke-width:1.5; }
     .new-post { position:relative; }
-    .new-post-del { display:none !important; }
+    .new-post-del { position:absolute; top:8px; right:8px; background:rgba(26,28,36,0.85); border:1px solid rgba(229,228,227,0.18); border-radius:50%; width:24px; height:24px; color:rgba(229,228,227,0.5); font-size:14px; cursor:pointer; display:none; align-items:center; justify-content:center; z-index:10; line-height:1; transition:all 0.15s; }
+    body.editor-mode .new-post-del { display:flex; }
+    .new-post-del:hover { background:rgba(229,80,80,0.25); border-color:rgba(229,80,80,0.4); color:rgba(255,100,100,1); }
     .new-post-type-row { display:flex; gap:8px; margin-bottom:14px; flex-wrap:wrap; }
     .new-post-type-btn { flex:1; min-width:80px; padding:10px; border:1px solid rgba(229,228,227,0.09); border-radius:8px; background:none; color:var(--muted); font-family:var(--sans); font-size:10px; letter-spacing:0.12em; cursor:pointer; transition:all 0.18s; display:flex; align-items:center; justify-content:center; gap:7px; }
     .new-post-type-btn:hover { border-color:rgba(229,228,227,0.22); color:var(--light); }
@@ -399,10 +401,10 @@
   <button class="snav-burger" id="burger-btn" onclick="toggleMenu()"><span></span><span></span><span></span><span></span></button>
 </nav>
 <div id="snav-dropdown">
-  <a class="sdrop-item active" id="sdrop-1" onclick="if(!_isPublic&&event.target.closest('[contenteditable]'))return false;goToPage(1);return false;" href="#"><span class="sdrop-num">01</span><div><div class="sdrop-label" contenteditable="true">Starten</div><div class="sdrop-sub" contenteditable="true">September 2026</div></div></a>
-  <a class="sdrop-item" id="sdrop-2" onclick="if(!_isPublic&&event.target.closest('[contenteditable]'))return false;goToPage(2);return false;" href="#"><span class="sdrop-num">02</span><div><div class="sdrop-label" contenteditable="true">Hverdagen</div><div class="sdrop-sub" contenteditable="true">2026</div></div></a>
-  <a class="sdrop-item" id="sdrop-3" onclick="if(!_isPublic&&event.target.closest('[contenteditable]'))return false;goToPage(3);return false;" href="#"><span class="sdrop-num">03</span><div><div class="sdrop-label" contenteditable="true">Eksamen</div><div class="sdrop-sub" contenteditable="true">2026</div></div></a>
-  <a class="sdrop-item" id="sdrop-4" onclick="if(!_isPublic&&event.target.closest('[contenteditable]'))return false;goToPage(4);return false;" href="#"><span class="sdrop-num">04</span><div><div class="sdrop-label" contenteditable="true">Megler</div><div class="sdrop-sub" contenteditable="true">2026</div></div></a>
+  <a class="sdrop-item active" id="sdrop-1" onclick="goToPage(1);return false;" href="#"><span class="sdrop-num">01</span><div><div class="sdrop-label">episode 1</div><div class="sdrop-sub"></div></div></a>
+  <a class="sdrop-item" id="sdrop-2" onclick="goToPage(2);return false;" href="#"><span class="sdrop-num">02</span><div><div class="sdrop-label">episode 2</div><div class="sdrop-sub"></div></div></a>
+  <a class="sdrop-item" id="sdrop-3" onclick="goToPage(3);return false;" href="#"><span class="sdrop-num">03</span><div><div class="sdrop-label">episode 3</div><div class="sdrop-sub"></div></div></a>
+  <a class="sdrop-item" id="sdrop-4" onclick="goToPage(4);return false;" href="#"><span class="sdrop-num">04</span><div><div class="sdrop-label">episode 4</div><div class="sdrop-sub"></div></div></a>
 </div>
 
 <!-- HERO -->
@@ -411,10 +413,10 @@
   <div class="hero-overlay"></div>
   <button id="hero-img-btn" onclick="triggerHeroUpload()" title="Bytt bakgrunnsbilde" style="position:absolute;top:16px;right:16px;z-index:30;background:rgba(26,28,36,0.82);border:1px solid rgba(229,228,227,0.18);border-radius:20px;color:rgba(229,228,227,0.6);font-size:9px;letter-spacing:0.15em;text-transform:uppercase;padding:6px 14px;cursor:pointer;font-family:inherit;backdrop-filter:blur(8px);display:none;">bytt bilde</button>
   <nav class="hero-nav" id="main-nav">
-    <a href="#" class="active" onclick="if(!_isPublic&&event.target.closest('[contenteditable]'))return false;goToPage(1);return false;" contenteditable="true" spellcheck="false">episode 1</a>
-    <a href="#" onclick="if(!_isPublic&&event.target.closest('[contenteditable]'))return false;goToPage(2);return false;" contenteditable="true" spellcheck="false">episode 2</a>
-    <a href="#" onclick="if(!_isPublic&&event.target.closest('[contenteditable]'))return false;goToPage(3);return false;" contenteditable="true" spellcheck="false">episode 3</a>
-    <a href="#" onclick="if(!_isPublic&&event.target.closest('[contenteditable]'))return false;goToPage(4);return false;" contenteditable="true" spellcheck="false">episode 4</a>
+    <a href="#" class="active" onclick="goToPage(1);return false;" spellcheck="false">episode 1</a>
+    <a href="#" onclick="goToPage(2);return false;" spellcheck="false">episode 2</a>
+    <a href="#" onclick="goToPage(3);return false;" spellcheck="false">episode 3</a>
+    <a href="#" onclick="goToPage(4);return false;" spellcheck="false">episode 4</a>
   </nav>
   <div class="hero-content">
     <p class="hero-eyebrow" contenteditable="true">Felix Green — en fortelling</p>
@@ -1608,6 +1610,14 @@ function initPostControls(){
       const ind=document.createElement('div');ind.className='drop-indicator';
       p.insertBefore(ind,p.firstChild);
     }
+    // Sørg for at ALLE poster har en sletteknapp (X)
+    if(!_isPublic&&!p.querySelector('.new-post-del')&&!p.classList.contains('add-post-btn')){
+      p.style.position='relative';
+      const del=document.createElement('button');
+      del.className='new-post-del';del.textContent='×';del.title='Slett element';
+      del.onclick=e=>{e.stopPropagation();pushUndo();p.remove();closeRightPanel();saveStructure();};
+      p.appendChild(del);
+    }
     // Drag-init (én gang per post)
     if(p.dataset.dragInit)return;
     p.dataset.dragInit='1';
@@ -2079,15 +2089,58 @@ function initEpisodeControls(){
     const m=a.getAttribute('onclick')?.match(/goToPage\((\d+)\)/);
     if(!m)return;
     const n=parseInt(m[1]);
+    // Sletteknapp
     const del=document.createElement('button');
     del.className='ep-nav-del';del.textContent='×';del.title='Fjern episode';
     del.onclick=e=>{e.preventDefault();e.stopPropagation();removeEpisode(n);};
     a.appendChild(del);
+    // Dobbeltklikk = rediger tekst
+    setupDblEdit(a,n);
   });
   const addBtn=document.createElement('button');
   addBtn.className='ep-nav-add';addBtn.textContent='+';addBtn.title='Legg til episode';
   addBtn.onclick=e=>{e.preventDefault();addEpisode();};
   nav.appendChild(addBtn);
+  // Initial sync: hero-nav → dropdown
+  syncNavToDropdown();
+}
+
+// Dobbeltklikk-redigering for hero-nav lenker
+function setupDblEdit(a,n){
+  a.addEventListener('dblclick',e=>{
+    e.preventDefault();e.stopPropagation();
+    a.contentEditable='true';
+    a.focus();
+    // Selekter teksten (ekskluder delete-knappen)
+    const range=document.createRange();
+    const textNode=a.childNodes[0];
+    if(textNode){range.selectNodeContents(textNode);const sel=window.getSelection();sel.removeAllRanges();sel.addRange(range);}
+  });
+  a.addEventListener('blur',()=>{
+    a.contentEditable='false';
+    syncNavToDropdown();
+    saveStructure();
+  });
+  a.addEventListener('keydown',e=>{
+    if(e.key==='Enter'){e.preventDefault();a.blur();}
+  });
+}
+
+// Synk hero-nav tekst → dropdown labels
+function syncNavToDropdown(){
+  const nav=document.getElementById('main-nav');
+  if(!nav)return;
+  nav.querySelectorAll('a').forEach(a=>{
+    const m=a.getAttribute('onclick')?.match(/goToPage\((\d+)\)/);
+    if(!m)return;
+    const n=parseInt(m[1]);
+    const label=document.querySelector('#sdrop-'+n+' .sdrop-label');
+    if(label){
+      // Hent tekst uten delete-knapp
+      const text=a.childNodes[0]?.textContent?.trim()||'episode '+n;
+      label.textContent=text;
+    }
+  });
 }
 
 function removeEpisode(n){
@@ -2126,18 +2179,19 @@ function addEpisode(){
   const nav=document.getElementById('main-nav');
   const addBtn=nav.querySelector('.ep-nav-add');
   const a=document.createElement('a');
-  a.href='#';a.contentEditable='true';a.spellcheck=false;
+  a.href='#';a.spellcheck=false;
   a.setAttribute('onclick',`goToPage(${n});return false;`);
   a.textContent='episode '+n;
   const del=document.createElement('button');del.className='ep-nav-del';del.textContent='×';
   del.onclick=e=>{e.preventDefault();e.stopPropagation();removeEpisode(n);};
   a.appendChild(del);
+  setupDblEdit(a,n);
   nav.insertBefore(a,addBtn);
-  // Legg til i dropdown
+  // Legg til i dropdown (synkes fra hero-nav, ikke editerbar)
   const dd=document.getElementById('snav-dropdown');
   const si=document.createElement('a');si.className='sdrop-item';si.id='sdrop-'+n;si.href='#';
   si.setAttribute('onclick',`goToPage(${n});return false;`);
-  si.innerHTML=`<span class="sdrop-num">0${n}</span><div><div class="sdrop-label" contenteditable="true">Episode ${n}</div><div class="sdrop-sub" contenteditable="true">2026</div></div>`;
+  si.innerHTML=`<span class="sdrop-num">0${n}</span><div><div class="sdrop-label">episode ${n}</div><div class="sdrop-sub"></div></div>`;
   dd.appendChild(si);
   // Legg til i paginering
   // Legg sidetall inn FØR neste-pilen (→), ikke etter den

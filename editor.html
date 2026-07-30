@@ -1060,7 +1060,7 @@ function saveStructure(){
     const feed=document.querySelector('#page-'+i+' .feed');
     if(!feed)continue;
     const clone=feed.cloneNode(true);
-    clone.querySelectorAll('.post-controls,.drop-indicator,.img-date,.media-toolbar,.media-content').forEach(el=>el.remove());
+    clone.querySelectorAll('.post-controls,.drop-indicator,.img-date,.media-toolbar,.media-content,.new-post-del').forEach(el=>el.remove());
     clone.querySelectorAll('.drop-zone').forEach(z=>{
       z.classList.remove('has-media');z.style.width='';z.style.height='';
       if(!z.querySelector('.drop-hint'))
@@ -1649,12 +1649,16 @@ function initPostControls(){
       p.insertBefore(ind,p.firstChild);
     }
     // Sørg for at ALLE poster har en sletteknapp (X)
-    if(!_isPublic&&!p.querySelector('.new-post-del')&&!p.classList.contains('add-post-btn')){
-      p.style.position='relative';
-      const del=document.createElement('button');
-      del.className='new-post-del';del.textContent='×';del.title='Slett element';
+    if(!_isPublic&&!p.classList.contains('add-post-btn')){
+      let del=p.querySelector('.new-post-del');
+      if(!del){
+        p.style.position='relative';
+        del=document.createElement('button');
+        del.className='new-post-del';del.textContent='×';del.title='Slett element';
+        p.appendChild(del);
+      }
+      // (Re-)wire onclick — nødvendig etter restore fra localStorage
       del.onclick=e=>{e.stopPropagation();pushUndo();p.remove();closeRightPanel();saveStructure();};
-      p.appendChild(del);
     }
     // Drag-init (én gang per post)
     if(p.dataset.dragInit)return;

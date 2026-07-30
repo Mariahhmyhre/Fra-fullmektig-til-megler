@@ -63,10 +63,10 @@
 
     /* ── FEED ── */
     .feed { max-width:660px; margin:0 auto; padding:0 24px 80px; }
-    .post { padding:56px 0; border-bottom:1px solid rgba(229,228,227,0.05); text-align:center; opacity:0; transform:translateY(22px); transition:opacity 0.7s ease,transform 0.7s ease; }
+    .post { padding:32px 0; border-bottom:1px solid rgba(229,228,227,0.05); text-align:center; opacity:0; transform:translateY(22px); transition:opacity 0.7s ease,transform 0.7s ease; }
     .post.visible { opacity:1; transform:translateY(0); }
     .post:last-child { border-bottom:none; }
-    .post-stamp { display:flex; align-items:center; justify-content:center; gap:10px; margin-bottom:28px; }
+    .post-stamp { display:flex; align-items:center; justify-content:center; gap:10px; margin-bottom:18px; }
     .stamp-icon { display:none; }
     .stamp-date { font-size:13px; letter-spacing:0.06em; color:rgba(229,228,227,0.45); font-weight:300; }
     .ep-number { font-size:9px; letter-spacing:0.4em; text-transform:uppercase; color:rgba(229,228,227,0.3); margin-bottom:8px; }
@@ -82,6 +82,7 @@
     .drop-zone.wide { width:100%; height:360px; min-height:80px; min-width:120px; }
     .drop-zone.tall { width:320px; height:400px; min-height:80px; min-width:120px; }
     .drop-zone.sq   { width:420px; height:420px; min-height:80px; min-width:120px; }
+    .drop-zone.has-media { border-style:solid; border-color:transparent; background:transparent; }
     .drop-zone.drag-over { border-color:rgba(229,228,227,0.3); }
     .drop-hint { display:flex; flex-direction:column; align-items:center; gap:8px; font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); pointer-events:none; transition:opacity 0.2s; }
     .drop-hint svg { width:20px; stroke:var(--muted); fill:none; stroke-width:1.2; opacity:0.4; }
@@ -114,7 +115,8 @@
     .msg.them { align-self:flex-start; align-items:flex-start; }
     .msg.me   { align-self:flex-end;   align-items:flex-end; }
     .msg-sender { font-size:8px; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); margin-bottom:3px; padding:0 10px; }
-    .bubble { padding:10px 15px; border-radius:17px; font-size:14px; line-height:1.5; font-weight:300; }
+    .bubble { padding:10px 15px; border-radius:17px; font-size:14px; line-height:1.5; font-weight:300; min-height:20px; min-width:60px; }
+    .bubble:empty::before { content:'[ skriv melding ]'; opacity:0.3; font-style:italic; pointer-events:none; }
     .msg.them .bubble { background:var(--mid-2); color:var(--light); border-bottom-left-radius:4px; }
     .msg.me   .bubble { background:#2d5a8e; color:#fff; border-bottom-right-radius:4px; }
     .msg-time { font-size:8px; color:var(--muted); margin-top:3px; padding:0 10px; opacity:0.35; }
@@ -200,6 +202,7 @@
     .break-label { font-size:9px; letter-spacing:0.3em; text-transform:uppercase; color:rgba(229,228,227,0.3); white-space:nowrap; }
 
     .pagination { display:flex; align-items:center; justify-content:center; gap:4px; padding:48px 24px 80px; }
+    body.editor-mode .pagination { display:none; }
     .page-btn { width:36px; height:36px; display:flex; align-items:center; justify-content:center; font-size:12px; color:var(--muted); background:none; border:none; cursor:pointer; transition:color 0.2s,background 0.2s; text-decoration:none; font-family:var(--sans); font-weight:300; border-radius:4px; }
     .page-btn:hover { color:var(--light); background:rgba(229,228,227,0.05); }
     .page-btn.active { background:var(--light); color:var(--dark); font-weight:400; }
@@ -224,7 +227,7 @@
     footer p { font-size:9px; letter-spacing:0.12em; color:var(--muted); opacity:0.4; }
 
     /* ── SLETT + FLYTT POST ── */
-    .post { position:relative; transition:opacity 0.2s; }
+    .post { position:relative; }
     .post.dragging { opacity:0.35; }
     .post-controls { display:none !important; }
     .post-ctrl-btn { background:rgba(26,28,36,0.92); border:1px solid rgba(229,228,227,0.12); border-radius:50%; width:24px; height:24px; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:13px; color:rgba(229,228,227,0.4); transition:color 0.15s,border-color 0.15s; }
@@ -281,12 +284,12 @@
 
     /* ── VERKTØYBOKS (alltid synlig, Adobe-stil) ── */
     #_toolbox { position:fixed; left:0; top:50%; transform:translateY(-50%); z-index:450; pointer-events:none; }
-    #_tb-panel { width:52px; background:rgba(22,24,32,0.97); border:1px solid rgba(229,228,227,0.1); border-left:none; border-radius:0 12px 12px 0; padding:10px 6px; display:flex; flex-direction:column; gap:2px; backdrop-filter:blur(24px); pointer-events:all; align-items:center; }
+    #_tb-panel { width:120px; background:rgba(22,24,32,0.97); border:1px solid rgba(229,228,227,0.1); border-left:none; border-radius:0 12px 12px 0; padding:10px 8px; display:flex; flex-direction:column; gap:2px; backdrop-filter:blur(24px); pointer-events:all; }
     #_tb-tab { display:none; }
     ._tb-head { display:none; }
-    ._tb-btn { display:flex; align-items:center; justify-content:center; width:36px; height:36px; padding:0; border:1px solid transparent; border-radius:8px; background:none; color:rgba(229,228,227,0.5); cursor:pointer; transition:all 0.15s; }
+    ._tb-btn { display:flex; align-items:center; gap:8px; width:100%; height:32px; padding:0 10px; border:1px solid transparent; border-radius:8px; background:none; color:rgba(229,228,227,0.5); cursor:pointer; transition:all 0.15s; font-family:var(--sans); font-size:9px; letter-spacing:0.08em; }
     ._tb-btn:hover { border-color:rgba(229,228,227,0.18); color:var(--light); background:rgba(229,228,227,0.06); }
-    ._tb-btn svg { width:15px; stroke:currentColor; fill:none; stroke-width:1.5; flex-shrink:0; }
+    ._tb-btn svg { width:14px; stroke:currentColor; fill:none; stroke-width:1.5; flex-shrink:0; }
     ._tb-sep { height:1px; width:28px; background:rgba(229,228,227,0.07); margin:3px 0; }
     ._tb-undo { color:rgba(229,228,227,0.3); }
     ._tb-undo:hover { color:rgba(229,228,227,0.7); }
@@ -295,7 +298,8 @@
     ._tb-del.active:hover { color:rgba(255,100,100,1); background:rgba(229,80,80,0.08); border-color:rgba(229,80,80,0.25); }
 
     /* ── HØYRE PANEL ── */
-    #_rp { position:fixed; right:0; top:0; bottom:0; width:260px; background:rgba(20,22,30,0.98); border-left:1px solid rgba(229,228,227,0.09); z-index:460; backdrop-filter:blur(24px); display:flex; flex-direction:column; overflow-y:auto; }
+    #_rp { position:fixed; right:0; top:0; bottom:0; width:260px; background:rgba(20,22,30,0.98); border-left:1px solid rgba(229,228,227,0.09); z-index:460; backdrop-filter:blur(24px); display:flex; flex-direction:column; overflow-y:auto; transform:translateX(100%); transition:transform 0.25s cubic-bezier(0.22,1,0.36,1); }
+    #_rp.open { transform:translateX(0); }
     #_rp-head { padding:18px 18px 12px; border-bottom:1px solid rgba(229,228,227,0.07); display:flex; align-items:center; flex-shrink:0; }
     ._rp-type { font-size:8px; letter-spacing:0.3em; text-transform:uppercase; color:rgba(229,228,227,0.3); }
     ._rp-sublabel { font-size:9px; color:rgba(229,228,227,0.28); letter-spacing:0.2em; text-transform:uppercase; margin-top:2px; margin-bottom:1px; display:flex; justify-content:space-between; }
@@ -334,12 +338,18 @@
     .ep-nav-add:hover { color:var(--light); border-color:rgba(229,228,227,0.45); background:rgba(229,228,227,0.06); }
 
     /* ── EDITOR: offset innhold for alltid-synlige paneler ── */
-    body.editor-mode { padding-left:60px; padding-right:268px; }
+    body.editor-mode { padding-left:128px; padding-right:8px; transition:padding-right 0.25s; }
+    body.editor-mode.rp-open { padding-right:268px; }
     body.editor-mode .hero, body.editor-mode #sticky-nav,
     body.editor-mode footer,
-    body.editor-mode #progress { margin-left:-60px; margin-right:-268px; width:auto; }
-    body.editor-mode #sticky-nav { left:60px; right:268px; }
-    body.editor-mode #snav-dropdown { right:268px; width:280px; }
+    body.editor-mode #progress { margin-left:-128px; margin-right:-8px; width:auto; }
+    body.editor-mode.rp-open .hero, body.editor-mode.rp-open #sticky-nav,
+    body.editor-mode.rp-open footer,
+    body.editor-mode.rp-open #progress { margin-right:-268px; }
+    body.editor-mode #sticky-nav { left:128px; right:8px; }
+    body.editor-mode.rp-open #sticky-nav { right:268px; }
+    body.editor-mode #snav-dropdown { right:8px; width:280px; }
+    body.editor-mode.rp-open #snav-dropdown { right:268px; }
 
     /* ── SLETT BILDEBOKS (skjult – høyre panel brukes) ── */
     .dz-del { display:none !important; }
@@ -352,12 +362,12 @@
 <div id="_toolbox">
   <div id="_tb-panel">
     <div class="_tb-head">verktøy</div>
-    <button class="_tb-btn" title="Bilde / video" onclick="tbAdd('img')"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></button>
-    <button class="_tb-btn" title="YouTube / Vimeo" onclick="tbAdd('embed')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polygon points="10 8 16 12 10 16 10 8"/></svg></button>
-    <button class="_tb-btn" title="Tekst" onclick="tbAdd('text')"><svg viewBox="0 0 24 24"><path d="M17 6H3M21 12H3M17 18H3"/></svg></button>
-    <button class="_tb-btn" title="SMS-samtale" onclick="tbAdd('sms')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></button>
-    <button class="_tb-btn" title="Sitat" onclick="tbAdd('quote')"><svg viewBox="0 0 24 24"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/></svg></button>
-    <button class="_tb-btn" title="Quiz" onclick="tbAdd('quiz')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></button>
+    <button class="_tb-btn" title="Bilde / video" onclick="tbAdd('img')"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>bilde</button>
+    <button class="_tb-btn" title="YouTube / Vimeo" onclick="tbAdd('embed')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polygon points="10 8 16 12 10 16 10 8"/></svg>video</button>
+    <button class="_tb-btn" title="Tekst" onclick="tbAdd('text')"><svg viewBox="0 0 24 24"><path d="M17 6H3M21 12H3M17 18H3"/></svg>tekst</button>
+    <button class="_tb-btn" title="SMS-samtale" onclick="tbAdd('sms')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>sms</button>
+    <button class="_tb-btn" title="Sitat" onclick="tbAdd('quote')"><svg viewBox="0 0 24 24"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/></svg>sitat</button>
+    <button class="_tb-btn" title="Quiz" onclick="tbAdd('quiz')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>quiz</button>
     <div class="_tb-sep"></div>
     <button class="_tb-btn _tb-undo" title="Angre (⌘Z)" onclick="tbUndo()"><svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.5"/></svg></button>
     <button class="_tb-btn _tb-del" id="_tb-del-btn" title="Slett valgt (Delete)" onclick="rpDelete()"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg></button>
@@ -389,10 +399,10 @@
   <button class="snav-burger" id="burger-btn" onclick="toggleMenu()"><span></span><span></span><span></span><span></span></button>
 </nav>
 <div id="snav-dropdown">
-  <a class="sdrop-item active" id="sdrop-1" onclick="goToPage(1);return false;" href="#"><span class="sdrop-num">01</span><div><div class="sdrop-label" contenteditable="true">Starten</div><div class="sdrop-sub" contenteditable="true">September 2026</div></div></a>
-  <a class="sdrop-item" id="sdrop-2" onclick="goToPage(2);return false;" href="#"><span class="sdrop-num">02</span><div><div class="sdrop-label" contenteditable="true">Hverdagen</div><div class="sdrop-sub" contenteditable="true">2026</div></div></a>
-  <a class="sdrop-item" id="sdrop-3" onclick="goToPage(3);return false;" href="#"><span class="sdrop-num">03</span><div><div class="sdrop-label" contenteditable="true">Eksamen</div><div class="sdrop-sub" contenteditable="true">2026</div></div></a>
-  <a class="sdrop-item" id="sdrop-4" onclick="goToPage(4);return false;" href="#"><span class="sdrop-num">04</span><div><div class="sdrop-label" contenteditable="true">Megler</div><div class="sdrop-sub" contenteditable="true">2026</div></div></a>
+  <a class="sdrop-item active" id="sdrop-1" onclick="if(!_isPublic&&event.target.closest('[contenteditable]'))return false;goToPage(1);return false;" href="#"><span class="sdrop-num">01</span><div><div class="sdrop-label" contenteditable="true">Starten</div><div class="sdrop-sub" contenteditable="true">September 2026</div></div></a>
+  <a class="sdrop-item" id="sdrop-2" onclick="if(!_isPublic&&event.target.closest('[contenteditable]'))return false;goToPage(2);return false;" href="#"><span class="sdrop-num">02</span><div><div class="sdrop-label" contenteditable="true">Hverdagen</div><div class="sdrop-sub" contenteditable="true">2026</div></div></a>
+  <a class="sdrop-item" id="sdrop-3" onclick="if(!_isPublic&&event.target.closest('[contenteditable]'))return false;goToPage(3);return false;" href="#"><span class="sdrop-num">03</span><div><div class="sdrop-label" contenteditable="true">Eksamen</div><div class="sdrop-sub" contenteditable="true">2026</div></div></a>
+  <a class="sdrop-item" id="sdrop-4" onclick="if(!_isPublic&&event.target.closest('[contenteditable]'))return false;goToPage(4);return false;" href="#"><span class="sdrop-num">04</span><div><div class="sdrop-label" contenteditable="true">Megler</div><div class="sdrop-sub" contenteditable="true">2026</div></div></a>
 </div>
 
 <!-- HERO -->
@@ -401,10 +411,10 @@
   <div class="hero-overlay"></div>
   <button id="hero-img-btn" onclick="triggerHeroUpload()" title="Bytt bakgrunnsbilde" style="position:absolute;top:16px;right:16px;z-index:30;background:rgba(26,28,36,0.82);border:1px solid rgba(229,228,227,0.18);border-radius:20px;color:rgba(229,228,227,0.6);font-size:9px;letter-spacing:0.15em;text-transform:uppercase;padding:6px 14px;cursor:pointer;font-family:inherit;backdrop-filter:blur(8px);display:none;">bytt bilde</button>
   <nav class="hero-nav" id="main-nav">
-    <a href="#" class="active" onclick="goToPage(1);return false;" contenteditable="true" spellcheck="false">episode 1</a>
-    <a href="#" onclick="goToPage(2);return false;" contenteditable="true" spellcheck="false">episode 2</a>
-    <a href="#" onclick="goToPage(3);return false;" contenteditable="true" spellcheck="false">episode 3</a>
-    <a href="#" onclick="goToPage(4);return false;" contenteditable="true" spellcheck="false">episode 4</a>
+    <a href="#" class="active" onclick="if(!_isPublic&&event.target.closest('[contenteditable]'))return false;goToPage(1);return false;" contenteditable="true" spellcheck="false">episode 1</a>
+    <a href="#" onclick="if(!_isPublic&&event.target.closest('[contenteditable]'))return false;goToPage(2);return false;" contenteditable="true" spellcheck="false">episode 2</a>
+    <a href="#" onclick="if(!_isPublic&&event.target.closest('[contenteditable]'))return false;goToPage(3);return false;" contenteditable="true" spellcheck="false">episode 3</a>
+    <a href="#" onclick="if(!_isPublic&&event.target.closest('[contenteditable]'))return false;goToPage(4);return false;" contenteditable="true" spellcheck="false">episode 4</a>
   </nav>
   <div class="hero-content">
     <p class="hero-eyebrow" contenteditable="true">Felix Green — en fortelling</p>
@@ -1062,7 +1072,7 @@ function saveStructure(){
 }
 
 function restoreStructure(){
-  if(_isSaved)return; // bilder er allerede bakt inn i HTML
+  if(_isPublic)return; // offentlig visning: bruk bakt HTML, ingen localStorage
   for(let i=1;i<=4;i++){
     const saved=localStorage.getItem('pm-struct-'+i);
     if(!saved)continue;
@@ -1360,7 +1370,7 @@ function initContentEditable(){
   let ceIdx=parseInt(localStorage.getItem('pm-ce-max')||'0');
   document.querySelectorAll('[contenteditable]').forEach(el=>{
     if(!el.dataset.ck){el.dataset.ck='pm-ce-'+(ceIdx++);localStorage.setItem('pm-ce-max',ceIdx);}
-    if(!_isSaved){const saved=localStorage.getItem(el.dataset.ck);if(saved!==null)el.innerHTML=saved;}
+    if(!_isPublic){const saved=localStorage.getItem(el.dataset.ck);if(saved!==null)el.innerHTML=saved;}
     if(!el.dataset.ceInit){
       el.dataset.ceInit='1';
       el.addEventListener('input',()=>{
@@ -1376,21 +1386,18 @@ initContentEditable();
 
 // Bilder: gjenopprett (enten fra innbakt HTML eller IndexedDB)
 async function restoreMedia(){
-  if(_isSaved){
-    // Bilder er bakt inn i HTML — gjenopprett størrelse og koble til zoom/pan uten å erstatte elementet
+  if(_isPublic&&_isSaved){
+    // Offentlig visning: bilder er bakt inn i HTML — koble til zoom/pan
     document.querySelectorAll('.drop-zone.has-media').forEach(z=>{
       const el=z.querySelector('img,video');if(!el)return;
       const isVideo=el.tagName==='VIDEO';
-      // Gjenopprett størrelse fra localStorage (resize:both serialiseres ikke)
       const zid=getZid(z);
       const sz=localStorage.getItem('pm-zsz-'+zid);
       if(sz){const[w,h]=sz.split(',');if(+w&&+h){z.style.width=w+'px';z.style.height=h+'px';}}
-      // Les eksisterende transform
       const tr=el.style.transform||'';
       const sm=tr.match(/scale\(([\d.]+)\)/);
       const tm=tr.match(/translate\(([-\d.]+)px,\s*([-\d.]+)px\)/);
       const s={scale:sm?parseFloat(sm[1]):1,tx:tm?parseFloat(tm[1]):0,ty:tm?parseFloat(tm[2]):0};
-      // Legg til toolbar direkte (uten å erstatte elementet)
       const tb=document.createElement('div');tb.className='media-toolbar';
       tb.innerHTML=`<span class="toolbar-label">zoom</span>
         <input type="range" class="zoom-slider" min="50" max="300" value="${Math.round(s.scale*100)}">
@@ -1408,7 +1415,7 @@ async function restoreMedia(){
     });
     return;
   }
-  // Fallback: gjenopprett fra IndexedDB
+  // Editor-modus eller fersk fil: gjenopprett fra IndexedDB
   const zones=document.querySelectorAll('.drop-zone');
   for(const z of zones){
     const zid=getZid(z);
@@ -1667,21 +1674,30 @@ let _selectedPost=null;
 // ── TYPOGRAFI-KONTROLLER ──
 function buildTypoSection(post){
   const ff=post.style.fontFamily||'';
-  const lh=parseFloat(post.style.lineHeight)||1.7;
   const op=Math.round((parseFloat(post.style.opacity)||1)*100);
+  const isText=!!(post.querySelector('.text-body')||post.classList.contains('quote-block'));
   const ffOpts=[
     ['','standard (arvet)'],
     ["'DomaineDisplay',Georgia,serif","Domaine Display — tittel"],
     ["'DomaineText',sans-serif","Domaine Text — brødtekst"],
   ];
   const ffSelect=ffOpts.map(([v,l])=>`<option value="${v}" ${ff===v?'selected':''}>${l}</option>`).join('');
+  let midControls='';
+  if(isText){
+    const lh=parseFloat(post.style.lineHeight)||1.7;
+    midControls=`<span class="_rp-sublabel">linjeavstand <span id="_rp-lh-v">${lh.toFixed(1)}</span></span>
+    <input type="range" class="_rp-range" id="_rp-lh" min="0.8" max="3.0" step="0.05" value="${lh}">`;
+  } else {
+    const mb=parseInt(post.style.marginBottom)||0;
+    midControls=`<span class="_rp-sublabel">avstand under <span id="_rp-sp-v">${mb}px</span></span>
+    <input type="range" class="_rp-range" id="_rp-sp" min="0" max="80" step="4" value="${mb}">`;
+  }
   return `<div class="_rp-sep"></div>
   <span class="_rp-label" style="font-size:8px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(229,228,227,0.3);">typografi</span>
   <div class="_rp-typo-group">
     <span class="_rp-sublabel">font</span>
     <select class="_rp-select" id="_rp-ff">${ffSelect}</select>
-    <span class="_rp-sublabel">linjeavstand <span id="_rp-lh-v">${lh.toFixed(1)}</span></span>
-    <input type="range" class="_rp-range" id="_rp-lh" min="0.8" max="3.0" step="0.05" value="${lh}">
+    ${midControls}
     <span class="_rp-sublabel">gjennomsiktighet <span id="_rp-op-v">${op}%</span></span>
     <input type="range" class="_rp-range" id="_rp-op" min="10" max="100" step="5" value="${op}">
   </div>`;
@@ -1693,6 +1709,11 @@ function initTypoControls(post){
   document.getElementById('_rp-lh')?.addEventListener('input',e=>{
     post.style.lineHeight=e.target.value;
     const v=document.getElementById('_rp-lh-v');if(v)v.textContent=parseFloat(e.target.value).toFixed(1);
+    saveStructure();
+  });
+  document.getElementById('_rp-sp')?.addEventListener('input',e=>{
+    post.style.marginBottom=e.target.value+'px';
+    const v=document.getElementById('_rp-sp-v');if(v)v.textContent=e.target.value+'px';
     saveStructure();
   });
   document.getElementById('_rp-op')?.addEventListener('input',e=>{
@@ -1708,6 +1729,7 @@ function openRightPanel(post){
   _selectedPost=post;
   post.classList.add('pm-selected');
   document.getElementById('_rp')?.classList.add('open');
+  document.body.classList.add('rp-open');
   document.getElementById('_tb-del-btn')?.classList.add('active');
   renderRightPanel(post);
 }
@@ -1715,6 +1737,8 @@ function openRightPanel(post){
 function closeRightPanel(){
   if(_selectedPost)_selectedPost.classList.remove('pm-selected');
   _selectedPost=null;
+  document.getElementById('_rp')?.classList.remove('open');
+  document.body.classList.remove('rp-open');
   const body=document.getElementById('_rp-body');
   if(body)body.innerHTML='<p class="_rp-empty">Klikk på et element i feedet for å redigere det</p>';
   const typeEl=document.getElementById('_rp-type');

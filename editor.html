@@ -45,7 +45,7 @@
     .sdrop-item:last-child { border-bottom:none; }
     .sdrop-item:hover { background:rgba(229,228,227,0.04); }
     .sdrop-item.active { background:rgba(229,228,227,0.06); }
-    .sdrop-num { font-size:9px; letter-spacing:0.3em; color:var(--muted); min-width:20px; }
+    .sdrop-num { display:none; }
     .sdrop-label { font-size:14px; color:var(--light); font-weight:300; }
     .sdrop-sub { font-size:10px; color:var(--muted); margin-top:2px; }
 
@@ -2145,11 +2145,22 @@ function initEpisodeControls(){
 
 // Dobbeltklikk-redigering for hero-nav lenker
 function setupDblEdit(a,n){
+  // Fjern inline onclick — vi håndterer klikk selv
+  a.removeAttribute('onclick');
+  let _clickTimer=null;
+  a.addEventListener('click',e=>{
+    e.preventDefault();e.stopPropagation();
+    // Hvis vi allerede er i redigeringsmodus, ikke naviger
+    if(a.contentEditable==='true')return;
+    // Vent 280ms — hvis ikke dobbeltklikk, naviger
+    if(_clickTimer){clearTimeout(_clickTimer);_clickTimer=null;return;}
+    _clickTimer=setTimeout(()=>{_clickTimer=null;goToPage(n);},280);
+  });
   a.addEventListener('dblclick',e=>{
     e.preventDefault();e.stopPropagation();
+    if(_clickTimer){clearTimeout(_clickTimer);_clickTimer=null;}
     a.contentEditable='true';
     a.focus();
-    // Selekter teksten (ekskluder delete-knappen)
     const range=document.createRange();
     const textNode=a.childNodes[0];
     if(textNode){range.selectNodeContents(textNode);const sel=window.getSelection();sel.removeAllRanges();sel.addRange(range);}
@@ -2158,6 +2169,7 @@ function setupDblEdit(a,n){
     a.contentEditable='false';
     syncNavToDropdown();
     saveStructure();
+    saveNavLabels();
   });
   a.addEventListener('keydown',e=>{
     if(e.key==='Enter'){e.preventDefault();a.blur();}

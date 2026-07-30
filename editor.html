@@ -58,7 +58,7 @@
     .hero-title { font-family:var(--serif); font-size:clamp(52px,9vw,112px); font-weight:300; line-height:0.92; letter-spacing:-0.025em; color:var(--light); }
     .hero-title-line2 { display:block; }
     .hero-nav { position:absolute; bottom:0; left:0; right:0; z-index:20; display:flex; align-items:center; justify-content:center; gap:48px; height:48px; background:rgba(30,32,40,0.78); backdrop-filter:blur(18px); border-top:1px solid rgba(229,228,227,0.06); }
-    .hero-nav a { font-size:9px; letter-spacing:0.22em; text-transform:uppercase; color:var(--muted); text-decoration:none; transition:color 0.2s; }
+    .hero-nav a { font-size:9px; letter-spacing:0.22em; color:var(--muted); text-decoration:none; transition:color 0.2s; position:relative; }
     .hero-nav a:hover,.hero-nav a.active { color:var(--light); }
 
     /* ── FEED ── */
@@ -1071,6 +1071,44 @@ function saveStructure(){
     clone.querySelectorAll('[data-ce-init]').forEach(el=>el.removeAttribute('data-ce-init'));
     try{localStorage.setItem('pm-struct-'+i,clone.innerHTML);}catch(e){}
   }
+  // Lagre hero-nav episode-labels
+  saveNavLabels();
+}
+function saveNavLabels(){
+  const nav=document.getElementById('main-nav');
+  if(!nav)return;
+  const labels={};
+  nav.querySelectorAll('a').forEach(a=>{
+    const m=a.getAttribute('onclick')?.match(/goToPage\((\d+)\)/);
+    if(!m)return;
+    labels[m[1]]=a.childNodes[0]?.textContent?.trim()||'';
+  });
+  try{localStorage.setItem('pm-nav-labels',JSON.stringify(labels));}catch(e){}
+}
+function restoreNavLabels(){
+  if(_isPublic)return;
+  try{
+    const raw=localStorage.getItem('pm-nav-labels');
+    if(!raw)return;
+    const labels=JSON.parse(raw);
+    const nav=document.getElementById('main-nav');
+    if(!nav)return;
+    nav.querySelectorAll('a').forEach(a=>{
+      const m=a.getAttribute('onclick')?.match(/goToPage\((\d+)\)/);
+      if(!m)return;
+      const text=labels[m[1]];
+      if(text){
+        // Sett bare tekstnoden, behold eventuelle barn (som delete-knapp)
+        if(a.childNodes[0]&&a.childNodes[0].nodeType===3){
+          a.childNodes[0].textContent=text;
+        }else{
+          a.insertBefore(document.createTextNode(text),a.firstChild);
+        }
+      }
+    });
+    // Synk dropdown etter restore
+    if(typeof syncNavToDropdown==='function')syncNavToDropdown();
+  }catch(e){}
 }
 
 function restoreStructure(){
@@ -2206,6 +2244,7 @@ function addEpisode(){
   goToPage(n);saveStructure();
 }
 initEpisodeControls();
+restoreNavLabels();
 
 // ── TOUCH SWIPE (mobil episodenavigasjon) ──
 let _tX=0,_tY=0;

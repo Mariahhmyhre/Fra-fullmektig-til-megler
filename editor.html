@@ -930,7 +930,7 @@ if(localStorage.getItem('pm-build')!==_BUILD){
 const _GH_OWNER='Mariahhmyhre';
 const _GH_REPO='Fra-fullmektig-til-megler';
 const _EDITOR_CODE='fullmektigtilmegler';
-const _VIEWER_CODE='fullmektigtilmegler2026';
+const _VIEWER_CODE='fullmektigtilmegler';
 // Token lagres kun i nettleseren, aldri i koden
 function getToken(){return localStorage.getItem('pm-gh-token')||'';}
 
@@ -1305,7 +1305,13 @@ async function publishToGitHub(){
       showPublishToast();
     }else{
       const e=await pushResp.json();
-      alert('Feil ved publisering: '+(e.message||JSON.stringify(e)));
+      if(pushResp.status===401||pushResp.status===403){
+        localStorage.removeItem('pm-gh-token');
+        alert('Token ble avvist av GitHub ('+pushResp.status+'). Prøv med et nytt token.');
+        showTokenSetup();
+      }else{
+        alert('Feil ved publisering: '+(e.message||JSON.stringify(e)));
+      }
     }
   }catch(e){
     alert('Nettverksfeil: '+e.message);
@@ -1321,18 +1327,27 @@ function showTokenSetup(){
   box.id='_token-setup';
   box.style.cssText='position:fixed;inset:0;background:rgba(38,40,48,0.95);z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;';
   box.innerHTML='<div style="font-size:9px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(229,228,227,0.35);margin-bottom:4px">Engangsoppsett — GitHub-token</div>'
-    +'<div style="font-size:12px;color:rgba(229,228,227,0.5);max-width:340px;text-align:center;line-height:1.7;">Lim inn din GitHub Personal Access Token (classic) med <strong style=\'color:#E5E4E3\'>repo</strong>-tilgang. Lagres kun i denne nettleseren.</div>'
-    +'<input id="_tk-inp" type="password" placeholder="ghp_... eller github_pat_..." autocomplete="off" style="background:rgba(229,228,227,0.06);border:1px solid rgba(229,228,227,0.14);border-radius:8px;color:#E5E4E3;font-size:14px;padding:12px 18px;outline:none;width:300px;font-family:monospace;letter-spacing:0.05em;">'
-    +'<button onclick="saveToken()" style="background:#E5E4E3;color:#262830;border:none;border-radius:8px;padding:10px 24px;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;cursor:pointer;font-weight:600;">lagre og publiser</button>'
+    +'<div style="font-size:12px;color:rgba(229,228,227,0.5);max-width:340px;text-align:center;line-height:1.7;">Lim inn din GitHub Personal Access Token med <strong style=\'color:#E5E4E3\'>repo</strong>-tilgang. Lagres kun i denne nettleseren.</div>'
+    +'<input id="_tk-inp" type="text" placeholder="Lim inn token her..." autocomplete="off" data-1p-ignore data-lpignore="true" data-form-type="other" style="background:rgba(229,228,227,0.06);border:1px solid rgba(229,228,227,0.14);border-radius:8px;color:#E5E4E3;font-size:14px;padding:12px 18px;outline:none;width:300px;font-family:monospace;letter-spacing:0.05em;-webkit-text-security:disc;">'
+    +'<div id="_tk-err" style="font-size:10px;color:rgba(237,189,242,0.7);height:14px;letter-spacing:0.1em;transition:opacity 0.3s;"></div>'
+    +'<button onclick="saveToken()" style="background:#E5E4E3;color:#262830;border:none;border-radius:8px;padding:10px 24px;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;cursor:pointer;font-weight:600;position:relative;z-index:100000;">lagre og publiser</button>'
     +'<button onclick="document.getElementById(\'_token-setup\').remove()" style="background:none;border:none;color:rgba(229,228,227,0.3);font-size:11px;cursor:pointer;margin-top:4px;">avbryt</button>';
   document.body.appendChild(box);
-  setTimeout(()=>document.getElementById('_tk-inp')?.focus(),80);
+  const tkInp=document.getElementById('_tk-inp');
+  setTimeout(()=>tkInp?.focus(),80);
+  tkInp?.addEventListener('keydown',e=>{if(e.key==='Enter')saveToken();});
 }
 
 function saveToken(){
   const inp=document.getElementById('_tk-inp');
+  const err=document.getElementById('_tk-err');
   const val=inp?.value.trim();
-  if(!val||(!val.startsWith('ghp_')&&!val.startsWith('github_pat_'))){inp.style.borderColor='rgba(237,189,242,0.5)';return;}
+  if(!val){
+    if(err)err.textContent='skriv inn token først';
+    if(inp)inp.style.borderColor='rgba(237,189,242,0.5)';
+    setTimeout(()=>{if(err)err.textContent='';if(inp)inp.style.borderColor='';},3000);
+    return;
+  }
   localStorage.setItem('pm-gh-token',val);
   document.getElementById('_token-setup')?.remove();
   publishToGitHub();

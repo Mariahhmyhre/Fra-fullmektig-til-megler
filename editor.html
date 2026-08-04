@@ -1074,7 +1074,11 @@ function saveStructure(){
     });
     clone.querySelectorAll('[draggable]').forEach(el=>el.removeAttribute('draggable'));
     clone.querySelectorAll('[data-ce-init]').forEach(el=>el.removeAttribute('data-ce-init'));
-    try{localStorage.setItem('pm-struct-'+i,clone.innerHTML);}catch(e){}
+    const html=clone.innerHTML;
+    // Lagre i IndexedDB (mye mer plass enn localStorage)
+    idbSet('pm-struct-'+i,html).catch(()=>{});
+    // Backup i localStorage (kan feile ved store data)
+    try{localStorage.setItem('pm-struct-'+i,html);}catch(e){console.warn('localStorage full for feed '+i);}
   }
   // Lagre hero-nav episode-labels
   saveNavLabels();
@@ -1113,10 +1117,13 @@ function restoreNavLabels(){
   }catch(e){}
 }
 
-function restoreStructure(){
+async function restoreStructure(){
   if(_isPublic)return; // offentlig visning: bruk bakt HTML, ingen localStorage
   for(let i=1;i<=4;i++){
-    const saved=localStorage.getItem('pm-struct-'+i);
+    // Prøv IndexedDB først (pålitelig), deretter localStorage (backup)
+    let saved=null;
+    try{saved=await idbGet('pm-struct-'+i);}catch(e){}
+    if(!saved)saved=localStorage.getItem('pm-struct-'+i);
     if(!saved)continue;
     const feed=document.querySelector('#page-'+i+' .feed');
     if(!feed)continue;
@@ -1521,8 +1528,20 @@ if(!_isPublic){
     if(!skip)schedSave();
   });
   document.querySelectorAll('.feed').forEach(f=>_feedObserver.observe(f,{childList:true,subtree:true,attributes:true,characterData:true}));
+  // Lagre ved input i contenteditable-elementer (ekstra sikkerhet)
+  document.addEventListener('input',e=>{
+    if(e.target.closest&&e.target.closest('[contenteditable]'))schedSave();
+  });
+  // Lagre ved blur (bytter fane, klikker utenfor)
+  document.addEventListener('focusout',e=>{
+    if(e.target.closest&&e.target.closest('[contenteditable]')){
+      clearTimeout(_autoSaveTimer);saveStructure();
+    }
+  });
   // Flush saves immediately on page close/refresh — prevents losing last edits
   window.addEventListener('beforeunload',()=>{clearTimeout(_autoSaveTimer);saveStructure();});
+  // Ekstra: lagre hvert 10. sekund som backup
+  setInterval(()=>saveStructure(),10000);
 }
 
 // ── LEGG TIL INNHOLD ──

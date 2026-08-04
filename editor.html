@@ -1296,45 +1296,78 @@ async function publishToGitHub(){
   const token=getToken();
   if(!token){showTokenSetup();return;}
   const btn=document.getElementById('_pub-btn');
-  if(btn){btn.textContent='publiserer...';btn.disabled=true;}
+  if(btn){btn.textContent='forbereder...';btn.disabled=true;}
   try{
-    const html=buildPublicHTML(_VIEWER_CODE);
-    const encoded=btoa(unescape(encodeURIComponent(html)));
+    let html=buildPublicHTML(_VIEWER_CODE);
     const base='https://api.github.com/repos/'+_GH_OWNER+'/'+_GH_REPO;
     const headers={'Authorization':'token '+token,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'};
-    // Bruk Git Data API for store filer (Blob → Tree → Commit → Ref)
-    // 1. Opprett blob
-    const blobResp=await fetch(base+'/git/blobs',{method:'POST',headers,body:JSON.stringify({content:encoded,encoding:'base64'})});
-    if(!blobResp.ok){const e=await blobResp.json();throw new Error('Blob: '+(e.message||blobResp.status));}
-    const blobSha=(await blobResp.json()).sha;
-    // 2. Hent nåværende commit SHA for main
+
+    // ── Ekstraher base64-media til separate filer ──
+    const mediaFiles=[];
+    let mIdx=0;
+    // src="data:image/...;base64,..." og src="data:video/...;base64,..."
+    html=html.replace(/src="data:(image\/[^;]+|video\/[^;]+);base64,([^"]+)"/g,(_m,mime,b64)=>{
+      const ext=mime.split('/')[1].replace('jpeg','jpg').replace('quicktime','mov').replace('webm','webm').replace('mp4','mp4');
+      const fname='media/m'+(mIdx++)+'.'+ext;
+      mediaFiles.push({path:fname,content:b64});
+      return 'src="'+fname+'"';
+    });
+    // background-image:url(data:image/...;base64,...)
+    html=html.replace(/url\(data:(image\/[^;]+);base64,([^)]+)\)/g,(_m,mime,b64)=>{
+      const ext=mime.split('/')[1].replace('jpeg','jpg');
+      const fname='media/m'+(mIdx++)+'.'+ext;
+      mediaFiles.push({path:fname,content:b64});
+      return 'url('+fname+')';
+    });
+
+    // ── 1. Hent nåværende commit og tree ──
+    if(btn)btn.textContent='kobler til github...';
     const refResp=await fetch(base+'/git/ref/heads/main',{headers});
-    if(!refResp.ok){const e=await refResp.json();throw new Error('Ref: '+(e.message||refResp.status));}
+    if(!refResp.ok){
+      if(refResp.status===401||refResp.status===403){
+        localStorage.removeItem('pm-gh-token');
+        alert('Token avvist av GitHub ('+refResp.status+'). Prøv med et nytt token.');
+        showTokenSetup();return;
+      }
+      throw new Error('Ref: '+refResp.status);
+    }
     const parentSha=(await refResp.json()).object.sha;
-    // 3. Hent nåværende tree
     const commitResp=await fetch(base+'/git/commits/'+parentSha,{headers});
     const baseTree=(await commitResp.json()).tree.sha;
-    // 4. Opprett ny tree med index.html
-    const treeResp=await fetch(base+'/git/trees',{method:'POST',headers,body:JSON.stringify({base_tree:baseTree,tree:[{path:'index.html',mode:'100644',type:'blob',sha:blobSha}]})});
-    if(!treeResp.ok){const e=await treeResp.json();throw new Error('Tree: '+(e.message||treeResp.status));}
+
+    // ── 2. Last opp index.html som blob (nå liten uten media) ──
+    if(btn)btn.textContent='laster opp html...';
+    const htmlB64=btoa(unescape(encodeURIComponent(html)));
+    const htmlBlobResp=await fetch(base+'/git/blobs',{method:'POST',headers,body:JSON.stringify({content:htmlB64,encoding:'base64'})});
+    if(!htmlBlobResp.ok)throw new Error('HTML blob: '+(await htmlBlobResp.json()).message);
+    const htmlBlobSha=(await htmlBlobResp.json()).sha;
+    const treeItems=[{path:'index.html',mode:'100644',type:'blob',sha:htmlBlobSha}];
+
+    // ── 3. Last opp hver mediafil som egen blob ──
+    for(let i=0;i<mediaFiles.length;i++){
+      if(btn)btn.textContent='media '+(i+1)+'/'+mediaFiles.length+'...';
+      const mf=mediaFiles[i];
+      const bResp=await fetch(base+'/git/blobs',{method:'POST',headers,body:JSON.stringify({content:mf.content,encoding:'base64'})});
+      if(!bResp.ok)throw new Error('Media '+(i+1)+': '+(await bResp.json()).message);
+      treeItems.push({path:mf.path,mode:'100644',type:'blob',sha:(await bResp.json()).sha});
+    }
+
+    // ── 4. Opprett tree, commit, oppdater ref ──
+    if(btn)btn.textContent='committer...';
+    const treeResp=await fetch(base+'/git/trees',{method:'POST',headers,body:JSON.stringify({base_tree:baseTree,tree:treeItems})});
+    if(!treeResp.ok)throw new Error('Tree: '+(await treeResp.json()).message);
     const treeSha=(await treeResp.json()).sha;
-    // 5. Opprett commit
+
     const newCommitResp=await fetch(base+'/git/commits',{method:'POST',headers,body:JSON.stringify({message:'Oppdater nettside',tree:treeSha,parents:[parentSha]})});
-    if(!newCommitResp.ok){const e=await newCommitResp.json();throw new Error('Commit: '+(e.message||newCommitResp.status));}
+    if(!newCommitResp.ok)throw new Error('Commit: '+(await newCommitResp.json()).message);
     const newCommitSha=(await newCommitResp.json()).sha;
-    // 6. Oppdater main-referansen
+
     const updateResp=await fetch(base+'/git/refs/heads/main',{method:'PATCH',headers,body:JSON.stringify({sha:newCommitSha})});
     if(updateResp.ok){
       showPublishToast();
     }else{
       const e=await updateResp.json();
-      if(updateResp.status===401||updateResp.status===403){
-        localStorage.removeItem('pm-gh-token');
-        alert('Token ble avvist av GitHub ('+updateResp.status+'). Prøv med et nytt token.');
-        showTokenSetup();
-      }else{
-        alert('Feil ved publisering: '+(e.message||JSON.stringify(e)));
-      }
+      alert('Feil ved publisering: '+(e.message||JSON.stringify(e)));
     }
   }catch(e){
     alert('Nettverksfeil: '+e.message);

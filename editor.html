@@ -930,7 +930,7 @@ if(localStorage.getItem('pm-build')!==_BUILD){
 const _GH_OWNER='Mariahhmyhre';
 const _GH_REPO='Fra-fullmektig-til-megler';
 const _EDITOR_CODE='fullmektigtilmegler';
-const _VIEWER_CODE='fullmektigtilmegler';
+const _VIEWER_CODE='fullmektigtilmegler2026';
 // Token lagres kun i nettleseren, aldri i koden
 function getToken(){return localStorage.getItem('pm-gh-token')||'';}
 
@@ -1300,21 +1300,37 @@ async function publishToGitHub(){
   try{
     const html=buildPublicHTML(_VIEWER_CODE);
     const encoded=btoa(unescape(encodeURIComponent(html)));
-    const apiUrl='https://api.github.com/repos/'+_GH_OWNER+'/'+_GH_REPO+'/contents/index.html';
+    const base='https://api.github.com/repos/'+_GH_OWNER+'/'+_GH_REPO;
     const headers={'Authorization':'token '+token,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'};
-    const getResp=await fetch(apiUrl,{headers});
-    let sha=null;
-    if(getResp.ok){const d=await getResp.json();sha=d.sha;}
-    const body={message:'Oppdater nettside',content:encoded};
-    if(sha)body.sha=sha;
-    const pushResp=await fetch(apiUrl,{method:'PUT',headers,body:JSON.stringify(body)});
-    if(pushResp.ok){
+    // Bruk Git Data API for store filer (Blob → Tree → Commit → Ref)
+    // 1. Opprett blob
+    const blobResp=await fetch(base+'/git/blobs',{method:'POST',headers,body:JSON.stringify({content:encoded,encoding:'base64'})});
+    if(!blobResp.ok){const e=await blobResp.json();throw new Error('Blob: '+(e.message||blobResp.status));}
+    const blobSha=(await blobResp.json()).sha;
+    // 2. Hent nåværende commit SHA for main
+    const refResp=await fetch(base+'/git/ref/heads/main',{headers});
+    if(!refResp.ok){const e=await refResp.json();throw new Error('Ref: '+(e.message||refResp.status));}
+    const parentSha=(await refResp.json()).object.sha;
+    // 3. Hent nåværende tree
+    const commitResp=await fetch(base+'/git/commits/'+parentSha,{headers});
+    const baseTree=(await commitResp.json()).tree.sha;
+    // 4. Opprett ny tree med index.html
+    const treeResp=await fetch(base+'/git/trees',{method:'POST',headers,body:JSON.stringify({base_tree:baseTree,tree:[{path:'index.html',mode:'100644',type:'blob',sha:blobSha}]})});
+    if(!treeResp.ok){const e=await treeResp.json();throw new Error('Tree: '+(e.message||treeResp.status));}
+    const treeSha=(await treeResp.json()).sha;
+    // 5. Opprett commit
+    const newCommitResp=await fetch(base+'/git/commits',{method:'POST',headers,body:JSON.stringify({message:'Oppdater nettside',tree:treeSha,parents:[parentSha]})});
+    if(!newCommitResp.ok){const e=await newCommitResp.json();throw new Error('Commit: '+(e.message||newCommitResp.status));}
+    const newCommitSha=(await newCommitResp.json()).sha;
+    // 6. Oppdater main-referansen
+    const updateResp=await fetch(base+'/git/refs/heads/main',{method:'PATCH',headers,body:JSON.stringify({sha:newCommitSha})});
+    if(updateResp.ok){
       showPublishToast();
     }else{
-      const e=await pushResp.json();
-      if(pushResp.status===401||pushResp.status===403){
+      const e=await updateResp.json();
+      if(updateResp.status===401||updateResp.status===403){
         localStorage.removeItem('pm-gh-token');
-        alert('Token ble avvist av GitHub ('+pushResp.status+'). Prøv med et nytt token.');
+        alert('Token ble avvist av GitHub ('+updateResp.status+'). Prøv med et nytt token.');
         showTokenSetup();
       }else{
         alert('Feil ved publisering: '+(e.message||JSON.stringify(e)));

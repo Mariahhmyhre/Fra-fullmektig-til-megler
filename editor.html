@@ -980,10 +980,10 @@ function buildHTML(){
 
   // ── 1b. Bak inn hero-bilde ──
   const liveHero=document.getElementById('hero-img');
-  const cloneHero=doc.getElementById('hero-img');
+  const cloneHero=doc.querySelector('#hero-img');
   if(liveHero&&cloneHero&&liveHero.src&&!liveHero.src.includes('felix-hero.jpg')){cloneHero.src=liveHero.src;}
   // Fjern hero-knapp fra output
-  doc.getElementById('hero-img-btn')?.remove();
+  doc.querySelector('#hero-img-btn')?.remove();
 
   // ── 2. Fjern runtime-UI ──
   doc.querySelectorAll('.post-controls,.drop-indicator,.media-toolbar,#_perm-bar,#_save-toast').forEach(el=>el.remove());

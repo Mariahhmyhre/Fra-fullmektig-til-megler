@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="no"><head>
+<html lang="no"><head><script>(function(){var C="fullmektigtilmegler2026",K="pm-access-v1";if(localStorage.getItem(K)===C)return;document.addEventListener("DOMContentLoaded",function(){document.body.style.overflow="hidden";var g=document.createElement("div");g.style.cssText="position:fixed;inset:0;background:#262830;z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;";g.innerHTML='<div style="font-size:9px;letter-spacing:0.35em;text-transform:uppercase;color:rgba(229,228,227,0.3);margin-bottom:8px">Fra fullmektig til megler</div>'+'<input id="pmci" type="password" placeholder="tilgangskode" autocomplete="off" style="background:rgba(229,228,227,0.06);border:1px solid rgba(229,228,227,0.14);border-radius:8px;color:#E5E4E3;font-size:18px;padding:14px 22px;outline:none;text-align:center;letter-spacing:0.25em;width:220px;font-family:inherit;">'+'<div id="pmce" style="font-size:10px;color:rgba(237,189,242,0.55);height:14px;letter-spacing:0.1em;transition:opacity 0.3s;"></div>';document.body.appendChild(g);var inp=document.getElementById("pmci"),err=document.getElementById("pmce");setTimeout(function(){inp.focus();},80);inp.addEventListener("keydown",function(e){if(e.key!=="Enter")return;if(inp.value===C){localStorage.setItem(K,C);g.style.opacity="0";g.style.transition="opacity 0.4s";setTimeout(function(){g.remove();document.body.style.overflow="";},400);}else{err.textContent="feil kode";inp.value="";inp.style.borderColor="rgba(237,189,242,0.4)";setTimeout(function(){err.textContent="";inp.style.borderColor="";},2000);}});});})();</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fra fullmektig til megler — Felix Green</title>
@@ -360,101 +360,39 @@
     /* ── SLETT BILDEBOKS (skjult – høyre panel brukes) ── */
     .dz-del { display:none !important; }
   </style>
-<meta name="pm-saved" content="1"><meta name="pm-public" content="1"><script>(function(){
-  var C='fullmektigtilmegler2026',K='pm-access-v1';
-  if(localStorage.getItem(K)===C)return;
-  document.body.style.overflow='hidden';
-  var g=document.createElement('div');
-  g.style.cssText='position:fixed;inset:0;background:#262830;z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;';
-  g.innerHTML='<div style="font-size:9px;letter-spacing:0.35em;text-transform:uppercase;color:rgba(229,228,227,0.3);margin-bottom:8px">Fra fullmektig til megler</div>'
-    +'<input id="pmci" type="password" placeholder="tilgangskode" autocomplete="off" style="background:rgba(229,228,227,0.06);border:1px solid rgba(229,228,227,0.14);border-radius:8px;color:#E5E4E3;font-size:18px;padding:14px 22px;outline:none;text-align:center;letter-spacing:0.25em;width:220px;font-family:inherit;">'
-    +'<div id="pmce" style="font-size:10px;color:rgba(237,189,242,0.55);height:14px;letter-spacing:0.1em;transition:opacity 0.3s;"></div>';
-  document.body.appendChild(g);
-  var inp=document.getElementById('pmci'),err=document.getElementById('pmce');
-  setTimeout(function(){inp.focus();},80);
-  inp.addEventListener('keydown',function(e){
-    if(e.key!=='Enter')return;
-    if(inp.value===C){localStorage.setItem(K,C);g.style.opacity='0';g.style.transition='opacity 0.4s';setTimeout(function(){g.remove();document.body.style.overflow='';},400);}
-    else{err.textContent='feil kode';inp.value='';inp.style.borderColor='rgba(237,189,242,0.4)';setTimeout(function(){err.textContent='';inp.style.borderColor='';},2000);}
-  });
-})();</script></head>
-<body class="editor-mode rp-open">
+<meta name="pm-saved" content="1"><meta name="pm-public" content="1"></head>
+<body class="">
 <div id="progress" style="width: 100%;"></div>
 
 <!-- VERKTØYBOKS (skjules i public) -->
-<div id="_toolbox">
-  <div id="_tb-panel">
-    <div class="_tb-head">verktøy</div>
-    <button class="_tb-btn" title="Bilde / video" onclick="tbAdd('img')"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>bilde</button>
-    <button class="_tb-btn" title="YouTube / Vimeo" onclick="tbAdd('embed')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg>video</button>
-    <button class="_tb-btn" title="Tekst" onclick="tbAdd('text')"><svg viewBox="0 0 24 24"><path d="M17 6H3M21 12H3M17 18H3"></path></svg>tekst</button>
-    <button class="_tb-btn" title="SMS-samtale" onclick="tbAdd('sms')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>sms</button>
-    <button class="_tb-btn" title="Sitat" onclick="tbAdd('quote')"><svg viewBox="0 0 24 24"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg>sitat</button>
-    <button class="_tb-btn" title="Quiz" onclick="tbAdd('quiz')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>quiz</button>
-    <div class="_tb-sep"></div>
-    <button class="_tb-btn _tb-undo" title="Angre (⌘Z)" onclick="tbUndo()"><svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 .49-4.5"></path></svg></button>
-    <button class="_tb-btn _tb-del active" id="_tb-del-btn" title="Slett valgt (Delete)" onclick="rpDelete()"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6l-1 14H6L5 6"></path><path d="M10 11v6M14 11v6"></path></svg></button>
-  </div>
-  <button id="_tb-tab" onclick="toggleToolbox()">›</button>
-</div>
+
 
 <!-- HØYRE PANEL (skjules i public) -->
-<div id="_rp" class="open">
-  <div id="_rp-head">
-    <span class="_rp-type" id="_rp-type">bildeboks</span>
-    <!-- close button removed — panel alltid synlig -->
-  </div>
-  <div id="_rp-body">
-      <span class="_rp-label">dato</span>
-      <input class="_rp-input" id="_rp-date" value="[ dato ]" placeholder="[ dato ]">
-      <div class="_rp-sep"></div>
-      <button class="_rp-btn" onclick="rpUploadImg()"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>last opp bilde / video</button>
-      <button class="_rp-btn" onclick="rpPasteImg()"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>lim inn bilde (⌘V)</button>
-      <div class="_rp-sep"></div><div class="_rp-sep"></div>
-  <span class="_rp-label" style="font-size:8px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(229,228,227,0.3);">typografi</span>
-  <div class="_rp-typo-group">
-    <span class="_rp-sublabel">font</span>
-    <select class="_rp-select" id="_rp-ff"><option value="" selected="">standard (arvet)</option><option value="'DomaineDisplay',Georgia,serif">Domaine Display — tittel</option><option value="'DomaineText',sans-serif">Domaine Text — brødtekst</option></select>
-    <span class="_rp-sublabel">avstand under <span id="_rp-sp-v">0px</span></span>
-    <input type="range" class="_rp-range" id="_rp-sp" min="0" max="80" step="4" value="0">
-    <span class="_rp-sublabel">gjennomsiktighet <span id="_rp-op-v">100%</span></span>
-    <input type="range" class="_rp-range" id="_rp-op" min="10" max="100" step="5" value="100">
-  </div><div class="_rp-sep"></div><div class="_rp-row">
-    <button class="_rp-btn" onclick="rpMove(-1)" title="Flytt opp"><svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"></polyline></svg>opp</button>
-    <button class="_rp-btn" onclick="rpMove(1)" title="Flytt ned"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>ned</button>
-  </div>
-  <div class="_rp-sep"></div>
-  <button class="_rp-btn danger" onclick="rpDelete()"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6l-1 14H6L5 6"></path><path d="M10 11v6M14 11v6"></path></svg>slett element</button></div>
-</div>
+
 
 
 
 <!-- STICKY NAV -->
 <nav id="sticky-nav" class="">
   <div class="snav-logo"><img src="media/m0.png" alt="PrivatMegleren"></div>
-  <button class="snav-burger" id="burger-btn" onclick="toggleMenu()"><span></span><span></span><span></span><span></span></button>
+  
 </nav>
-<div id="snav-dropdown" class="">
-  <a class="sdrop-item active" id="sdrop-1" onclick="goToPage(1);return false;" href="#"><span class="sdrop-num">01</span><div><div class="sdrop-label">rrrrrrrr</div><div class="sdrop-sub"></div></div></a>
-  <a class="sdrop-item" id="sdrop-2" onclick="goToPage(2);return false;" href="#"><span class="sdrop-num">02</span><div><div class="sdrop-label">episode 2</div><div class="sdrop-sub"></div></div></a>
-  <a class="sdrop-item" id="sdrop-3" onclick="goToPage(3);return false;" href="#"><span class="sdrop-num">03</span><div><div class="sdrop-label">episode 3</div><div class="sdrop-sub"></div></div></a>
-  <a class="sdrop-item" id="sdrop-4" onclick="goToPage(4);return false;" href="#"><span class="sdrop-num">04</span><div><div class="sdrop-label">episode 4</div><div class="sdrop-sub"></div></div></a>
-</div>
+
 
 <!-- HERO -->
 <header class="hero" id="hero-section">
-  <img class="hero-img" id="hero-img" src="felix-hero.jpg" alt="Felix Green">
+  <img class="hero-img" id="hero-img" src="file:///Users/mariamyhre/Documents/Claude/Projects/Privatmegleren/felix-hero.jpg" alt="Felix Green">
   <div class="hero-overlay"></div>
   
   <nav class="hero-nav" id="main-nav" data-ep-init="1">
-    <a href="#" class="active" spellcheck="false" data-page="1">rrrrrrrr<button class="ep-nav-del" title="Fjern episode">×</button></a>
-    <a href="#" spellcheck="false" data-page="2">episode 2<button class="ep-nav-del" title="Fjern episode">×</button></a>
-    <a href="#" spellcheck="false" data-page="3">episode 3<button class="ep-nav-del" title="Fjern episode">×</button></a>
-    <a href="#" spellcheck="false" data-page="4">episode 4<button class="ep-nav-del" title="Fjern episode">×</button></a>
-  <button class="ep-nav-add" title="Legg til episode">+</button></nav>
+    <a href="#" class="active" data-page="1">August<button class="ep-nav-del" title="Fjern episode">×</button></a>
+    <a href="#" data-page="2">episode 2<button class="ep-nav-del" title="Fjern episode">×</button></a>
+    <a href="#" data-page="3">episode 3<button class="ep-nav-del" title="Fjern episode">×</button></a>
+    <a href="#" data-page="4">episode 4<button class="ep-nav-del" title="Fjern episode">×</button></a>
+  </nav>
   <div class="hero-content">
-    <p class="hero-eyebrow" data-ck="pm-ce-1304">Felix Green — en fortelling</p>
-    <h1 class="hero-title" data-ck="pm-ce-1305">Fra fullmektig<span class="hero-title-line2">til megler</span></h1>
+    <p class="hero-eyebrow" data-ck="pm-ce-1333">Felix Green — en fortelling</p>
+    <h1 class="hero-title" data-ck="pm-ce-1334">Fra fullmektig<span class="hero-title-line2">til megler</span></h1>
   </div>
 </header>
 
@@ -466,26 +404,20 @@
 
   <div class="post visible" data-drag-init="1" data-rp-init="1" style="position: relative;">
     <div class="post-stamp"><div class="stamp-icon"><svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="1"></rect><circle cx="6" cy="7.5" r="1.2" fill="#65666d" stroke="none"></circle><path d="M2 11.5l3.5-3 2 2 2.5-2.5L14 12"></path></svg></div><span class="stamp-date" data-ck="pm-ce-303">Onsdag 01ggg.09.2025 kl 08.47</span></div>
-    <span class="img-date" data-ck="pm-ce-1309"></span><div class="drop-zone-wrap"><div class="drop-zone wide has-media" data-zid="z17824586766094fqr4" style="width: 479px; height: 327px; resize: none; cursor: default;" data-del-init="1" data-ztrk="1"><video src="media/m1.mp4" loop="" autoplay="" playsinline="" muted="" class="media-content" style="transform: translate(0px, 0px) scale(1);"></video></div></div>
-  <button class="new-post-del" title="Slett element">×</button></div>
+    <span class="img-date" data-ck="pm-ce-1338"></span><div class="drop-zone-wrap"><div class="drop-zone wide has-media" data-zid="z17824586766094fqr4" style="width: 479px; height: 327px; resize: none; cursor: default;" data-del-init="1" data-ztrk="1"><video src="media/m1.mp4" playsinline="" class="media-content" style="transform: translate(0px, 0px) scale(1);" controls="" preload="metadata"></video></div></div>
+  </div>
 
   
 
   
 
-  <div class="post visible" data-drag-init="1" data-rp-init="1" style="position: relative;">
-    <div class="post-stamp"><div class="stamp-icon"><svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="1"></rect><circle cx="6" cy="7.5" r="1.2" fill="#65666d" stroke="none"></circle><path d="M2 11.5l3.5-3 2 2 2.5-2.5L14 12"></path></svg></div><span class="stamp-date" data-ck="pm-ce-318"></span></div>
-    <span class="img-date" data-ck="pm-ce-1310"></span><div class="drop-zone-wrap"><div class="drop-zone tall has-media" data-zid="z1782458676609bx1l8" style="width: 320px; height: 400px; resize: none; cursor: default;" data-del-init="1" data-ztrk="1"><video src="media/m2.mp4" loop="" autoplay="" playsinline="" muted="" class="media-content" style="transform: translate(0px, 0px) scale(1);"></video></div></div>
-  <button class="new-post-del" title="Slett element">×</button></div>
+  
 
   
 
-  <div class="post visible" data-drag-init="1" data-rp-init="1" style="position: relative;">
-    <div class="post-stamp"><div class="stamp-icon"><svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="1"></rect><circle cx="6" cy="7.5" r="1.2" fill="#65666d" stroke="none"></circle><path d="M2 11.5l3.5-3 2 2 2.5-2.5L14 12"></path></svg></div><span class="stamp-date" data-ck="pm-ce-327"></span></div>
-    <span class="img-date" data-ck="pm-ce-1311"></span><div class="drop-zone-wrap"><div class="drop-zone wide has-media" data-zid="z17824586766099yip6" style="width: 552px; height: 699px; resize: none; cursor: default;" data-del-init="1" data-ztrk="1"><img src="media/m3.jpg" class="media-content" style="transform: translate(0px, 0px) scale(1);"></div></div>
-  <button class="new-post-del" title="Slett element">×</button></div>
+  
 
-  <div class="post visible" data-drag-init="1" data-rp-init="1" style="position: relative;"></div>
+  
 
   <!-- QUIZ 1 -->
   
@@ -498,23 +430,17 @@
 <!-- ═══════════════════ EP 2 ═══════════════════ -->
 <div id="page-2" class="page-content" style="display:none;">
 <main class="feed">
-  <div class="chapter-break post visible" data-drag-init="1" data-rp-init="1" style="position: relative;"><div class="break-line"></div><span class="break-label" data-ck="pm-ce-1243">episode 2 · 2022</span><div class="break-line"></div><button class="new-post-del" title="Slett element">×</button></div>
-
-  <div class="post visible" data-drag-init="1" data-rp-init="1" style="position: relative;">
-    <div class="post-stamp"><div class="stamp-icon"><svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="1"></rect><circle cx="6" cy="7.5" r="1.2" fill="#65666d" stroke="none"></circle><path d="M2 11.5l3.5-3 2 2 2.5-2.5L14 12"></path></svg></div><span class="stamp-date" data-ck="pm-ce-352"></span></div>
-    <span class="img-date" data-ck="pm-ce-1315"></span><div class="drop-zone-wrap"><div class="drop-zone wide has-media" data-zid="z17824586766099jddz" style="width: 552px; height: 469px; resize: none; cursor: default;" data-del-init="1" data-ztrk="1"><video src="media/m4.mp4" loop="" autoplay="" playsinline="" muted="" class="media-content" style="transform: translate(0px, 0px) scale(1);"></video></div></div>
-  <button class="new-post-del" title="Slett element">×</button></div>
+  <div class="chapter-break post visible" data-drag-init="1" data-rp-init="1" style="position: relative;"><div class="break-line"></div><span class="break-label" data-ck="pm-ce-1243">episode 2 · 2022</span><div class="break-line"></div></div>
 
   
 
   
 
-  <div class="post visible" data-drag-init="1" data-rp-init="1" style="position: relative;">
-    <div class="post-stamp"><div class="stamp-icon"><svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="1"></rect><circle cx="6" cy="7.5" r="1.2" fill="#65666d" stroke="none"></circle><path d="M2 11.5l3.5-3 2 2 2.5-2.5L14 12"></path></svg></div><span class="stamp-date" data-ck="pm-ce-365"></span></div>
-    <span class="img-date" data-ck="pm-ce-1316"></span><div class="drop-zone-wrap"><div class="drop-zone tall has-media" data-zid="z1782458676610zyvmr" style="width: 552px; height: 864px; resize: none; cursor: default;" data-del-init="1" data-ztrk="1"><img src="media/m5.jpg" class="media-content" style="transform: translate(0px, 0px) scale(1);"></div></div>
-  <button class="new-post-del" title="Slett element">×</button></div>
+  
 
-  <div class="post visible" data-drag-init="1" data-rp-init="1" style="position: relative;"></div>
+  
+
+  
 
   <!-- QUIZ 2 -->
   <div class="post visible" data-drag-init="1" data-rp-init="1" style="position: relative;">
@@ -554,9 +480,9 @@
       <div class="qc-foot"><button class="qc-next" id="qnext-2" onclick="qNext('2')">neste →</button></div>
       <button class="qc-add" onclick="qAdd('2')"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>legg til spørsmål</button>
     </div>
-  <button class="new-post-del" title="Slett element">×</button></div>
+  </div>
 
-  <div class="post quote-block visible" data-drag-init="1" data-rp-init="1" style="position: relative;"><blockquote><span data-ck="pm-ce-381">"Jeg er svært bevisst på ansvaret det innebærer — å forvalte denne investeringen på best mulig måte."</span><cite data-ck="pm-ce-382">Felix Green</cite></blockquote><button class="new-post-del" title="Slett element">×</button></div>
+  <div class="post quote-block visible" data-drag-init="1" data-rp-init="1" style="position: relative;"><blockquote><span data-ck="pm-ce-381">"Jeg er svært bevisst på ansvaret det innebærer — å forvalte denne investeringen på best mulig måte."</span><cite data-ck="pm-ce-382">Felix Green</cite></blockquote></div>
 </main>
 </div>
 
@@ -564,18 +490,15 @@
 <!-- ═══════════════════ EP 3 ═══════════════════ -->
 <div id="page-3" class="page-content" style="display:none;">
 <main class="feed">
-  <div class="chapter-break post visible" data-drag-init="1" data-rp-init="1" style="position: relative;"><div class="break-line"></div><span class="break-label" data-ck="pm-ce-1244">episode 3 · eksamen 2024</span><div class="break-line"></div><button class="new-post-del" title="Slett element">×</button></div>
-
-  <div class="post visible" data-drag-init="1" data-rp-init="1" style="position: relative;">
-    <div class="post-stamp"><div class="stamp-icon"><svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="1"></rect><circle cx="6" cy="7.5" r="1.2" fill="#65666d" stroke="none"></circle><path d="M2 11.5l3.5-3 2 2 2.5-2.5L14 12"></path></svg></div><span class="stamp-date" data-ck="pm-ce-383"></span></div>
-    <span class="img-date" data-ck="pm-ce-1320"></span><div class="drop-zone-wrap"><div class="drop-zone wide has-media" data-zid="z1782458676610hn9ft" style="width: 563px; height: 426px; resize: none; cursor: default;" data-del-init="1" data-ztrk="1"><video src="media/m6.mp4" loop="" autoplay="" playsinline="" muted="" class="media-content" style="transform: translate(0px, 0px) scale(1);"></video></div></div>
-  <button class="new-post-del" title="Slett element">×</button></div>
+  <div class="chapter-break post visible" data-drag-init="1" data-rp-init="1" style="position: relative;"><div class="break-line"></div><span class="break-label" data-ck="pm-ce-1244">episode 3 · eksamen 2024</span><div class="break-line"></div></div>
 
   
 
   
 
-  <div class="post visible" data-drag-init="1" data-rp-init="1" style="position: relative;"></div>
+  
+
+  
 
   <!-- QUIZ 3 -->
   <div class="post visible" data-drag-init="1" data-rp-init="1" style="position: relative;">
@@ -615,7 +538,7 @@
       <div class="qc-foot"><button class="qc-next" id="qnext-3" onclick="qNext('3')">neste →</button></div>
       <button class="qc-add" onclick="qAdd('3')"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>legg til spørsmål</button>
     </div>
-  <button class="new-post-del" title="Slett element">×</button></div>
+  </div>
 </main>
 </div>
 
@@ -623,18 +546,15 @@
 <!-- ═══════════════════ EP 4 ═══════════════════ -->
 <div id="page-4" class="page-content" style="display:none;">
 <main class="feed">
-  <div class="chapter-break post visible" data-drag-init="1" data-rp-init="1" style="position: relative;"><div class="break-line"></div><span class="break-label" data-ck="pm-ce-1246">episode 4 · megler 2025</span><div class="break-line"></div><button class="new-post-del" title="Slett element">×</button></div>
+  <div class="chapter-break post visible" data-drag-init="1" data-rp-init="1" style="position: relative;"><div class="break-line"></div><span class="break-label" data-ck="pm-ce-1246">episode 4 · megler 2025</span><div class="break-line"></div></div>
 
   
 
-  <div class="post visible" data-drag-init="1" data-rp-init="1" style="position: relative;">
-    <div class="post-stamp"><div class="stamp-icon"><svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="1"></rect><circle cx="6" cy="7.5" r="1.2" fill="#65666d" stroke="none"></circle><path d="M2 11.5l3.5-3 2 2 2.5-2.5L14 12"></path></svg></div><span class="stamp-date" data-ck="pm-ce-418"></span></div>
-    <span class="img-date" data-ck="pm-ce-1322"></span><div class="drop-zone-wrap"><div class="drop-zone wide has-media" data-zid="z1782458676610qmjad" style="width: 425px; height: 719px; resize: none; cursor: default;" data-del-init="1" data-ztrk="1"><video src="media/m7.mp4" loop="" autoplay="" playsinline="" muted="" class="media-content" style="transform: translate(0px, 0px) scale(1);"></video></div></div>
-  <button class="new-post-del" title="Slett element">×</button></div>
+  
 
   
 
-  <div class="post visible" data-drag-init="1" data-rp-init="1" style="position: relative;"></div>
+  
 
   <!-- QUIZ 4 -->
   <div class="post visible" data-drag-init="1" data-rp-init="1" style="position: relative;">
@@ -675,16 +595,16 @@
       <div class="qc-foot"><button class="qc-next" id="qnext-4" onclick="qNext('4')">neste →</button></div>
       <button class="qc-add" onclick="qAdd('4')"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>legg til spørsmål</button>
     </div>
-  <button class="new-post-del" title="Slett element">×</button></div>
+  </div>
 
-  <div class="post quote-block visible" data-drag-init="1" data-rp-init="1" style="position: relative;"><blockquote><span data-ck="pm-ce-438">"Jeg strekker meg ekstra langt for å oppnå et godt resultat. Det vil aldri forandre seg."</span><cite data-ck="pm-ce-439">Felix Green — Autorisert eiendomsmegler, PrivatMegleren Park</cite></blockquote><button class="new-post-del" title="Slett element">×</button></div>
+  <div class="post quote-block visible" data-drag-init="1" data-rp-init="1" style="position: relative;"><blockquote><span data-ck="pm-ce-438">"Jeg strekker meg ekstra langt for å oppnå et godt resultat. Det vil aldri forandre seg."</span><cite data-ck="pm-ce-439">Felix Green — Autorisert eiendomsmegler, PrivatMegleren Park</cite></blockquote></div>
 </main>
 <section class="cta-section">
-  <p class="cta-label" data-ck="pm-ce-1324">din tur</p>
-  <h2 class="cta-title" data-ck="pm-ce-1306">Er dette veien din?</h2>
+  <p class="cta-label" data-ck="pm-ce-1355">din tur</p>
+  <h2 class="cta-title" data-ck="pm-ce-1335">Er dette veien din?</h2>
   <div class="cta-btns">
-    <a href="https://privatmegleren.no/stillinger" class="btn btn-fill" data-href="https://privatmegleren.no/stillinger" data-ck="pm-ce-1307">se ledige stillinger</a>
-    <a href="https://privatmegleren.no/megler/felix-green" class="btn btn-outline" data-href="https://privatmegleren.no/megler/felix-green" data-ck="pm-ce-1308">les mer om felix</a>
+    <a href="https://privatmegleren.no/stillinger" class="btn btn-fill" data-href="https://privatmegleren.no/stillinger" data-ck="pm-ce-1336">se ledige stillinger</a>
+    <a href="https://privatmegleren.no/megler/felix-green" class="btn btn-outline" data-href="https://privatmegleren.no/megler/felix-green" data-ck="pm-ce-1337">les mer om felix</a>
   </div>
 </section>
 </div>
@@ -700,7 +620,7 @@
   <a class="page-btn arrow" id="pb-next" onclick="changePage(1)" title="Neste">&gt;</a>
   <a class="page-btn arrow" id="pb-last" onclick="goToPage(totalPages())" title="Siste">&gt;&gt;</a>
 </div>
-<footer><img src="media/m8.png" alt="PrivatMegleren"><p data-ck="pm-ce-1325">© PrivatMegleren Park</p></footer>
+<footer><img src="media/m2.png" alt="PrivatMegleren"><p data-ck="pm-ce-1356">© PrivatMegleren Park</p></footer>
 
 <script>
 // ── STICKY NAV ──
@@ -886,10 +806,13 @@ function buildHTML(){
   const m=document.createElement('meta');m.name='pm-saved';m.content='1';
   doc.querySelector('head').appendChild(m);
 
-  // ── 1b. Bak inn hero-bilde ──
+  // ── 1b. Bak inn hero-bilde (alltid fra live DOM) ──
   const liveHero=document.getElementById('hero-img');
   const cloneHero=doc.querySelector('#hero-img');
-  if(liveHero&&cloneHero&&liveHero.src&&!liveHero.src.includes('felix-hero.jpg')){cloneHero.src=liveHero.src;}
+  if(liveHero&&cloneHero&&liveHero.src){
+    // Bak inn hero uansett — felix-hero.jpg finnes ikke på GitHub
+    cloneHero.src=liveHero.src;
+  }
   // Fjern hero-knapp fra output
   doc.querySelector('#hero-img-btn')?.remove();
 
@@ -1151,40 +1074,83 @@ function buildPublicHTML(accessCode){
   // Merk som offentlig — skrur av all redigering
   const pm=d.createElement('meta');pm.name='pm-public';pm.content='1';
   d.querySelector('head').appendChild(pm);
-  // Fjern redaktørverktøy
+
+  // ── Fjern ALLE redaktørverktøy og editor-UI ──
   d.querySelector('.edit-bar')?.remove();
-  d.querySelectorAll('.post-controls,.add-post-btn,.new-post,.drop-indicator,.drop-hint,.dz-pick-overlay,.media-toolbar').forEach(el=>el.remove());
-  // Fjern redigerbarhet
+  d.querySelector('#_rp')?.remove();              // høyre panel
+  d.querySelector('#_toolbox')?.remove();          // verktøyboks
+  d.querySelector('#_perm-bar')?.remove();         // perm-bar
+  d.querySelector('#_save-toast')?.remove();       // lagre-toast
+  d.querySelector('#snav-dropdown')?.remove();     // dropdown-meny
+  d.querySelector('#burger-btn')?.remove();        // hamburger-knapp
+  d.querySelector('#hero-img-btn')?.remove();      // bytt-bilde-knapp
+  d.querySelectorAll('.ep-nav-add').forEach(el=>el.remove());  // + episode-knapp
+  d.querySelectorAll('.post-controls,.add-post-btn,.new-post,.drop-indicator,.drop-hint,.dz-pick-overlay,.media-toolbar,.new-post-del').forEach(el=>el.remove());
+  d.querySelectorAll('.msg-delete').forEach(el=>el.remove());  // × på meldinger
+  d.querySelectorAll('.msg-add-row').forEach(el=>el.remove()); // legg-til-melding-knapper
+  // Fjern poster som KUN inneholder add-post-btn (nå tomme etter fjerning)
+  d.querySelectorAll('.post').forEach(p=>{if(!p.children.length||!p.textContent.trim())p.remove();});
+
+  // ── Fjern redigerbarhet ──
   d.querySelectorAll('[contenteditable]').forEach(el=>el.removeAttribute('contenteditable'));
-  // Fjern resize på drop-zones
+  d.querySelectorAll('[spellcheck]').forEach(el=>el.removeAttribute('spellcheck'));
+  d.querySelectorAll('[draggable]').forEach(el=>el.removeAttribute('draggable'));
+  // Fjern onclick fra nav-lenker (behold kun navigering)
+  d.querySelectorAll('.hero-nav a').forEach(a=>{
+    const m=a.getAttribute('onclick')?.match(/goToPage\(\d+\)/);
+    if(m) a.setAttribute('onclick',m[0]+';return false;');
+  });
+
+  // ── Fjern resize og editor-cursor på drop-zones ──
   d.querySelectorAll('.drop-zone').forEach(z=>{z.style.resize='none';z.style.cursor='default';});
   // Fjern tomme bildefelt (uten media)
   d.querySelectorAll('.drop-zone:not(.has-media)').forEach(z=>{
     const wrap=z.closest('.drop-zone-wrap');
     if(wrap)wrap.remove(); else z.remove();
   });
-  // Legg til tilgangskode-gate hvis kode er oppgitt
+
+  // ── Video: native controls, ingen autoplay ──
+  d.querySelectorAll('video').forEach(v=>{
+    v.setAttribute('controls','');
+    v.removeAttribute('autoplay');
+    v.setAttribute('preload','metadata');
+    v.setAttribute('playsinline','');
+    v.removeAttribute('muted');
+    v.removeAttribute('loop');
+  });
+
+  // ── Sørg for at body IKKE har editor-mode ──
+  const body=d.querySelector('body');
+  if(body){
+    body.classList.remove('editor-mode','rp-open');
+  }
+
+  // ── Legg til tilgangskode-gate FØRST i head (kjører før alt annet) ──
   if(accessCode){
     const gateScript=d.createElement('script');
-    gateScript.textContent=`(function(){
-  var C='${accessCode.replace(/'/g,"\\'")}',K='pm-access-v1';
-  if(localStorage.getItem(K)===C)return;
-  document.body.style.overflow='hidden';
-  var g=document.createElement('div');
-  g.style.cssText='position:fixed;inset:0;background:#262830;z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;';
-  g.innerHTML='<div style="font-size:9px;letter-spacing:0.35em;text-transform:uppercase;color:rgba(229,228,227,0.3);margin-bottom:8px">Fra fullmektig til megler</div>'
-    +'<input id="pmci" type="password" placeholder="tilgangskode" autocomplete="off" style="background:rgba(229,228,227,0.06);border:1px solid rgba(229,228,227,0.14);border-radius:8px;color:#E5E4E3;font-size:18px;padding:14px 22px;outline:none;text-align:center;letter-spacing:0.25em;width:220px;font-family:inherit;">'
-    +'<div id="pmce" style="font-size:10px;color:rgba(237,189,242,0.55);height:14px;letter-spacing:0.1em;transition:opacity 0.3s;"></div>';
-  document.body.appendChild(g);
-  var inp=document.getElementById('pmci'),err=document.getElementById('pmce');
-  setTimeout(function(){inp.focus();},80);
-  inp.addEventListener('keydown',function(e){
-    if(e.key!=='Enter')return;
-    if(inp.value===C){localStorage.setItem(K,C);g.style.opacity='0';g.style.transition='opacity 0.4s';setTimeout(function(){g.remove();document.body.style.overflow='';},400);}
-    else{err.textContent='feil kode';inp.value='';inp.style.borderColor='rgba(237,189,242,0.4)';setTimeout(function(){err.textContent='';inp.style.borderColor='';},2000);}
-  });
-})();`;
-    d.querySelector('head').appendChild(gateScript);
+    gateScript.textContent='(function(){'
+      +'var C="'+accessCode.replace(/"/g,'\\"')+'",K="pm-access-v1";'
+      +'if(localStorage.getItem(K)===C)return;'
+      +'document.addEventListener("DOMContentLoaded",function(){'
+      +'document.body.style.overflow="hidden";'
+      +'var g=document.createElement("div");'
+      +'g.style.cssText="position:fixed;inset:0;background:#262830;z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;";'
+      +'g.innerHTML=\'<div style="font-size:9px;letter-spacing:0.35em;text-transform:uppercase;color:rgba(229,228,227,0.3);margin-bottom:8px">Fra fullmektig til megler</div>\''
+      +'+\'<input id="pmci" type="password" placeholder="tilgangskode" autocomplete="off" style="background:rgba(229,228,227,0.06);border:1px solid rgba(229,228,227,0.14);border-radius:8px;color:#E5E4E3;font-size:18px;padding:14px 22px;outline:none;text-align:center;letter-spacing:0.25em;width:220px;font-family:inherit;">\''
+      +'+\'<div id="pmce" style="font-size:10px;color:rgba(237,189,242,0.55);height:14px;letter-spacing:0.1em;transition:opacity 0.3s;"></div>\';'
+      +'document.body.appendChild(g);'
+      +'var inp=document.getElementById("pmci"),err=document.getElementById("pmce");'
+      +'setTimeout(function(){inp.focus();},80);'
+      +'inp.addEventListener("keydown",function(e){'
+      +'if(e.key!=="Enter")return;'
+      +'if(inp.value===C){localStorage.setItem(K,C);g.style.opacity="0";g.style.transition="opacity 0.4s";setTimeout(function(){g.remove();document.body.style.overflow="";},400);}'
+      +'else{err.textContent="feil kode";inp.value="";inp.style.borderColor="rgba(237,189,242,0.4)";setTimeout(function(){err.textContent="";inp.style.borderColor="";},2000);}'
+      +'});'
+      +'});'
+      +'})();';
+    // Sett inn FØRST i head, før andre scripts
+    const head=d.querySelector('head');
+    head.insertBefore(gateScript,head.firstChild);
   }
   return '<!DOCTYPE html>\n'+d.documentElement.outerHTML;
 }
@@ -1213,14 +1179,14 @@ async function publishToGitHub(){
     // ── Ekstraher base64-media til separate filer ──
     const mediaFiles=[];
     let mIdx=0;
-    // src="media/m9...." og src="media/m10...."
+    // src="media/m3...." og src="media/m4...."
     html=html.replace(/src="data:(image\/[^;]+|video\/[^;]+);base64,([^"]+)"/g,(_m,mime,b64)=>{
       const ext=mime.split('/')[1].replace('jpeg','jpg').replace('quicktime','mov').replace('webm','webm').replace('mp4','mp4');
       const fname='media/m'+(mIdx++)+'.'+ext;
       mediaFiles.push({path:fname,content:b64});
       return 'src="'+fname+'"';
     });
-    // background-image:url(media/m11....)
+    // background-image:url(media/m5....)
     html=html.replace(/url\(data:(image\/[^;]+);base64,([^)]+)\)/g,(_m,mime,b64)=>{
       const ext=mime.split('/')[1].replace('jpeg','jpg');
       const fname='media/m'+(mIdx++)+'.'+ext;
@@ -1424,25 +1390,16 @@ async function restoreMedia(){
       const isVideo=el.tagName==='VIDEO';
       z.style.cursor='default';
       z.onclick=null;
-      // Fjern resize-handle i offentlig modus
       z.style.resize='none';
       if(isVideo){
-        // Legg til play-overlay for video
-        el.controls=false;el.muted=true;el.loop=true;el.playsInline=true;
-        el.autoplay=true;
-        el.play().catch(()=>{});
-        const overlay=document.createElement('button');
-        overlay.className='video-play-overlay';
-        overlay.innerHTML='<svg viewBox="0 0 24 24" fill="white" width="48" height="48"><polygon points="6,3 20,12 6,21"/></svg>';
-        overlay.onclick=function(e){
-          e.stopPropagation();
-          if(el.paused){el.muted=false;el.play();overlay.classList.add('playing');}
-          else{el.pause();overlay.classList.remove('playing');}
-        };
-        // Vis overlay, skjul når spiller med lyd
-        el.addEventListener('play',()=>{if(!el.muted)overlay.classList.add('playing');});
-        el.addEventListener('pause',()=>overlay.classList.remove('playing'));
-        z.appendChild(overlay);
+        // Native kontroller, ingen autoplay
+        el.controls=true;
+        el.autoplay=false;
+        el.muted=false;
+        el.loop=false;
+        el.playsInline=true;
+        el.preload='metadata';
+        el.pause();
       }
     });
     return;
@@ -2477,4 +2434,4 @@ function changePage(d){const n=currentPage+d;if(n>=1&&n<=4)goToPage(n);}
 </script>
 
 
-<div id="_pub-toast" style="position: fixed; bottom: 72px; left: 50%; transform: translateX(-50%); background: rgb(38, 40, 48); color: rgb(229, 228, 227); border: 1px solid rgba(229, 228, 227, 0.15); padding: 10px 24px; border-radius: 20px; font-size: 11px; letter-spacing: 0.12em; z-index: 9999; font-family: sans-serif; pointer-events: none; transition: opacity 0.4s; text-align: center; white-space: nowrap; opacity: 0;">publisert ✓ &nbsp;·&nbsp; <span style="opacity:0.5">live om ~30 sek på mariahhmyhre.github.io/Fra-fullmektig-til-megler</span></div></body></html>
+</body></html>

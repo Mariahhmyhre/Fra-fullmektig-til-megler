@@ -378,8 +378,8 @@
     else{err.textContent='feil kode';inp.value='';inp.style.borderColor='rgba(237,189,242,0.4)';setTimeout(function(){err.textContent='';inp.style.borderColor='';},2000);}
   });
 })();</script></head>
-<body class="editor-mode">
-<div id="progress" style="width: 1.51515%;"></div>
+<body class="editor-mode rp-open">
+<div id="progress" style="width: 100%;"></div>
 
 <!-- VERKTØYBOKS (skjules i public) -->
 <div id="_toolbox">
@@ -393,20 +393,38 @@
     <button class="_tb-btn" title="Quiz" onclick="tbAdd('quiz')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>quiz</button>
     <div class="_tb-sep"></div>
     <button class="_tb-btn _tb-undo" title="Angre (⌘Z)" onclick="tbUndo()"><svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 .49-4.5"></path></svg></button>
-    <button class="_tb-btn _tb-del" id="_tb-del-btn" title="Slett valgt (Delete)" onclick="rpDelete()"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6l-1 14H6L5 6"></path><path d="M10 11v6M14 11v6"></path></svg></button>
+    <button class="_tb-btn _tb-del active" id="_tb-del-btn" title="Slett valgt (Delete)" onclick="rpDelete()"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6l-1 14H6L5 6"></path><path d="M10 11v6M14 11v6"></path></svg></button>
   </div>
   <button id="_tb-tab" onclick="toggleToolbox()">›</button>
 </div>
 
 <!-- HØYRE PANEL (skjules i public) -->
-<div id="_rp">
+<div id="_rp" class="open">
   <div id="_rp-head">
-    <span class="_rp-type" id="_rp-type">element</span>
+    <span class="_rp-type" id="_rp-type">bildeboks</span>
     <!-- close button removed — panel alltid synlig -->
   </div>
   <div id="_rp-body">
-    <p class="_rp-empty">Klikk på et element i feedet for å redigere det</p>
+      <span class="_rp-label">dato</span>
+      <input class="_rp-input" id="_rp-date" value="[ dato ]" placeholder="[ dato ]">
+      <div class="_rp-sep"></div>
+      <button class="_rp-btn" onclick="rpUploadImg()"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>last opp bilde / video</button>
+      <button class="_rp-btn" onclick="rpPasteImg()"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>lim inn bilde (⌘V)</button>
+      <div class="_rp-sep"></div><div class="_rp-sep"></div>
+  <span class="_rp-label" style="font-size:8px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(229,228,227,0.3);">typografi</span>
+  <div class="_rp-typo-group">
+    <span class="_rp-sublabel">font</span>
+    <select class="_rp-select" id="_rp-ff"><option value="" selected="">standard (arvet)</option><option value="'DomaineDisplay',Georgia,serif">Domaine Display — tittel</option><option value="'DomaineText',sans-serif">Domaine Text — brødtekst</option></select>
+    <span class="_rp-sublabel">avstand under <span id="_rp-sp-v">0px</span></span>
+    <input type="range" class="_rp-range" id="_rp-sp" min="0" max="80" step="4" value="0">
+    <span class="_rp-sublabel">gjennomsiktighet <span id="_rp-op-v">100%</span></span>
+    <input type="range" class="_rp-range" id="_rp-op" min="10" max="100" step="5" value="100">
+  </div><div class="_rp-sep"></div><div class="_rp-row">
+    <button class="_rp-btn" onclick="rpMove(-1)" title="Flytt opp"><svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"></polyline></svg>opp</button>
+    <button class="_rp-btn" onclick="rpMove(1)" title="Flytt ned"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>ned</button>
   </div>
+  <div class="_rp-sep"></div>
+  <button class="_rp-btn danger" onclick="rpDelete()"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6l-1 14H6L5 6"></path><path d="M10 11v6M14 11v6"></path></svg>slett element</button></div>
 </div>
 
 
@@ -416,8 +434,8 @@
   <div class="snav-logo"><img src="media/m0.png" alt="PrivatMegleren"></div>
   <button class="snav-burger" id="burger-btn" onclick="toggleMenu()"><span></span><span></span><span></span><span></span></button>
 </nav>
-<div id="snav-dropdown">
-  <a class="sdrop-item active" id="sdrop-1" onclick="goToPage(1);return false;" href="#"><span class="sdrop-num">01</span><div><div class="sdrop-label">episode 1</div><div class="sdrop-sub"></div></div></a>
+<div id="snav-dropdown" class="">
+  <a class="sdrop-item active" id="sdrop-1" onclick="goToPage(1);return false;" href="#"><span class="sdrop-num">01</span><div><div class="sdrop-label">rrrrrrrr</div><div class="sdrop-sub"></div></div></a>
   <a class="sdrop-item" id="sdrop-2" onclick="goToPage(2);return false;" href="#"><span class="sdrop-num">02</span><div><div class="sdrop-label">episode 2</div><div class="sdrop-sub"></div></div></a>
   <a class="sdrop-item" id="sdrop-3" onclick="goToPage(3);return false;" href="#"><span class="sdrop-num">03</span><div><div class="sdrop-label">episode 3</div><div class="sdrop-sub"></div></div></a>
   <a class="sdrop-item" id="sdrop-4" onclick="goToPage(4);return false;" href="#"><span class="sdrop-num">04</span><div><div class="sdrop-label">episode 4</div><div class="sdrop-sub"></div></div></a>
@@ -429,7 +447,7 @@
   <div class="hero-overlay"></div>
   
   <nav class="hero-nav" id="main-nav" data-ep-init="1">
-    <a href="#" class="active" spellcheck="false" data-page="1">episode 1<button class="ep-nav-del" title="Fjern episode">×</button></a>
+    <a href="#" class="active" spellcheck="false" data-page="1">rrrrrrrr<button class="ep-nav-del" title="Fjern episode">×</button></a>
     <a href="#" spellcheck="false" data-page="2">episode 2<button class="ep-nav-del" title="Fjern episode">×</button></a>
     <a href="#" spellcheck="false" data-page="3">episode 3<button class="ep-nav-del" title="Fjern episode">×</button></a>
     <a href="#" spellcheck="false" data-page="4">episode 4<button class="ep-nav-del" title="Fjern episode">×</button></a>
@@ -447,8 +465,8 @@
   
 
   <div class="post visible" data-drag-init="1" data-rp-init="1" style="position: relative;">
-    <div class="post-stamp"><div class="stamp-icon"><svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="1"></rect><circle cx="6" cy="7.5" r="1.2" fill="#65666d" stroke="none"></circle><path d="M2 11.5l3.5-3 2 2 2.5-2.5L14 12"></path></svg></div><span class="stamp-date" data-ck="pm-ce-303">Onsdag 01.09.2025 kl 08.47</span></div>
-    <span class="img-date"></span><div class="drop-zone-wrap"><div class="drop-zone wide has-media" data-zid="z17824586766094fqr4" style="width: 479px; height: 327px; resize: none; cursor: default;" data-del-init="1"><video src="media/m1.mp4" loop="" autoplay="" playsinline="" muted="" class="media-content" style="transform: translate(0px, 0px) scale(1);"></video></div></div>
+    <div class="post-stamp"><div class="stamp-icon"><svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="1"></rect><circle cx="6" cy="7.5" r="1.2" fill="#65666d" stroke="none"></circle><path d="M2 11.5l3.5-3 2 2 2.5-2.5L14 12"></path></svg></div><span class="stamp-date" data-ck="pm-ce-303">Onsdag 01ggg.09.2025 kl 08.47</span></div>
+    <span class="img-date" data-ck="pm-ce-1309"></span><div class="drop-zone-wrap"><div class="drop-zone wide has-media" data-zid="z17824586766094fqr4" style="width: 479px; height: 327px; resize: none; cursor: default;" data-del-init="1" data-ztrk="1"><video src="media/m1.mp4" loop="" autoplay="" playsinline="" muted="" class="media-content" style="transform: translate(0px, 0px) scale(1);"></video></div></div>
   <button class="new-post-del" title="Slett element">×</button></div>
 
   
@@ -457,14 +475,14 @@
 
   <div class="post visible" data-drag-init="1" data-rp-init="1" style="position: relative;">
     <div class="post-stamp"><div class="stamp-icon"><svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="1"></rect><circle cx="6" cy="7.5" r="1.2" fill="#65666d" stroke="none"></circle><path d="M2 11.5l3.5-3 2 2 2.5-2.5L14 12"></path></svg></div><span class="stamp-date" data-ck="pm-ce-318"></span></div>
-    <span class="img-date"></span><div class="drop-zone-wrap"><div class="drop-zone tall has-media" data-zid="z1782458676609bx1l8" style="width: 320px; height: 400px; resize: none; cursor: default;" data-del-init="1"><video src="media/m2.mp4" loop="" autoplay="" playsinline="" muted="" class="media-content" style="transform: translate(0px, 0px) scale(1);"></video></div></div>
+    <span class="img-date" data-ck="pm-ce-1310"></span><div class="drop-zone-wrap"><div class="drop-zone tall has-media" data-zid="z1782458676609bx1l8" style="width: 320px; height: 400px; resize: none; cursor: default;" data-del-init="1" data-ztrk="1"><video src="media/m2.mp4" loop="" autoplay="" playsinline="" muted="" class="media-content" style="transform: translate(0px, 0px) scale(1);"></video></div></div>
   <button class="new-post-del" title="Slett element">×</button></div>
 
   
 
   <div class="post visible" data-drag-init="1" data-rp-init="1" style="position: relative;">
     <div class="post-stamp"><div class="stamp-icon"><svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="1"></rect><circle cx="6" cy="7.5" r="1.2" fill="#65666d" stroke="none"></circle><path d="M2 11.5l3.5-3 2 2 2.5-2.5L14 12"></path></svg></div><span class="stamp-date" data-ck="pm-ce-327"></span></div>
-    <span class="img-date"></span><div class="drop-zone-wrap"><div class="drop-zone wide has-media" data-zid="z17824586766099yip6" style="width: 552px; height: 699px; resize: none; cursor: default;" data-del-init="1"><img src="media/m3.jpg" class="media-content" style="transform: translate(0px, 0px) scale(1);"></div></div>
+    <span class="img-date" data-ck="pm-ce-1311"></span><div class="drop-zone-wrap"><div class="drop-zone wide has-media" data-zid="z17824586766099yip6" style="width: 552px; height: 699px; resize: none; cursor: default;" data-del-init="1" data-ztrk="1"><img src="media/m3.jpg" class="media-content" style="transform: translate(0px, 0px) scale(1);"></div></div>
   <button class="new-post-del" title="Slett element">×</button></div>
 
   <div class="post visible" data-drag-init="1" data-rp-init="1" style="position: relative;"></div>
@@ -484,7 +502,7 @@
 
   <div class="post visible" data-drag-init="1" data-rp-init="1" style="position: relative;">
     <div class="post-stamp"><div class="stamp-icon"><svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="1"></rect><circle cx="6" cy="7.5" r="1.2" fill="#65666d" stroke="none"></circle><path d="M2 11.5l3.5-3 2 2 2.5-2.5L14 12"></path></svg></div><span class="stamp-date" data-ck="pm-ce-352"></span></div>
-    <span class="img-date"></span><div class="drop-zone-wrap"><div class="drop-zone wide has-media" data-zid="z17824586766099jddz" style="width: 552px; height: 469px; resize: none; cursor: default;" data-del-init="1"><video src="media/m4.mp4" loop="" autoplay="" playsinline="" muted="" class="media-content" style="transform: translate(0px, 0px) scale(1);"></video></div></div>
+    <span class="img-date" data-ck="pm-ce-1315"></span><div class="drop-zone-wrap"><div class="drop-zone wide has-media" data-zid="z17824586766099jddz" style="width: 552px; height: 469px; resize: none; cursor: default;" data-del-init="1" data-ztrk="1"><video src="media/m4.mp4" loop="" autoplay="" playsinline="" muted="" class="media-content" style="transform: translate(0px, 0px) scale(1);"></video></div></div>
   <button class="new-post-del" title="Slett element">×</button></div>
 
   
@@ -493,7 +511,7 @@
 
   <div class="post visible" data-drag-init="1" data-rp-init="1" style="position: relative;">
     <div class="post-stamp"><div class="stamp-icon"><svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="1"></rect><circle cx="6" cy="7.5" r="1.2" fill="#65666d" stroke="none"></circle><path d="M2 11.5l3.5-3 2 2 2.5-2.5L14 12"></path></svg></div><span class="stamp-date" data-ck="pm-ce-365"></span></div>
-    <span class="img-date"></span><div class="drop-zone-wrap"><div class="drop-zone tall has-media" data-zid="z1782458676610zyvmr" style="width: 552px; height: 864px; resize: none; cursor: default;" data-del-init="1"><img src="media/m5.jpg" class="media-content" style="transform: translate(0px, 0px) scale(1);"></div></div>
+    <span class="img-date" data-ck="pm-ce-1316"></span><div class="drop-zone-wrap"><div class="drop-zone tall has-media" data-zid="z1782458676610zyvmr" style="width: 552px; height: 864px; resize: none; cursor: default;" data-del-init="1" data-ztrk="1"><img src="media/m5.jpg" class="media-content" style="transform: translate(0px, 0px) scale(1);"></div></div>
   <button class="new-post-del" title="Slett element">×</button></div>
 
   <div class="post visible" data-drag-init="1" data-rp-init="1" style="position: relative;"></div>
@@ -550,7 +568,7 @@
 
   <div class="post visible" data-drag-init="1" data-rp-init="1" style="position: relative;">
     <div class="post-stamp"><div class="stamp-icon"><svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="1"></rect><circle cx="6" cy="7.5" r="1.2" fill="#65666d" stroke="none"></circle><path d="M2 11.5l3.5-3 2 2 2.5-2.5L14 12"></path></svg></div><span class="stamp-date" data-ck="pm-ce-383"></span></div>
-    <span class="img-date"></span><div class="drop-zone-wrap"><div class="drop-zone wide has-media" data-zid="z1782458676610hn9ft" style="width: 563px; height: 426px; resize: none; cursor: default;" data-del-init="1"><video src="media/m6.mp4" loop="" autoplay="" playsinline="" muted="" class="media-content" style="transform: translate(0px, 0px) scale(1);"></video></div></div>
+    <span class="img-date" data-ck="pm-ce-1320"></span><div class="drop-zone-wrap"><div class="drop-zone wide has-media" data-zid="z1782458676610hn9ft" style="width: 563px; height: 426px; resize: none; cursor: default;" data-del-init="1" data-ztrk="1"><video src="media/m6.mp4" loop="" autoplay="" playsinline="" muted="" class="media-content" style="transform: translate(0px, 0px) scale(1);"></video></div></div>
   <button class="new-post-del" title="Slett element">×</button></div>
 
   
@@ -611,7 +629,7 @@
 
   <div class="post visible" data-drag-init="1" data-rp-init="1" style="position: relative;">
     <div class="post-stamp"><div class="stamp-icon"><svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="1"></rect><circle cx="6" cy="7.5" r="1.2" fill="#65666d" stroke="none"></circle><path d="M2 11.5l3.5-3 2 2 2.5-2.5L14 12"></path></svg></div><span class="stamp-date" data-ck="pm-ce-418"></span></div>
-    <span class="img-date"></span><div class="drop-zone-wrap"><div class="drop-zone wide has-media" data-zid="z1782458676610qmjad" style="width: 425px; height: 719px; resize: none; cursor: default;" data-del-init="1"><video src="media/m7.mp4" loop="" autoplay="" playsinline="" muted="" class="media-content" style="transform: translate(0px, 0px) scale(1);"></video></div></div>
+    <span class="img-date" data-ck="pm-ce-1322"></span><div class="drop-zone-wrap"><div class="drop-zone wide has-media" data-zid="z1782458676610qmjad" style="width: 425px; height: 719px; resize: none; cursor: default;" data-del-init="1" data-ztrk="1"><video src="media/m7.mp4" loop="" autoplay="" playsinline="" muted="" class="media-content" style="transform: translate(0px, 0px) scale(1);"></video></div></div>
   <button class="new-post-del" title="Slett element">×</button></div>
 
   
@@ -662,7 +680,7 @@
   <div class="post quote-block visible" data-drag-init="1" data-rp-init="1" style="position: relative;"><blockquote><span data-ck="pm-ce-438">"Jeg strekker meg ekstra langt for å oppnå et godt resultat. Det vil aldri forandre seg."</span><cite data-ck="pm-ce-439">Felix Green — Autorisert eiendomsmegler, PrivatMegleren Park</cite></blockquote><button class="new-post-del" title="Slett element">×</button></div>
 </main>
 <section class="cta-section">
-  <p class="cta-label">din tur</p>
+  <p class="cta-label" data-ck="pm-ce-1324">din tur</p>
   <h2 class="cta-title" data-ck="pm-ce-1306">Er dette veien din?</h2>
   <div class="cta-btns">
     <a href="https://privatmegleren.no/stillinger" class="btn btn-fill" data-href="https://privatmegleren.no/stillinger" data-ck="pm-ce-1307">se ledige stillinger</a>
@@ -682,7 +700,7 @@
   <a class="page-btn arrow" id="pb-next" onclick="changePage(1)" title="Neste">&gt;</a>
   <a class="page-btn arrow" id="pb-last" onclick="goToPage(totalPages())" title="Siste">&gt;&gt;</a>
 </div>
-<footer><img src="media/m8.png" alt="PrivatMegleren"><p>© PrivatMegleren Park</p></footer>
+<footer><img src="media/m8.png" alt="PrivatMegleren"><p data-ck="pm-ce-1325">© PrivatMegleren Park</p></footer>
 
 <script>
 // ── STICKY NAV ──
@@ -2459,4 +2477,4 @@ function changePage(d){const n=currentPage+d;if(n>=1&&n<=4)goToPage(n);}
 </script>
 
 
-</body></html>
+<div id="_pub-toast" style="position: fixed; bottom: 72px; left: 50%; transform: translateX(-50%); background: rgb(38, 40, 48); color: rgb(229, 228, 227); border: 1px solid rgba(229, 228, 227, 0.15); padding: 10px 24px; border-radius: 20px; font-size: 11px; letter-spacing: 0.12em; z-index: 9999; font-family: sans-serif; pointer-events: none; transition: opacity 0.4s; text-align: center; white-space: nowrap; opacity: 0;">publisert ✓ &nbsp;·&nbsp; <span style="opacity:0.5">live om ~30 sek på mariahhmyhre.github.io/Fra-fullmektig-til-megler</span></div></body></html>

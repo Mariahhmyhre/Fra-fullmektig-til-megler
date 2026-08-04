@@ -1339,28 +1339,30 @@ async function publishToGitHub(){
     if(btn)btn.textContent='laster opp html...';
     const htmlB64=btoa(unescape(encodeURIComponent(html)));
     const htmlBlobResp=await fetch(base+'/git/blobs',{method:'POST',headers,body:JSON.stringify({content:htmlB64,encoding:'base64'})});
-    if(!htmlBlobResp.ok)throw new Error('HTML blob: '+(await htmlBlobResp.json()).message);
-    const htmlBlobSha=(await htmlBlobResp.json()).sha;
-    const treeItems=[{path:'index.html',mode:'100644',type:'blob',sha:htmlBlobSha}];
+    const htmlBlobData=await htmlBlobResp.json();
+    if(!htmlBlobResp.ok)throw new Error('HTML blob: '+(htmlBlobData.message||htmlBlobResp.status));
+    const treeItems=[{path:'index.html',mode:'100644',type:'blob',sha:htmlBlobData.sha}];
 
     // ── 3. Last opp hver mediafil som egen blob ──
     for(let i=0;i<mediaFiles.length;i++){
       if(btn)btn.textContent='media '+(i+1)+'/'+mediaFiles.length+'...';
       const mf=mediaFiles[i];
       const bResp=await fetch(base+'/git/blobs',{method:'POST',headers,body:JSON.stringify({content:mf.content,encoding:'base64'})});
-      if(!bResp.ok)throw new Error('Media '+(i+1)+': '+(await bResp.json()).message);
-      treeItems.push({path:mf.path,mode:'100644',type:'blob',sha:(await bResp.json()).sha});
+      const bData=await bResp.json();
+      if(!bResp.ok)throw new Error('Media '+(i+1)+': '+(bData.message||bResp.status));
+      treeItems.push({path:mf.path,mode:'100644',type:'blob',sha:bData.sha});
     }
 
     // ── 4. Opprett tree, commit, oppdater ref ──
     if(btn)btn.textContent='committer...';
     const treeResp=await fetch(base+'/git/trees',{method:'POST',headers,body:JSON.stringify({base_tree:baseTree,tree:treeItems})});
-    if(!treeResp.ok)throw new Error('Tree: '+(await treeResp.json()).message);
-    const treeSha=(await treeResp.json()).sha;
+    const treeData=await treeResp.json();
+    if(!treeResp.ok)throw new Error('Tree: '+(treeData.message||treeResp.status));
 
-    const newCommitResp=await fetch(base+'/git/commits',{method:'POST',headers,body:JSON.stringify({message:'Oppdater nettside',tree:treeSha,parents:[parentSha]})});
-    if(!newCommitResp.ok)throw new Error('Commit: '+(await newCommitResp.json()).message);
-    const newCommitSha=(await newCommitResp.json()).sha;
+    const newCommitResp=await fetch(base+'/git/commits',{method:'POST',headers,body:JSON.stringify({message:'Oppdater nettside',tree:treeData.sha,parents:[parentSha]})});
+    const newCommitData=await newCommitResp.json();
+    if(!newCommitResp.ok)throw new Error('Commit: '+(newCommitData.message||newCommitResp.status));
+    const newCommitSha=newCommitData.sha;
 
     const updateResp=await fetch(base+'/git/refs/heads/main',{method:'PATCH',headers,body:JSON.stringify({sha:newCommitSha})});
     if(updateResp.ok){

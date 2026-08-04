@@ -91,6 +91,11 @@
     .drop-zone .media-content { position:absolute; width:100%; height:100%; object-fit:contain; display:block; transform-origin:center center; cursor:grab; user-select:none; }
     .drop-zone .media-content.dragging { cursor:grabbing; }
     .drop-zone video.media-content { background:#000; }
+    .video-play-overlay { position:absolute; inset:0; z-index:5; background:rgba(0,0,0,0.25); border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:opacity 0.3s,background 0.3s; }
+    .video-play-overlay:hover { background:rgba(0,0,0,0.35); }
+    .video-play-overlay.playing { opacity:0; pointer-events:none; }
+    .video-play-overlay svg { filter:drop-shadow(0 2px 8px rgba(0,0,0,0.4)); opacity:0.9; transition:transform 0.2s; }
+    .video-play-overlay:hover svg { transform:scale(1.1); }
 
     /* Media toolbar (zoom + bytt) */
     .media-toolbar { position:absolute; bottom:0; left:0; right:0; z-index:10; display:flex; align-items:center; gap:8px; padding:7px 10px; background:rgba(26,28,36,0.88); backdrop-filter:blur(8px); opacity:0; transition:opacity 0.2s; pointer-events:none; }
@@ -1233,9 +1238,11 @@ function buildPublicHTML(accessCode){
   d.querySelector('head').appendChild(pm);
   // Fjern redaktørverktøy
   d.querySelector('.edit-bar')?.remove();
-  d.querySelectorAll('.post-controls,.add-post-btn,.new-post,.drop-indicator').forEach(el=>el.remove());
+  d.querySelectorAll('.post-controls,.add-post-btn,.new-post,.drop-indicator,.drop-hint,.dz-pick-overlay,.media-toolbar').forEach(el=>el.remove());
   // Fjern redigerbarhet
   d.querySelectorAll('[contenteditable]').forEach(el=>el.removeAttribute('contenteditable'));
+  // Fjern resize på drop-zones
+  d.querySelectorAll('.drop-zone').forEach(z=>{z.style.resize='none';z.style.cursor='default';});
   // Fjern tomme bildefelt (uten media)
   d.querySelectorAll('.drop-zone:not(.has-media)').forEach(z=>{
     const wrap=z.closest('.drop-zone-wrap');
@@ -1430,31 +1437,32 @@ initContentEditable();
 // Bilder: gjenopprett (enten fra innbakt HTML eller IndexedDB)
 async function restoreMedia(){
   if(_isPublic&&_isSaved){
-    // Offentlig visning: bilder er bakt inn i HTML — koble til zoom/pan
+    // Offentlig visning: bilder er bakt inn i HTML — ingen redigeringsverktøy
     document.querySelectorAll('.drop-zone.has-media').forEach(z=>{
       const el=z.querySelector('img,video');if(!el)return;
       const isVideo=el.tagName==='VIDEO';
-      const zid=getZid(z);
-      const sz=localStorage.getItem('pm-zsz-'+zid);
-      if(sz){const[w,h]=sz.split(',');if(+w&&+h){z.style.width=w+'px';z.style.height=h+'px';}}
-      const tr=el.style.transform||'';
-      const sm=tr.match(/scale\(([\d.]+)\)/);
-      const tm=tr.match(/translate\(([-\d.]+)px,\s*([-\d.]+)px\)/);
-      const s={scale:sm?parseFloat(sm[1]):1,tx:tm?parseFloat(tm[1]):0,ty:tm?parseFloat(tm[2]):0};
-      const tb=document.createElement('div');tb.className='media-toolbar';
-      tb.innerHTML=`<span class="toolbar-label">zoom</span>
-        <input type="range" class="zoom-slider" min="50" max="300" value="${Math.round(s.scale*100)}">
-        ${isVideo?`<button class="toolbar-btn" onclick="const v=this.closest('.drop-zone').querySelector('video');v.paused?v.play():v.pause();this.textContent=v.paused?'spill':'pause'">pause</button>`:''}
-        <button class="toolbar-btn" onclick="triggerUpload(this.closest('.drop-zone'))">bytt</button>`;
-      z.appendChild(tb);
-      const slider=tb.querySelector('.zoom-slider');
-      slider.addEventListener('input',()=>{s.scale=slider.value/100;applyTransform(el,s.scale,s.tx,s.ty);saveMediaState(z,s);});
-      let dragging=false,ox=0,oy=0;
-      el.addEventListener('mousedown',e=>{if(e.button!==0)return;dragging=true;ox=e.clientX-s.tx;oy=e.clientY-s.ty;el.classList.add('dragging');e.preventDefault();});
-      document.addEventListener('mousemove',e=>{if(!dragging)return;s.tx=e.clientX-ox;s.ty=e.clientY-oy;applyTransform(el,s.scale,s.tx,s.ty);});
-      document.addEventListener('mouseup',()=>{if(!dragging)return;dragging=false;el.classList.remove('dragging');saveMediaState(z,s);});
-      if(isVideo)el.play().catch(()=>{});
+      z.style.cursor='default';
       z.onclick=null;
+      // Fjern resize-handle i offentlig modus
+      z.style.resize='none';
+      if(isVideo){
+        // Legg til play-overlay for video
+        el.controls=false;el.muted=true;el.loop=true;el.playsInline=true;
+        el.autoplay=true;
+        el.play().catch(()=>{});
+        const overlay=document.createElement('button');
+        overlay.className='video-play-overlay';
+        overlay.innerHTML='<svg viewBox="0 0 24 24" fill="white" width="48" height="48"><polygon points="6,3 20,12 6,21"/></svg>';
+        overlay.onclick=function(e){
+          e.stopPropagation();
+          if(el.paused){el.muted=false;el.play();overlay.classList.add('playing');}
+          else{el.pause();overlay.classList.remove('playing');}
+        };
+        // Vis overlay, skjul når spiller med lyd
+        el.addEventListener('play',()=>{if(!el.muted)overlay.classList.add('playing');});
+        el.addEventListener('pause',()=>overlay.classList.remove('playing'));
+        z.appendChild(overlay);
+      }
     });
     return;
   }

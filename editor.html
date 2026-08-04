@@ -1078,10 +1078,9 @@ function saveNavLabels(){
   const nav=document.getElementById('main-nav');
   if(!nav)return;
   const labels={};
-  nav.querySelectorAll('a').forEach(a=>{
-    const m=a.getAttribute('onclick')?.match(/goToPage\((\d+)\)/);
-    if(!m)return;
-    labels[m[1]]=a.childNodes[0]?.textContent?.trim()||'';
+  nav.querySelectorAll('a[data-page]').forEach(a=>{
+    const pg=a.dataset.page;
+    labels[pg]=a.childNodes[0]?.textContent?.trim()||'';
   });
   try{localStorage.setItem('pm-nav-labels',JSON.stringify(labels));}catch(e){}
 }
@@ -1093,12 +1092,10 @@ function restoreNavLabels(){
     const labels=JSON.parse(raw);
     const nav=document.getElementById('main-nav');
     if(!nav)return;
-    nav.querySelectorAll('a').forEach(a=>{
-      const m=a.getAttribute('onclick')?.match(/goToPage\((\d+)\)/);
-      if(!m)return;
-      const text=labels[m[1]];
+    nav.querySelectorAll('a[data-page]').forEach(a=>{
+      const pg=a.dataset.page;
+      const text=labels[pg];
       if(text){
-        // Sett bare tekstnoden, behold eventuelle barn (som delete-knapp)
         if(a.childNodes[0]&&a.childNodes[0].nodeType===3){
           a.childNodes[0].textContent=text;
         }else{
@@ -1119,6 +1116,12 @@ function restoreStructure(){
     const feed=document.querySelector('#page-'+i+' .feed');
     if(!feed)continue;
     feed.innerHTML=saved;
+    // Sørg for at add-post-btn finnes i hver feed
+    if(!feed.querySelector('.add-post-btn')){
+      const addDiv=document.createElement('div');addDiv.className='post';
+      addDiv.innerHTML='<button class="add-post-btn" onclick="addPost(this)"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>legg til innhold</button>';
+      feed.appendChild(addDiv);
+    }
   }
 }
 restoreStructure();
@@ -1649,7 +1652,7 @@ function initPostControls(){
       p.insertBefore(ind,p.firstChild);
     }
     // Sørg for at ALLE poster har en sletteknapp (X)
-    if(!_isPublic&&!p.classList.contains('add-post-btn')){
+    if(!_isPublic&&!p.classList.contains('add-post-btn')&&!p.querySelector('.add-post-btn')){
       let del=p.querySelector('.new-post-del');
       if(!del){
         p.style.position='relative';
@@ -2131,6 +2134,8 @@ function initEpisodeControls(){
     const m=a.getAttribute('onclick')?.match(/goToPage\((\d+)\)/);
     if(!m)return;
     const n=parseInt(m[1]);
+    // Lagre sidetall som data-attributt FØR onclick fjernes av setupDblEdit
+    a.dataset.page=n;
     // Sletteknapp
     const del=document.createElement('button');
     del.className='ep-nav-del';del.textContent='×';del.title='Fjern episode';
@@ -2184,13 +2189,10 @@ function setupDblEdit(a,n){
 function syncNavToDropdown(){
   const nav=document.getElementById('main-nav');
   if(!nav)return;
-  nav.querySelectorAll('a').forEach(a=>{
-    const m=a.getAttribute('onclick')?.match(/goToPage\((\d+)\)/);
-    if(!m)return;
-    const n=parseInt(m[1]);
+  nav.querySelectorAll('a[data-page]').forEach(a=>{
+    const n=parseInt(a.dataset.page);
     const label=document.querySelector('#sdrop-'+n+' .sdrop-label');
     if(label){
-      // Hent tekst uten delete-knapp
       const text=a.childNodes[0]?.textContent?.trim()||'episode '+n;
       label.textContent=text;
     }
@@ -2204,7 +2206,7 @@ function removeEpisode(n){
   // Fjern side
   document.getElementById('page-'+n)?.remove();
   // Fjern fra hero-nav (finn riktig link)
-  document.querySelector(`#main-nav a[onclick*="goToPage(${n})"]`)?.remove();
+  document.querySelector(`#main-nav a[data-page="${n}"]`)?.remove();
   // Fjern fra dropdown
   document.getElementById('sdrop-'+n)?.remove();
   // Fjern fra paginering
@@ -2235,6 +2237,7 @@ function addEpisode(){
   const a=document.createElement('a');
   a.href='#';a.spellcheck=false;
   a.setAttribute('onclick',`goToPage(${n});return false;`);
+  a.dataset.page=n;
   a.textContent='episode '+n;
   const del=document.createElement('button');del.className='ep-nav-del';del.textContent='×';
   del.onclick=e=>{e.preventDefault();e.stopPropagation();removeEpisode(n);};

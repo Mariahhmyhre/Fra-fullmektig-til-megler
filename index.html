@@ -362,7 +362,7 @@
   </style>
 <meta name="pm-saved" content="1"><meta name="pm-public" content="1"></head>
 <body class="">
-<div id="progress" style="width: 100%;"></div>
+<div id="progress" style="width: 0%;"></div>
 
 <!-- VERKTØYBOKS (skjules i public) -->
 
@@ -385,14 +385,14 @@
   <div class="hero-overlay"></div>
   
   <nav class="hero-nav" id="main-nav" data-ep-init="1">
-    <a href="#" class="active" data-page="1">August</a>
-    <a href="#" data-page="2">episode 2</a>
-    <a href="#" data-page="3">episode 3</a>
-    <a href="#" data-page="4">episode 4</a>
+    <a href="#" class="active" data-page="1" onclick="goToPage(1);return false;">August</a>
+    <a href="#" data-page="2" onclick="goToPage(2);return false;">episode 2</a>
+    <a href="#" data-page="3" onclick="goToPage(3);return false;">episode 3</a>
+    <a href="#" data-page="4" onclick="goToPage(4);return false;">episode 4</a>
   </nav>
   <div class="hero-content">
-    <p class="hero-eyebrow" data-ck="pm-ce-1379">Felix Green — en fortelling</p>
-    <h1 class="hero-title" data-ck="pm-ce-1380">Fra fullmektig<span class="hero-title-line2">til megler</span></h1>
+    <p class="hero-eyebrow" data-ck="pm-ce-1402">Felix Green — en fortelling</p>
+    <h1 class="hero-title" data-ck="pm-ce-1403">Fra fullmektig<span class="hero-title-line2">til megler</span></h1>
   </div>
 </header>
 
@@ -417,7 +417,7 @@
 
   
 
-  <div class="post quote-block visible pm-selected" data-drag-init="1" data-rp-init="1">
+  <div class="post quote-block visible pm-selected" data-drag-init="1" data-rp-init="1" style="position: relative;">
       <blockquote><span data-ck="pm-ce-1389">ree[ skriv sitat her ]</span><cite data-ck="pm-ce-1390">Felix Green</cite></blockquote></div>
 
   <!-- QUIZ 1 -->
@@ -601,11 +601,11 @@
   <div class="post quote-block visible" data-drag-init="1" data-rp-init="1" style="position: relative;"><blockquote><span data-ck="pm-ce-438">"Jeg strekker meg ekstra langt for å oppnå et godt resultat. Det vil aldri forandre seg."</span><cite data-ck="pm-ce-439">Felix Green — Autorisert eiendomsmegler, PrivatMegleren Park</cite></blockquote></div>
 </main>
 <section class="cta-section">
-  <p class="cta-label" data-ck="pm-ce-1400">din tur</p>
-  <h2 class="cta-title" data-ck="pm-ce-1381">Er dette veien din?</h2>
+  <p class="cta-label">din tur</p>
+  <h2 class="cta-title" data-ck="pm-ce-1404">Er dette veien din?</h2>
   <div class="cta-btns">
-    <a href="https://privatmegleren.no/stillinger" class="btn btn-fill" data-href="https://privatmegleren.no/stillinger" data-ck="pm-ce-1382">se ledige stillinger</a>
-    <a href="https://privatmegleren.no/megler/felix-green" class="btn btn-outline" data-href="https://privatmegleren.no/megler/felix-green" data-ck="pm-ce-1383">les mer om felix</a>
+    <a href="https://privatmegleren.no/stillinger" class="btn btn-fill" data-href="https://privatmegleren.no/stillinger" data-ck="pm-ce-1405">se ledige stillinger</a>
+    <a href="https://privatmegleren.no/megler/felix-green" class="btn btn-outline" data-href="https://privatmegleren.no/megler/felix-green" data-ck="pm-ce-1406">les mer om felix</a>
   </div>
 </section>
 </div>
@@ -621,31 +621,29 @@
   <a class="page-btn arrow" id="pb-next" onclick="changePage(1)" title="Neste">&gt;</a>
   <a class="page-btn arrow" id="pb-last" onclick="goToPage(totalPages())" title="Siste">&gt;&gt;</a>
 </div>
-<footer><img src="media/m3.png" alt="PrivatMegleren"><p data-ck="pm-ce-1401">© PrivatMegleren Park</p></footer>
+<footer><img src="media/m3.png" alt="PrivatMegleren"><p>© PrivatMegleren Park</p></footer>
 
 <script>
 // ── STICKY NAV ──
 const stickyNav=document.getElementById('sticky-nav'), dropdown=document.getElementById('snav-dropdown'), burgerBtn=document.getElementById('burger-btn'), heroEl=document.getElementById('hero-section'), prog=document.getElementById('progress');
 function updateStickyNav(){
   const h=heroEl?heroEl.offsetHeight:window.innerHeight;
-  stickyNav.classList.toggle('visible',window.scrollY>h-80);
+  if(stickyNav)stickyNav.classList.toggle('visible',window.scrollY>h-80);
   const total=document.documentElement.scrollHeight-window.innerHeight;
-  if(total>0)prog.style.width=(window.scrollY/total*100)+'%';
+  if(total>0&&prog)prog.style.width=(window.scrollY/total*100)+'%';
 }
 window.addEventListener('scroll',updateStickyNav);
 // Kjør én gang etter at siden er lastet (i tilfelle allerede scrollet eller hero-høyde endret seg)
 setTimeout(updateStickyNav,120);
-function toggleMenu(){const o=dropdown.classList.toggle('open');burgerBtn.classList.toggle('open',o);}
+function toggleMenu(){if(dropdown)dropdown.classList.toggle('open');if(burgerBtn)burgerBtn.classList.toggle('open');}
 // Hover proximity: show dropdown when mouse enters nav or dropdown, hide on leave
 let _menuHideTimer=null;
-function _showMenu(){clearTimeout(_menuHideTimer);dropdown.classList.add('open');burgerBtn.classList.add('open');}
-function _hideMenu(){_menuHideTimer=setTimeout(()=>{dropdown.classList.remove('open');burgerBtn.classList.remove('open');},180);}
-stickyNav.addEventListener('mouseenter',_showMenu);
-stickyNav.addEventListener('mouseleave',_hideMenu);
-dropdown.addEventListener('mouseenter',_showMenu);
-dropdown.addEventListener('mouseleave',_hideMenu);
+function _showMenu(){clearTimeout(_menuHideTimer);if(dropdown)dropdown.classList.add('open');if(burgerBtn)burgerBtn.classList.add('open');}
+function _hideMenu(){_menuHideTimer=setTimeout(()=>{if(dropdown)dropdown.classList.remove('open');if(burgerBtn)burgerBtn.classList.remove('open');},180);}
+if(stickyNav){stickyNav.addEventListener('mouseenter',_showMenu);stickyNav.addEventListener('mouseleave',_hideMenu);}
+if(dropdown){dropdown.addEventListener('mouseenter',_showMenu);dropdown.addEventListener('mouseleave',_hideMenu);}
 // Keep click-outside close for mobile (no hover events)
-document.addEventListener('click',e=>{if(!stickyNav.contains(e.target)&&!dropdown.contains(e.target)){clearTimeout(_menuHideTimer);dropdown.classList.remove('open');burgerBtn.classList.remove('open');}});
+document.addEventListener('click',e=>{if(stickyNav&&dropdown&&!stickyNav.contains(e.target)&&!dropdown.contains(e.target)){clearTimeout(_menuHideTimer);dropdown.classList.remove('open');burgerBtn?.classList.remove('open');}});
 
 // ── SMS ──
 const DEL_BTN=`<button class="msg-delete" onclick="this.closest('.msg').remove()">×</button>`;
@@ -782,6 +780,13 @@ if(_isPublic){
   document.querySelectorAll('[contenteditable]').forEach(el=>el.removeAttribute('contenteditable'));
   document.querySelectorAll('[spellcheck]').forEach(el=>el.removeAttribute('spellcheck'));
   document.querySelectorAll('[draggable]').forEach(el=>el.removeAttribute('draggable'));
+  // Sørg for at episode-nav fungerer (onclick fra data-page)
+  document.querySelectorAll('.hero-nav a, #main-nav a').forEach(a=>{
+    const page=a.dataset.page;
+    if(page&&!a.getAttribute('onclick')){
+      a.setAttribute('onclick','goToPage('+page+');return false;');
+    }
+  });
 }
 
 // ── REDAKTØRGATE ──
@@ -1108,10 +1113,15 @@ function buildPublicHTML(accessCode){
   d.querySelectorAll('[contenteditable]').forEach(el=>el.removeAttribute('contenteditable'));
   d.querySelectorAll('[spellcheck]').forEach(el=>el.removeAttribute('spellcheck'));
   d.querySelectorAll('[draggable]').forEach(el=>el.removeAttribute('draggable'));
-  // Fjern onclick fra nav-lenker (behold kun navigering)
+  // Sett onclick på nav-lenker basert på data-page (sikrer at navigering alltid fungerer)
   d.querySelectorAll('.hero-nav a').forEach(a=>{
-    const m=a.getAttribute('onclick')?.match(/goToPage\(\d+\)/);
-    if(m) a.setAttribute('onclick',m[0]+';return false;');
+    const page=a.dataset.page||a.getAttribute('data-page');
+    if(page) a.setAttribute('onclick','goToPage('+page+');return false;');
+    else{
+      // Fallback: prøv å hente fra eksisterende onclick
+      const m=a.getAttribute('onclick')?.match(/goToPage\((\d+)\)/);
+      if(m) a.setAttribute('onclick','goToPage('+m[1]+');return false;');
+    }
   });
 
   // ── Fjern resize og editor-cursor på drop-zones ──
@@ -2459,10 +2469,10 @@ initObserver();
 
 // ── PAGINERING ──
 let currentPage=1;
-function goToPage(n){if(!document.getElementById('page-'+n))return;document.getElementById('pb-last')&&(document.getElementById('pb-last').onclick=()=>goToPage(totalPages()));currentPage=n;document.querySelectorAll('.page-content').forEach(p=>p.style.display='none');document.getElementById('page-'+n).style.display='block';for(let i=1;i<=4;i++){document.getElementById('pb-'+i).classList.toggle('active',i===n);const sd=document.getElementById('sdrop-'+i);if(sd)sd.classList.toggle('active',i===n);}document.querySelectorAll('#main-nav a').forEach((a,i)=>a.classList.toggle('active',i+1===n));dropdown.classList.remove('open');burgerBtn.classList.remove('open');window.scrollTo({top:heroEl.offsetHeight,behavior:'smooth'});setTimeout(initObserver,80);}
+function goToPage(n){if(!document.getElementById('page-'+n))return;document.getElementById('pb-last')&&(document.getElementById('pb-last').onclick=()=>goToPage(totalPages()));currentPage=n;document.querySelectorAll('.page-content').forEach(p=>p.style.display='none');document.getElementById('page-'+n).style.display='block';for(let i=1;i<=4;i++){const pb=document.getElementById('pb-'+i);if(pb)pb.classList.toggle('active',i===n);const sd=document.getElementById('sdrop-'+i);if(sd)sd.classList.toggle('active',i===n);}document.querySelectorAll('#main-nav a').forEach((a,i)=>a.classList.toggle('active',i+1===n));if(dropdown)dropdown.classList.remove('open');if(burgerBtn)burgerBtn.classList.remove('open');window.scrollTo({top:heroEl?heroEl.offsetHeight:0,behavior:'smooth'});setTimeout(initObserver,80);}
 function totalPages(){return document.querySelectorAll('.page-content').length;}
 function changePage(d){const n=currentPage+d;if(n>=1&&n<=4)goToPage(n);}
 </script>
 
 
-<div id="_pub-toast" style="position: fixed; bottom: 72px; left: 50%; transform: translateX(-50%); background: rgb(38, 40, 48); color: rgb(229, 228, 227); border: 1px solid rgba(229, 228, 227, 0.15); padding: 10px 24px; border-radius: 20px; font-size: 11px; letter-spacing: 0.12em; z-index: 9999; font-family: sans-serif; pointer-events: none; transition: opacity 0.4s; text-align: center; white-space: nowrap; opacity: 0;">publisert ✓ &nbsp;·&nbsp; <span style="opacity:0.5">live om ~30 sek på mariahhmyhre.github.io/Fra-fullmektig-til-megler</span></div></body></html>
+</body></html>

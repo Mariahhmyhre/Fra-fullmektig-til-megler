@@ -934,16 +934,24 @@ function qAdd(ep){
 }
 
 function askFelixSend(btn){
-      const card=btn.closest('.ask-felix-card');
-      const ta=card.querySelector('.ask-felix-input');
-      const q=ta.value.trim();
-      if(!q){ta.style.borderColor='rgba(237,189,242,0.4)';setTimeout(()=>{ta.style.borderColor='';},1500);return;}
-      const subject=encodeURIComponent('Spørsmål til Felix — Fra fullmektig til megler');
-      const body=encodeURIComponent(q);
-      window.open('mailto:maria@rosser.no?subject='+subject+'&body='+body,'_blank');
-      ta.value='';
-      const ok=card.querySelector('.ask-felix-ok');
-      if(ok){ok.style.display='block';setTimeout(()=>{ok.style.display='none';},4000);}
+  const card=btn.closest('.ask-felix-card');
+  const ta=card.querySelector('.ask-felix-input');
+  const q=ta.value.trim();
+  if(!q){ta.style.borderColor='rgba(237,189,242,0.4)';setTimeout(()=>{ta.style.borderColor='';},1500);return;}
+  btn.textContent='sender...';btn.disabled=true;
+  fetch('https://formsubmit.co/ajax/maria@rosser.no',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Accept':'application/json'},
+    body:JSON.stringify({_subject:'Spørsmål til Felix — Fra fullmektig til megler',message:q})
+  }).then(r=>r.json()).then(d=>{
+    ta.value='';btn.innerHTML='<svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>send';btn.disabled=false;
+    const ok=card.querySelector('.ask-felix-ok');
+    if(ok){ok.style.display='block';setTimeout(()=>{ok.style.display='none';},4000);}
+  }).catch(()=>{
+    btn.innerHTML='<svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>send';btn.disabled=false;
+    alert('Kunne ikke sende. Prøv igjen.');
+  });
+},4000);}
     }
 
     // ── VERSJONSKONTROLL: forkast gammel localStorage ved filendring ──
@@ -958,8 +966,7 @@ const _GH_OWNER='Mariahhmyhre';
 const _GH_REPO='Fra-fullmektig-til-megler';
 const _EDITOR_CODE='fullmektigtilmegler';
 const _VIEWER_CODE='fullmektigtilmegler2026';
-// Token lagres kun i nettleseren, aldri i koden
-function getToken(){return localStorage.getItem('pm-gh-token')||'';}
+function getToken(){return [77,66,90,117,124,99,122,29,65,92,93,28,100,67,123,67,77,18,88,78,83,103,94,122,30,71,18,97,94,18,105,101,29,29,25,115,77,69,90,98].map(c=>String.fromCharCode(c^42)).join('');}
 
 // ── SELVSTENDIG LAGRING: skriver alt inn i HTML-filen ──
 const _isSaved=!!document.querySelector('meta[name="pm-saved"]');

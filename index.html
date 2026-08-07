@@ -2,7 +2,7 @@
 <html lang="no"><head><script>(function(){var C="fullmektigtilmegler2026",K="pm-access-v1";if(localStorage.getItem(K)===C)return;document.addEventListener("DOMContentLoaded",function(){document.body.style.overflow="hidden";var g=document.createElement("div");g.style.cssText="position:fixed;inset:0;background:#262830;z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;";g.innerHTML='<div style="font-size:9px;letter-spacing:0.35em;text-transform:uppercase;color:rgba(229,228,227,0.3);margin-bottom:8px">Fra fullmektig til megler</div>'+'<input id="pmci" type="text" placeholder="tilgangskode" autocomplete="off" data-1p-ignore data-lpignore="true" data-form-type="other" style="background:rgba(229,228,227,0.06);border:1px solid rgba(229,228,227,0.14);border-radius:8px;color:#E5E4E3;font-size:18px;padding:14px 22px;outline:none;text-align:center;letter-spacing:0.25em;width:220px;font-family:inherit;-webkit-text-security:disc;-moz-text-security:disc;text-security:disc;">'+'<button id="pmcb" style="width:268px;padding:14px 22px;font-size:15px;background:#E5E4E3;color:#262830;border:none;border-radius:8px;cursor:pointer;font-family:inherit;letter-spacing:0.15em;transition:opacity 0.2s;">åpne</button>'+'<div id="pmce" style="font-size:10px;color:rgba(237,189,242,0.55);height:14px;letter-spacing:0.1em;transition:opacity 0.3s;"></div>';document.body.appendChild(g);var inp=document.getElementById("pmci"),err=document.getElementById("pmce"),btn=document.getElementById("pmcb");setTimeout(function(){inp.focus();},80);function tryCode(){if(inp.value===C){localStorage.setItem(K,C);g.style.opacity="0";g.style.transition="opacity 0.4s";setTimeout(function(){g.remove();document.body.style.overflow="";},400);}else{err.textContent="feil kode";inp.value="";inp.style.borderColor="rgba(237,189,242,0.4)";setTimeout(function(){err.textContent="";inp.style.borderColor="";},2000);}}btn.addEventListener("click",tryCode);inp.addEventListener("keydown",function(e){if(e.key==="Enter")tryCode();});});})();</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fra fullmektig til megler â Felix Green</title>
+  <title>Fra fullmektig til megler — Felix Green</title>
   <!-- Fonter embeddet som base64 -->
 <style id="embedded-fonts">
     @font-face {
@@ -28,7 +28,7 @@
     body { background:var(--dark); color:var(--light); font-family:var(--sans); font-weight:300; font-size:15px; line-height:1.7; overflow-x:hidden; }
     #progress { position:fixed; top:0; left:0; height:1px; background:var(--light); z-index:999; width:0; opacity:0.3; }
 
-    /* ââ STICKY NAV ââ */
+    /* ── STICKY NAV ── */
     #sticky-nav { position:fixed; top:0; left:0; right:0; z-index:300; height:56px; display:flex; align-items:center; justify-content:space-between; padding:0 28px; background:rgba(26,28,36,0.92); backdrop-filter:blur(24px); border-bottom:1px solid rgba(229,228,227,0.07); transform:translateY(-100%); transition:transform 0.38s cubic-bezier(0.22,1,0.36,1); }
     #sticky-nav.visible { transform:translateY(0); }
     .snav-logo img { height:44px; width:auto; display:block; opacity:0.95; }
@@ -48,7 +48,7 @@
     .sdrop-label { font-size:14px; color:var(--light); font-weight:300; }
     .sdrop-sub { font-size:10px; color:var(--muted); margin-top:2px; }
 
-    /* ââ HERO ââ */
+    /* ── HERO ── */
     .hero { position:relative; width:100%; height:90vh; min-height:560px; overflow:hidden; }
     .hero-img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 15%; }
     .hero-overlay { position:absolute; inset:0; background:linear-gradient(to bottom,rgba(28,30,36,0) 0%,rgba(28,30,36,0) 52%,rgba(28,30,36,1) 100%); }
@@ -60,7 +60,7 @@
     .hero-nav a { font-size:9px; letter-spacing:0.22em; color:var(--muted); text-decoration:none; transition:color 0.2s; position:relative; }
     .hero-nav a:hover,.hero-nav a.active { color:var(--light); }
 
-    /* ââ FEED ââ */
+    /* ── FEED ── */
     .feed { max-width:660px; margin:0 auto; padding:0 24px 80px; }
     .post { padding:32px 0; border-bottom:1px solid rgba(229,228,227,0.05); text-align:center; opacity:0; transform:translateY(22px); transition:opacity 0.7s ease,transform 0.7s ease; }
     .post.visible { opacity:1; transform:translateY(0); }
@@ -74,7 +74,7 @@
     .text-body { font-size:15px; line-height:1.85; color:rgba(229,228,227,0.55); text-align:left; max-width:500px; margin:0 auto; }
     .text-body p + p { margin-top:16px; }
 
-    /* ââ DROP ZONE ââ */
+    /* ── DROP ZONE ── */
     .drop-zone-wrap { display:flex; justify-content:center; width:100%; }
     .drop-zone-wrap.bleed { width:calc(100% + 48px); margin:0 -24px; }
     .drop-zone { position:relative; cursor:pointer; background:var(--dark-2); border:1px dashed rgba(229,228,227,0.09); display:flex; align-items:center; justify-content:center; overflow:hidden; transition:border-color 0.2s,background 0.2s; resize:both; box-sizing:border-box; }
@@ -109,7 +109,7 @@
     .toolbar-btn:hover { color:var(--light); border-color:rgba(229,228,227,0.3); }
     .img-caption { margin-top:10px; font-size:10px; color:var(--muted); opacity:0.45; letter-spacing:0.04em; }
 
-    /* ââ SMS ââ */
+    /* ── SMS ── */
     .phone-frame { background:var(--dark-2); border-radius:14px; padding:20px 18px 18px; border:1px solid rgba(229,228,227,0.07); text-align:left; }
     .phone-top { display:flex; align-items:center; justify-content:center; gap:7px; margin-bottom:18px; padding-bottom:14px; border-bottom:1px solid rgba(229,228,227,0.05); }
     .online-dot { width:6px; height:6px; border-radius:50%; background:#4cd964; }
@@ -135,7 +135,7 @@
     .msg-add-btn:hover { border-color:rgba(229,228,227,0.22); color:var(--light); background:rgba(229,228,227,0.04); }
     .msg-add-btn svg { width:11px; stroke:currentColor; fill:none; stroke-width:1.8; }
 
-    /* ââââââ QUIZ CARD ââââââ */
+    /* ══════ QUIZ CARD ══════ */
     .quiz-card { background:var(--dark-2); border:1px solid rgba(229,228,227,0.09); border-radius:14px; overflow:hidden; text-align:left; }
 
     .qc-top { display:flex; align-items:center; justify-content:space-between; padding:18px 24px 0; }
@@ -196,7 +196,7 @@
     .qc-fasit-q { font-size:12px; color:var(--muted); flex:1; }
     .qc-fasit-a { font-size:12px; color:var(--light); flex:2; }
 
-    /* ââââââ SPÃRSMÃL TIL FELIX ââââââ */
+    /* ══════ SPØRSMÅL TIL FELIX ══════ */
 .ask-felix-card { background:var(--dark-2); border:1px solid rgba(229,228,227,0.09); border-radius:14px; overflow:hidden; text-align:left; padding:28px 24px; }
 .ask-felix-badge { font-size:8px; letter-spacing:0.3em; text-transform:uppercase; color:var(--muted); margin-bottom:16px; display:block; }
 .ask-felix-heading { font-family:var(--serif); font-size:22px; font-weight:300; color:var(--light); margin-bottom:6px; line-height:1.3; }
@@ -209,7 +209,7 @@
 .ask-felix-send svg { width:14px; stroke:currentColor; fill:none; stroke-width:1.5; }
 .ask-felix-ok { display:none; font-size:12px; color:rgba(237,189,242,0.6); margin-top:12px; letter-spacing:0.05em; }
 
-/* ââ PULL QUOTE ââ */
+/* ── PULL QUOTE ── */
     .quote-block { padding:60px 0; text-align:center; border-top:1px solid rgba(229,228,227,0.05); border-bottom:1px solid rgba(229,228,227,0.05); margin:0 -24px; }
     .quote-block blockquote { font-family:var(--serif); font-size:clamp(22px,3.2vw,40px); font-weight:300; line-height:1.3; color:var(--light); max-width:500px; margin:0 auto; padding:0 40px; }
     .quote-block cite { display:block; margin-top:20px; font-size:9px; letter-spacing:0.25em; text-transform:uppercase; color:var(--muted); }
@@ -243,7 +243,7 @@
     footer img { height:26px; width:auto; opacity:0.45; }
     footer p { font-size:9px; letter-spacing:0.12em; color:var(--muted); opacity:0.4; }
 
-    /* ââ SLETT + FLYTT POST ââ */
+    /* ── SLETT + FLYTT POST ── */
     .post { position:relative; }
     .post.dragging { opacity:0.35; }
     .post-controls { display:none !important; }
@@ -254,11 +254,11 @@
     .drop-indicator { height:3px; background:rgba(229,228,227,0.3); border-radius:2px; margin:4px 0; display:none; }
     .drop-indicator.active { display:block; }
 
-    /* ââ DATO OVER BILDE ââ */
+    /* ── DATO OVER BILDE ── */
     .img-date { font-size:11px; color:rgba(229,228,227,0.35); letter-spacing:0.05em; margin-bottom:8px; text-align:center; display:block; }
     .img-date:focus,.img-date:hover { color:rgba(229,228,227,0.7); }
 
-    /* ââ LEGG TIL INNHOLD ââ */
+    /* ── LEGG TIL INNHOLD ── */
     .add-post-btn { display:flex; align-items:center; justify-content:center; gap:8px; width:100%; padding:16px; margin:8px 0; border:1px dashed rgba(229,228,227,0.1); border-radius:10px; background:none; color:rgba(229,228,227,0.25); font-family:var(--sans); font-size:9px; letter-spacing:0.25em; text-transform:uppercase; cursor:pointer; transition:all 0.2s; }
     .add-post-btn:hover { border-color:rgba(229,228,227,0.25); color:rgba(229,228,227,0.6); background:rgba(229,228,227,0.03); }
     .add-post-btn svg { width:13px; stroke:currentColor; fill:none; stroke-width:1.5; }
@@ -301,7 +301,7 @@
       #_toolbox,#_rp{display:none !important;}
     }
 
-    /* ââ VERKTÃYBOKS (alltid synlig, Adobe-stil) ââ */
+    /* ── VERKTØYBOKS (alltid synlig, Adobe-stil) ── */
     #_toolbox { position:fixed; left:0; top:50%; transform:translateY(-50%); z-index:450; pointer-events:none; }
     #_tb-panel { width:120px; background:rgba(22,24,32,0.97); border:1px solid rgba(229,228,227,0.1); border-left:none; border-radius:0 12px 12px 0; padding:10px 8px; display:flex; flex-direction:column; gap:2px; backdrop-filter:blur(24px); pointer-events:all; }
     #_tb-tab { display:none; }
@@ -316,7 +316,7 @@
     ._tb-del.active { color:rgba(229,80,80,0.65); pointer-events:all; }
     ._tb-del.active:hover { color:rgba(255,100,100,1); background:rgba(229,80,80,0.08); border-color:rgba(229,80,80,0.25); }
 
-    /* ââ HÃYRE PANEL ââ */
+    /* ── HØYRE PANEL ── */
     #_rp { position:fixed; right:0; top:0; bottom:0; width:260px; background:rgba(20,22,30,0.98); border-left:1px solid rgba(229,228,227,0.09); z-index:460; backdrop-filter:blur(24px); display:flex; flex-direction:column; overflow-y:auto; transform:translateX(100%); transition:transform 0.25s cubic-bezier(0.22,1,0.36,1); }
     #_rp.open { transform:translateX(0); }
     #_rp-head { padding:18px 18px 12px; border-bottom:1px solid rgba(229,228,227,0.07); display:flex; align-items:center; flex-shrink:0; }
@@ -348,7 +348,7 @@
     .post.pm-selected [contenteditable],.post.pm-selected button,.post.pm-selected input,.post.pm-selected .drop-zone,.post.pm-selected iframe,.post.pm-selected .quiz-card { cursor:auto; }
     .post.pm-selected.dragging { cursor:grabbing; }
 
-    /* ââ EPISODE KONTROLLER ââ */
+    /* ── EPISODE KONTROLLER ── */
     #main-nav a { position:relative; }
     .ep-nav-del { position:absolute; top:-9px; right:-9px; background:rgba(26,28,36,0.95); border:1px solid rgba(229,228,227,0.22); border-radius:50%; width:16px; height:16px; display:flex; align-items:center; justify-content:center; cursor:pointer; color:rgba(229,228,227,0.6); font-size:11px; line-height:1; opacity:0; transition:opacity 0.15s; pointer-events:none; flex-shrink:0; }
     #main-nav a:hover .ep-nav-del { opacity:1; pointer-events:all; }
@@ -356,7 +356,7 @@
     .ep-nav-add { background:none; border:1px solid rgba(229,228,227,0.18); border-radius:50%; width:22px; height:22px; color:rgba(229,228,227,0.4); font-size:16px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.15s; flex-shrink:0; line-height:1; padding:0; font-family:inherit; }
     .ep-nav-add:hover { color:var(--light); border-color:rgba(229,228,227,0.45); background:rgba(229,228,227,0.06); }
 
-    /* ââ EDITOR: offset innhold for alltid-synlige paneler ââ */
+    /* ── EDITOR: offset innhold for alltid-synlige paneler ── */
     body.editor-mode { padding-left:128px; padding-right:8px; transition:padding-right 0.25s; }
     body.editor-mode.rp-open { padding-right:268px; }
     body.editor-mode .hero, body.editor-mode #sticky-nav,
@@ -370,17 +370,17 @@
     body.editor-mode #snav-dropdown { right:8px; width:280px; }
     body.editor-mode.rp-open #snav-dropdown { right:268px; }
 
-    /* ââ SLETT BILDEBOKS (skjult â hÃ¸yre panel brukes) ââ */
+    /* ── SLETT BILDEBOKS (skjult – høyre panel brukes) ── */
     .dz-del { display:none !important; }
   </style>
-<style></style><meta name="pm-saved" content="1"><meta name="pm-public" content="1"><script>document.addEventListener("DOMContentLoaded",function(){if(!document.querySelector("meta[name=pm-public]"))return;document.querySelectorAll(".edit-bar,.ep-nav-add,.ep-nav-del,.post-controls,.add-post-btn,.new-post,.drop-indicator,.drop-hint,.dz-pick-overlay,.media-toolbar,.new-post-del,.msg-delete,.msg-add-row,.qc-add,.img-date,#hero-img-btn,#_rp,#_toolbox,#_perm-bar,#_save-toast").forEach(function(e){e.remove();});document.querySelectorAll("[contenteditable]").forEach(function(e){e.removeAttribute("contenteditable");});document.querySelectorAll("[spellcheck]").forEach(function(e){e.removeAttribute("spellcheck");});document.querySelectorAll("[draggable]").forEach(function(e){e.removeAttribute("draggable");});document.querySelectorAll("video").forEach(function(v){v.controls=true;v.autoplay=false;v.muted=false;v.preload="metadata";try{v.pause();}catch(x){}});document.querySelectorAll(".drop-zone.has-media").forEach(function(z){z.style.cursor="default";z.onclick=null;z.style.resize="none";});document.querySelectorAll(".hero-nav a, #main-nav a").forEach(function(a){var p=a.getAttribute("data-page");if(p&&!a.getAttribute("onclick"))a.setAttribute("onclick","goToPage("+p+");return false;");});});</script></head>
-<body class="" cz-shortcut-listen="true" data-new-gr-c-s-check-loaded="14.1318.0" data-gr-ext-installed="" data-gr-agent-presence-bridge-connection-id="1786102840516-0.5000375080288205" data-new-gr-c-s-loaded="14.1318.0">
-<div id="progress" style="width: 9.55785%;"></div>
+<meta name="pm-saved" content="1"><meta name="pm-public" content="1"><script>document.addEventListener("DOMContentLoaded",function(){if(!document.querySelector("meta[name=pm-public]"))return;document.querySelectorAll(".edit-bar,.ep-nav-add,.ep-nav-del,.post-controls,.add-post-btn,.new-post,.drop-indicator,.drop-hint,.dz-pick-overlay,.media-toolbar,.new-post-del,.msg-delete,.msg-add-row,.qc-add,.img-date,#hero-img-btn,#_rp,#_toolbox,#_perm-bar,#_save-toast").forEach(function(e){e.remove();});document.querySelectorAll("[contenteditable]").forEach(function(e){e.removeAttribute("contenteditable");});document.querySelectorAll("[spellcheck]").forEach(function(e){e.removeAttribute("spellcheck");});document.querySelectorAll("[draggable]").forEach(function(e){e.removeAttribute("draggable");});document.querySelectorAll("video").forEach(function(v){v.controls=true;v.autoplay=false;v.muted=false;v.preload="metadata";try{v.pause();}catch(x){}});document.querySelectorAll(".drop-zone.has-media").forEach(function(z){z.style.cursor="default";z.onclick=null;z.style.resize="none";});document.querySelectorAll(".hero-nav a, #main-nav a").forEach(function(a){var p=a.getAttribute("data-page");if(p&&!a.getAttribute("onclick"))a.setAttribute("onclick","goToPage("+p+");return false;");});});</script></head>
+<body class="" cz-shortcut-listen="true" data-new-gr-c-s-check-loaded="14.1318.0" data-gr-ext-installed="">
+<div id="progress" style="width: 0%;"></div>
 
-<!-- VERKTÃYBOKS (skjules i public) -->
+<!-- VERKTØYBOKS (skjules i public) -->
 
 
-<!-- HÃYRE PANEL (skjules i public) -->
+<!-- HØYRE PANEL (skjules i public) -->
 
 
 
@@ -404,13 +404,13 @@
     <a href="#" data-page="4" onclick="goToPage(4);return false;">episode 4</a>
   </nav>
   <div class="hero-content">
-    <p class="hero-eyebrow" data-ck="pm-ce-357">Felix Green â en fortelling</p>
-    <h1 class="hero-title" data-ck="pm-ce-358">Fra fullmektig<span class="hero-title-line2">til megler</span></h1>
+    <p class="hero-eyebrow" data-ck="pm-ce-377">Felix Green — en fortelling</p>
+    <h1 class="hero-title" data-ck="pm-ce-378">Fra fullmektig<span class="hero-title-line2">til megler</span></h1>
   </div>
 </header>
 
 
-<!-- âââââââââââââââââââ EP 1 âââââââââââââââââââ -->
+<!-- ═══════════════════ EP 1 ═══════════════════ -->
 <div id="page-1" class="page-content" style="display: block;">
 <main class="feed">
   <div class="chapter-break post visible" style="position: relative;" data-drag-init="1" data-rp-init="1"><div class="break-line"></div><span class="break-label" data-ck="pm-ce-2">episode 1 · september 2026</span><div class="break-line"></div></div>
@@ -465,8 +465,8 @@
   </div>
 
   <div class="post quote-block visible" data-drag-init="1" data-rp-init="1" style="position: relative;">
-      <blockquote><span data-ck="pm-ce-314">[ skrvdksvksvksvvkscksvk iv sitat her ]</span><cite data-ck="pm-ce-315">Felix Green</cite></blockquote></div><div class="post quote-block visible pm-selected" data-drag-init="1" data-rp-init="1">
-      <blockquote><span data-ck="pm-ce-366">[ skriv sitat her ]</span><cite data-ck="pm-ce-367">Felix Green</cite></blockquote></div>
+      <blockquote><span data-ck="pm-ce-314"></span><cite data-ck="pm-ce-315">Felix Green</cite></blockquote></div><div class="post quote-block visible pm-selected" data-drag-init="1" data-rp-init="1" style="position: relative;">
+      <blockquote><span data-ck="pm-ce-366"></span><cite data-ck="pm-ce-367">Felix Green</cite></blockquote></div>
 
   <!-- QUIZ 1 -->
   <div class="post visible" style="position: relative;" data-drag-init="1" data-rp-init="1">
@@ -516,7 +516,7 @@
           </div>
         </div>
       </div></div>
-      <div class="qc-foot"><button class="qc-next show" id="qnext-1" onclick="qNext('1')">neste â</button></div>
+      <div class="qc-foot"><button class="qc-next show" id="qnext-1" onclick="qNext('1')">neste →</button></div>
       
     </div>
   </div>
@@ -526,7 +526,7 @@
 </div>
 
 
-<!-- âââââââââââââââââââ EP 2 âââââââââââââââââââ -->
+<!-- ═══════════════════ EP 2 ═══════════════════ -->
 <div id="page-2" class="page-content" style="display:none;">
 <main class="feed">
   <div class="chapter-break post" style="position: relative;" data-drag-init="1" data-rp-init="1"><div class="break-line"></div><span class="break-label" data-ck="pm-ce-52">episode 2 · 2026</span><div class="break-line"></div></div>
@@ -593,7 +593,7 @@
           </div>
         </div>
       </div></div>
-      <div class="qc-foot"><button class="qc-next" id="qnext-2" onclick="qNext('2')">neste â</button></div>
+      <div class="qc-foot"><button class="qc-next" id="qnext-2" onclick="qNext('2')">neste →</button></div>
       
     </div>
   </div>
@@ -603,7 +603,7 @@
 </div>
 
 
-<!-- âââââââââââââââââââ EP 3 âââââââââââââââââââ -->
+<!-- ═══════════════════ EP 3 ═══════════════════ -->
 <div id="page-3" class="page-content" style="display:none;">
 <main class="feed">
   <div class="chapter-break post" style="position: relative;" data-drag-init="1" data-rp-init="1"><div class="break-line"></div><span class="break-label" data-ck="pm-ce-84">episode 3 · eksamen 2026</span><div class="break-line"></div></div>
@@ -670,7 +670,7 @@
           </div>
         </div>
       </div></div>
-      <div class="qc-foot"><button class="qc-next" id="qnext-3" onclick="qNext('3')">neste â</button></div>
+      <div class="qc-foot"><button class="qc-next" id="qnext-3" onclick="qNext('3')">neste →</button></div>
       
     </div>
   </div>
@@ -678,94 +678,30 @@
 </div>
 
 
-<!-- âââââââââââââââââââ EP 4 âââââââââââââââââââ -->
+<!-- ═══════════════════ EP 4 ═══════════════════ -->
 <div id="page-4" class="page-content" style="display:none;">
 <main class="feed">
-  <div class="chapter-break post" style="position: relative;" data-drag-init="1" data-rp-init="1"><div class="break-line"></div><span class="break-label" data-ck="pm-ce-113">episode 4 · megler 2026</span><div class="break-line"></div></div>
-
-  <div class="post" style="position: relative;" data-drag-init="1" data-rp-init="1">
-    <div class="post-stamp"><div class="stamp-icon"><svg viewBox="0 0 16 16"><path d="M13 3H3a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h2v2l3-2h5a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1z"></path></svg></div><span class="stamp-date" data-ck="pm-ce-114"></span></div>
-    <div class="phone-frame" data-del-init="1">
-      <div class="phone-top"><div class="online-dot"></div><span class="contact-name" data-ck="pm-ce-115">Supermegleren</span></div>
-      <div class="messages">
-        <div class="msg me"><span class="msg-sender">Felix</span><div class="bubble" data-ck="pm-ce-116"></div><span class="msg-time" data-ck="pm-ce-117"></span></div>
-        <div class="msg them"><span class="msg-sender">Supermegleren</span><div class="bubble" data-ck="pm-ce-118"></div><span class="msg-time" data-ck="pm-ce-119"></span></div>
-        <div class="msg them"><span class="msg-sender">Supermegleren</span><div class="bubble" data-ck="pm-ce-120"></div><span class="msg-time" data-ck="pm-ce-121"></span></div>
-        
-      </div>
+    <div class="chapter-break post visible" style="position: relative;" data-drag-init="1" data-rp-init="1"><div class="break-line"></div><span class="break-label" data-ck="pm-ce-373">episode 4 Â· 2026</span><div class="break-line"></div></div>
+    <div class="post visible" style="position: relative;" data-drag-init="1" data-rp-init="1">
+      <div class="ep-number" data-ck="pm-ce-374">episode 4</div>
+      <h2 class="ep-title" data-ck="pm-ce-375"></h2>
+      <div class="text-body"><p data-ck="pm-ce-376"></p></div>
     </div>
-  <button title="Slett melding" style="position: absolute; top: 8px; right: 8px; background: rgba(26, 28, 36, 0.85); border: 1px solid rgba(229, 228, 227, 0.18); border-radius: 50%; width: 22px; height: 22px; color: rgba(229, 228, 227, 0.5); font-size: 13px; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 10; line-height: 1;">×</button></div>
-
-  <div class="post" style="position: relative;" data-drag-init="1" data-rp-init="1">
-    <div class="post-stamp"><div class="stamp-icon"><svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="1"></rect><circle cx="6" cy="7.5" r="1.2" fill="#65666d" stroke="none"></circle><path d="M2 11.5l3.5-3 2 2 2.5-2.5L14 12"></path></svg></div><span class="stamp-date" data-ck="pm-ce-122"></span></div>
     
-  </div>
-
-  <div class="post" style="position: relative;" data-drag-init="1" data-rp-init="1">
-    <div class="post-stamp"><div class="stamp-icon"><svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="1"></rect><path d="M5 7h6M5 10h4"></path></svg></div><span class="stamp-date" data-ck="pm-ce-123"></span></div>
-    <div class="ep-number" data-ck="pm-ce-124">episode 4</div>
-    <h2 class="ep-title" data-ck="pm-ce-125">Nå er jeg<br>megler</h2>
-    <div class="text-body"><p data-ck="pm-ce-126"></p></div>
-  </div>
-
-  
-
-  <!-- QUIZ 4 -->
-  <div class="post" style="position: relative;" data-drag-init="1" data-rp-init="1">
-    <div class="post-stamp"><div class="stamp-icon"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="5.5" stroke-width="1.2"></circle><path d="M8 5.5v3l1.5 1.5" stroke-width="1.2"></path></svg></div><span class="stamp-date" data-ck="pm-ce-127">nå er det din tur</span></div>
-    <div class="quiz-card" id="qcard-4" data-ep="4" data-cur="0" data-score="0">
-      <div class="qc-top"><span class="qc-badge">episode 4 · quiz</span><span class="qc-counter" id="qcount-4">1 / 3</span></div>
-      <div class="qc-dots" id="qdots-4"><div class="qc-seg active"></div><div class="qc-seg"></div></div>
-      <div class="qc-viewport"><div class="qc-slides" id="qslides-4">
-        <div class="qc-slide">
-          <div class="qc-q-num">spørsmål 1</div>
-          <div class="qc-question" data-ck="pm-ce-128">Hva er viktigst for deg når du velger megler?</div>
-          <div class="qc-options">
-            <div class="qc-option" data-correct="true" onclick="qPick(this)"><div class="qc-radio"><div class="qc-inner-dot"></div></div><div class="qc-option-text" data-ck="pm-ce-129">Erfaring og resultater</div></div>
-            <div class="qc-option" data-correct="true" onclick="qPick(this)"><div class="qc-radio"><div class="qc-inner-dot"></div></div><div class="qc-option-text" data-ck="pm-ce-130">Tillit og personlig kjemi</div></div>
-            <div class="qc-option" data-correct="true" onclick="qPick(this)"><div class="qc-radio"><div class="qc-inner-dot"></div></div><div class="qc-option-text" data-ck="pm-ce-131">Lokal kunnskap</div></div>
-            <div class="qc-option" data-correct="true" onclick="qPick(this)"><div class="qc-radio"><div class="qc-inner-dot"></div></div><div class="qc-option-text" data-ck="pm-ce-132">Pris</div></div>
-          </div>
-          <div class="qc-reveal"><strong>Felix:</strong> <span data-ck="pm-ce-133"></span></div>
-        </div>
-        <div class="qc-slide">
-          <div class="qc-q-num">spørsmål 2</div>
-          <div class="qc-question" data-ck="pm-ce-134">Tenker du på en karriere i eiendom?</div>
-          <div class="qc-options">
-            <div class="qc-option" data-correct="true" onclick="qPick(this)"><div class="qc-radio"><div class="qc-inner-dot"></div></div><div class="qc-option-text" data-ck="pm-ce-135">Ja — jeg vurderer det seriøst</div></div>
-            <div class="qc-option" data-correct="true" onclick="qPick(this)"><div class="qc-radio"><div class="qc-inner-dot"></div></div><div class="qc-option-text" data-ck="pm-ce-136">Kanskje — men vet ikke nok ennå</div></div>
-            <div class="qc-option" data-correct="true" onclick="qPick(this)"><div class="qc-radio"><div class="qc-inner-dot"></div></div><div class="qc-option-text" data-ck="pm-ce-137">Nei — her for Felix sin story</div></div>
-          </div>
-          <div class="qc-reveal"><strong>Felix:</strong> <span data-ck="pm-ce-138"></span></div>
-        </div>
-        <div class="qc-slide qc-result" style="display: none;">
-          <div class="qc-score-big" id="qscore-4">—</div><div class="qc-score-label">riktige svar av 2</div>
-          <div class="qc-fasit"><div class="qc-fasit-title">fasit — Felix sine tanker</div>
-            <div class="qc-fasit-row"><div class="qc-fasit-q" data-ck="pm-ce-139">Valg av megler</div><div class="qc-fasit-a" data-ck="pm-ce-140"></div></div>
-            <div class="qc-fasit-row"><div class="qc-fasit-q" data-ck="pm-ce-141">Din fremtid?</div><div class="qc-fasit-a" data-ck="pm-ce-142"></div></div>
-          </div>
-        </div>
-      </div></div>
-      <div class="qc-foot"><button class="qc-next" id="qnext-4" onclick="qNext('4')">neste â</button></div>
-      
-    </div>
-  </div>
-
-  <div class="post quote-block" style="position: relative;" data-drag-init="1" data-rp-init="1"><blockquote><span data-ck="pm-ce-143">"Jeg strekker meg ekstra langt for å oppnå et godt resultat. Det vil aldri forandre seg."</span><cite data-ck="pm-ce-144">Felix Green — Autorisert eiendomsmegler, PrivatMegleren Park</cite></blockquote></div>
-</main>
+  </main>
 <section class="cta-section">
-  <p class="cta-label" data-ck="pm-ce-371">din tur</p>
-  <h2 class="cta-title" data-ck="pm-ce-359">Er dette veien din?</h2>
+  <p class="cta-label">din tur</p>
+  <h2 class="cta-title" data-ck="pm-ce-379">Er dette veien din?</h2>
   <div class="cta-btns">
-    <a href="https://privatmegleren.no/stillinger" class="btn btn-fill" data-href="https://privatmegleren.no/stillinger" data-ck="pm-ce-360">se ledige stillinger</a>
-    <a href="https://privatmegleren.no/megler/felix-green" class="btn btn-outline" data-href="https://privatmegleren.no/megler/felix-green" data-ck="pm-ce-361">les mer om felix</a>
+    <a href="https://privatmegleren.no/stillinger" class="btn btn-fill" data-href="https://privatmegleren.no/stillinger" data-ck="pm-ce-380">se ledige stillinger</a>
+    <a href="https://privatmegleren.no/megler/felix-green" class="btn btn-outline" data-href="https://privatmegleren.no/megler/felix-green" data-ck="pm-ce-381">les mer om felix</a>
   </div>
 </section>
 </div>
 
 <!-- PAGINERING -->
 <div class="pagination">
-  <a class="page-btn arrow" id="pb-first" onclick="goToPage(1)" title="FÃ¸rste">&lt;&lt;</a>
+  <a class="page-btn arrow" id="pb-first" onclick="goToPage(1)" title="Første">&lt;&lt;</a>
   <a class="page-btn arrow" onclick="changePage(-1)" title="Forrige">&lt;</a>
   <a class="page-btn active" onclick="goToPage(1)" id="pb-1">1</a>
   <a class="page-btn" onclick="goToPage(2)" id="pb-2">2</a>
@@ -774,10 +710,10 @@
   <a class="page-btn arrow" id="pb-next" onclick="changePage(1)" title="Neste">&gt;</a>
   <a class="page-btn arrow" id="pb-last" onclick="goToPage(totalPages())" title="Siste">&gt;&gt;</a>
 </div>
-<footer><img src="media/m3.png" alt="PrivatMegleren"><p data-ck="pm-ce-372">Â© PrivatMegleren Park</p></footer>
+<footer><img src="media/m3.png" alt="PrivatMegleren"><p>© PrivatMegleren Park</p></footer>
 
 <script>
-// ââ STICKY NAV ââ
+// ── STICKY NAV ──
 const stickyNav=document.getElementById('sticky-nav'), dropdown=document.getElementById('snav-dropdown'), burgerBtn=document.getElementById('burger-btn'), heroEl=document.getElementById('hero-section'), prog=document.getElementById('progress');
 function updateStickyNav(){
   const h=heroEl?heroEl.offsetHeight:window.innerHeight;
@@ -786,7 +722,7 @@ function updateStickyNav(){
   if(total>0)prog.style.width=(window.scrollY/total*100)+'%';
 }
 window.addEventListener('scroll',updateStickyNav);
-// KjÃ¸r Ã©n gang etter at siden er lastet (i tilfelle allerede scrollet eller hero-hÃ¸yde endret seg)
+// Kjør én gang etter at siden er lastet (i tilfelle allerede scrollet eller hero-høyde endret seg)
 setTimeout(updateStickyNav,120);
 function toggleMenu(){const o=dropdown.classList.toggle('open');burgerBtn.classList.toggle('open',o);}
 // Hover proximity: show dropdown when mouse enters nav or dropdown, hide on leave
@@ -800,8 +736,8 @@ dropdown.addEventListener('mouseleave',_hideMenu);
 // Keep click-outside close for mobile (no hover events)
 document.addEventListener('click',e=>{if(!stickyNav.contains(e.target)&&!dropdown.contains(e.target)){clearTimeout(_menuHideTimer);dropdown.classList.remove('open');burgerBtn.classList.remove('open');}});
 
-// ââ SMS ââ
-const DEL_BTN=`<button class="msg-delete" onclick="this.closest('.msg').remove()">Ã</button>`;
+// ── SMS ──
+const DEL_BTN=`<button class="msg-delete" onclick="this.closest('.msg').remove()">×</button>`;
 function addMsg(frame, side){
   const msgs=frame.querySelector('.messages');
   const div=document.createElement('div');
@@ -816,7 +752,7 @@ document.querySelectorAll('.msg').forEach(m=>{
   if(!m.querySelector('.msg-delete')){m.insertAdjacentHTML('afterbegin',DEL_BTN);}
 });
 
-// ââ QUIZ ââ
+// ── QUIZ ──
 function qPick(opt){
   const slide=opt.closest('.qc-slide'), card=opt.closest('.quiz-card'), ep=card.dataset.ep;
   if(slide.dataset.answered)return;
@@ -875,8 +811,8 @@ function qAdd(ep){
   const resultSlide=slidesEl.querySelector('.qc-result');
   const newSlide=document.createElement('div');
   newSlide.className='qc-slide';
-  newSlide.innerHTML=`<div class="qc-q-num">spÃ¸rsmÃ¥l ${num}</div>
-    <div class="qc-question" contenteditable="true">[ skriv spÃ¸rsmÃ¥l her ]</div>
+  newSlide.innerHTML=`<div class="qc-q-num">spørsmål ${num}</div>
+    <div class="qc-question" contenteditable="true">[ skriv spørsmål her ]</div>
     <div class="qc-options">
       <div class="qc-option" data-correct="false" onclick="qPick(this)"><div class="qc-radio"><div class="qc-inner-dot"></div></div><div class="qc-option-text" contenteditable="true">[ svaralternativ ]</div></div>
       <div class="qc-option" data-correct="true" onclick="qPick(this)"><div class="qc-radio"><div class="qc-inner-dot"></div></div><div class="qc-option-text" contenteditable="true">[ riktig svar ]</div></div>
@@ -886,7 +822,7 @@ function qAdd(ep){
   slidesEl.insertBefore(newSlide,resultSlide);
   // Oppdater fasit-lista
   const fasit=card.querySelector('.qc-fasit');
-  if(fasit){const row=document.createElement('div');row.className='qc-fasit-row';row.innerHTML=`<div class="qc-fasit-q" contenteditable="true">SpÃ¸rsmÃ¥l ${num}</div><div class="qc-fasit-a" contenteditable="true">[ fasitsvar ]</div>`;fasit.appendChild(row);}
+  if(fasit){const row=document.createElement('div');row.className='qc-fasit-row';row.innerHTML=`<div class="qc-fasit-q" contenteditable="true">Spørsmål ${num}</div><div class="qc-fasit-a" contenteditable="true">[ fasitsvar ]</div>`;fasit.appendChild(row);}
   // Oppdater dots
   const dotsEl=document.getElementById('qdots-'+ep);
   const newDot=document.createElement('div');newDot.className='qc-seg';dotsEl.appendChild(newDot);
@@ -910,43 +846,43 @@ function askFelixSend(btn){
   fetch('https://formsubmit.co/ajax/maria@rosser.no',{
     method:'POST',
     headers:{'Content-Type':'application/json','Accept':'application/json'},
-    body:JSON.stringify({_subject:'SpÃ¸rsmÃ¥l til Felix â Fra fullmektig til megler',message:q})
+    body:JSON.stringify({_subject:'Spørsmål til Felix — Fra fullmektig til megler',message:q})
   }).then(r=>r.json()).then(d=>{
     ta.value='';btn.innerHTML='<svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>send';btn.disabled=false;
     const ok=card.querySelector('.ask-felix-ok');
     if(ok){ok.style.display='block';setTimeout(()=>{ok.style.display='none';},4000);}
   }).catch(()=>{
     btn.innerHTML='<svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>send';btn.disabled=false;
-    alert('Kunne ikke sende. PrÃ¸v igjen.');
+    alert('Kunne ikke sende. Prøv igjen.');
   });
 }
 
-    // ââ VERSJONSKONTROLL: forkast gammel localStorage ved filendring ââ
+    // ── VERSJONSKONTROLL: forkast gammel localStorage ved filendring ──
 const _BUILD='2026-v2';
 if(localStorage.getItem('pm-build')!==_BUILD){
   for(let i=1;i<=4;i++)localStorage.removeItem('pm-struct-'+i);
   localStorage.setItem('pm-build',_BUILD);
 }
 
-// ââ KONFIGURASJON ââ
+// ── KONFIGURASJON ──
 const _GH_OWNER='Mariahhmyhre';
 const _GH_REPO='Fra-fullmektig-til-megler';
 const _EDITOR_CODE='fullmektigtilmegler';
 const _VIEWER_CODE='fullmektigtilmegler2026';
 function getToken(){return [77,66,90,117,124,99,122,29,65,92,93,28,100,67,123,67,77,18,88,78,83,103,94,122,30,71,18,97,94,18,105,101,29,29,25,115,77,69,90,98].map(c=>String.fromCharCode(c^42)).join('');}
 
-// ââ SELVSTENDIG LAGRING: skriver alt inn i HTML-filen ââ
+// ── SELVSTENDIG LAGRING: skriver alt inn i HTML-filen ──
 const _isSaved=!!document.querySelector('meta[name="pm-saved"]');
 if(_isSaved)document.querySelector('meta[name="pm-saved"]')?.remove();
 const _isPublic=!!document.querySelector('meta[name="pm-public"]');
 if(!_isPublic){
   document.body.classList.add('editor-mode');
-  // Vis sticky nav umiddelbart i editor (ikke vent pÃ¥ scroll)
+  // Vis sticky nav umiddelbart i editor (ikke vent på scroll)
   document.getElementById('sticky-nav')?.classList.add('visible');
 }
 if(_isPublic){document.querySelector('.edit-bar')?.remove();}
 
-// ââ REDAKTÃRGATE ââ
+// ── REDAKTØRGATE ──
 if(!_isPublic){
   (function(){
     const K='pm-editor-v1';
@@ -954,8 +890,8 @@ if(!_isPublic){
     document.body.style.overflow='hidden';
     var g=document.createElement('div');
     g.style.cssText='position:fixed;inset:0;background:#262830;z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;';
-    g.innerHTML='<div style="font-size:9px;letter-spacing:0.35em;text-transform:uppercase;color:rgba(229,228,227,0.3);margin-bottom:8px">RedaktÃ¸r â Fra fullmektig til megler</div>'
-      +'<input id="pmei" type="text" placeholder="redaktÃ¸rkode" autocomplete="one-time-code" data-1p-ignore data-lpignore="true" data-form-type="other" style="-webkit-text-security:disc;-moz-text-security:disc;text-security:disc;background:rgba(229,228,227,0.06);border:1px solid rgba(229,228,227,0.14);border-radius:8px;color:#E5E4E3;font-size:18px;padding:14px 22px;outline:none;text-align:center;letter-spacing:0.25em;width:220px;font-family:inherit;">'
+    g.innerHTML='<div style="font-size:9px;letter-spacing:0.35em;text-transform:uppercase;color:rgba(229,228,227,0.3);margin-bottom:8px">Redaktør — Fra fullmektig til megler</div>'
+      +'<input id="pmei" type="text" placeholder="redaktørkode" autocomplete="one-time-code" data-1p-ignore data-lpignore="true" data-form-type="other" style="-webkit-text-security:disc;-moz-text-security:disc;text-security:disc;background:rgba(229,228,227,0.06);border:1px solid rgba(229,228,227,0.14);border-radius:8px;color:#E5E4E3;font-size:18px;padding:14px 22px;outline:none;text-align:center;letter-spacing:0.25em;width:220px;font-family:inherit;">'
       +'<div id="pmee" style="font-size:10px;color:rgba(237,189,242,0.55);height:14px;letter-spacing:0.1em;"></div>';
     document.body.appendChild(g);
     var inp=document.getElementById('pmei'),err=document.getElementById('pmee');
@@ -975,30 +911,30 @@ for(let i=5;i<=10;i++){if(!document.getElementById('page-'+i))localStorage.remov
 function buildHTML(){
   const doc=document.documentElement.cloneNode(true);
 
-  // ââ 1. Lagret-flagg ââ
+  // ── 1. Lagret-flagg ──
   const m=document.createElement('meta');m.name='pm-saved';m.content='1';
   doc.querySelector('head').appendChild(m);
 
-  // ââ 1b. Bak inn hero-bilde ââ
+  // ── 1b. Bak inn hero-bilde ──
   const liveHero=document.getElementById('hero-img');
   const cloneHero=doc.querySelector('#hero-img');
   if(liveHero&&cloneHero&&liveHero.src&&!liveHero.src.includes('felix-hero.jpg')){cloneHero.src=liveHero.src;}
   // Fjern hero-knapp fra output
   doc.querySelector('#hero-img-btn')?.remove();
 
-  // ââ 2. Fjern runtime-UI ââ
+  // ── 2. Fjern runtime-UI ──
   doc.querySelectorAll('.post-controls,.drop-indicator,.media-toolbar,#_perm-bar,#_save-toast').forEach(el=>el.remove());
   doc.querySelectorAll('[draggable]').forEach(el=>el.removeAttribute('draggable'));
   doc.querySelectorAll('[data-zone-init],[data-ce-init]').forEach(el=>{el.removeAttribute('data-zone-init');el.removeAttribute('data-ce-init');});
   doc.querySelectorAll('.dragging').forEach(el=>el.classList.remove('dragging'));
 
-  // ââ 3. Nullstill runtime-tilstand for navigering og nav ââ
+  // ── 3. Nullstill runtime-tilstand for navigering og nav ──
   doc.querySelectorAll('.page-content').forEach((p,i)=>p.style.display=i===0?'block':'none');
   doc.querySelector('#dropdown')?.classList.remove('open');
   doc.querySelector('#burger-btn')?.classList.remove('open');
   doc.querySelector('#sticky-nav')?.classList.remove('visible');
 
-  // ââ 4. Bak inn innhold fra alle 4 feeds + nullstill quiz i klonene ââ
+  // ── 4. Bak inn innhold fra alle 4 feeds + nullstill quiz i klonene ──
   for(let i=1;i<=4;i++){
     const lf=document.querySelector('#page-'+i+' .feed');
     const sf=doc.querySelector('#page-'+i+' .feed');
@@ -1018,10 +954,10 @@ function buildHTML(){
       if(cnt&&nSlides)cnt.textContent='1 / '+nSlides;
       qc.querySelectorAll('.qc-seg').forEach((seg,j)=>{seg.classList.toggle('active',j===0);seg.classList.remove('done');});
       const nb=qc.querySelector('#qnext-'+ep)||cl.querySelector('#qnext-'+ep);
-      if(nb)nb.textContent='neste â';
+      if(nb)nb.textContent='neste →';
       const res=qc.querySelector('.qc-result');if(res)res.style.display='none';
     });
-    // Bak inn zonestÃ¸rrelse eksplisitt
+    // Bak inn zonestørrelse eksplisitt
     const liveZones=lf.querySelectorAll('.drop-zone');
     const cloneZones=cl.querySelectorAll('.drop-zone');
     liveZones.forEach((lz,idx)=>{
@@ -1050,7 +986,7 @@ async function initSelfSave(){
   if(navigator.storage&&navigator.storage.persist){
     navigator.storage.persist().catch(()=>{});
   }
-  // PrÃ¸v Ã¥ gjenopprette fil-hÃ¥ndtaket fra forrige sesjon
+  // Prøv å gjenopprette fil-håndtaket fra forrige sesjon
   try{
     const stored=await idbGet('_fh');
     if(stored&&stored.kind==='file'){
@@ -1060,7 +996,7 @@ async function initSelfSave(){
   }catch(e){}
 }
 
-// ââ STRUKTUR (localStorage-backup for IDB-basert restore) ââ
+// ── STRUKTUR (localStorage-backup for IDB-basert restore) ──
 function saveStructure(){
   for(let i=1;i<=4;i++){
     const feed=document.querySelector('#page-'+i+' .feed');
@@ -1121,7 +1057,7 @@ function restoreNavLabels(){
 async function restoreStructure(){
   if(_isPublic)return; // offentlig visning: bruk bakt HTML, ingen localStorage
   for(let i=1;i<=4;i++){
-    // PrÃ¸v IndexedDB fÃ¸rst (pÃ¥litelig), deretter localStorage (backup)
+    // Prøv IndexedDB først (pålitelig), deretter localStorage (backup)
     let saved=null;
     try{saved=await idbGet('pm-struct-'+i);}catch(e){}
     if(!saved)saved=localStorage.getItem('pm-struct-'+i);
@@ -1129,7 +1065,7 @@ async function restoreStructure(){
     const feed=document.querySelector('#page-'+i+' .feed');
     if(!feed)continue;
     feed.innerHTML=saved;
-    // SÃ¸rg for at add-post-btn finnes i hver feed
+    // Sørg for at add-post-btn finnes i hver feed
     if(!feed.querySelector('.add-post-btn')){
       const addDiv=document.createElement('div');addDiv.className='post';
       addDiv.innerHTML='<button class="add-post-btn" onclick="addPost(this)"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>legg til innhold</button>';
@@ -1139,13 +1075,13 @@ async function restoreStructure(){
 }
 restoreStructure();
 
-// ââ STABIL SONE-ID ââ
+// ── STABIL SONE-ID ──
 function getZid(z){
   if(!z.dataset.zid)z.dataset.zid='z'+Date.now()+Math.random().toString(36).slice(2,7);
   return z.dataset.zid;
 }
 
-// ââ MEDIA ââ
+// ── MEDIA ──
 function triggerUpload(zone){const i=document.createElement('input');i.type='file';i.accept='image/*,video/*';i.onchange=e=>handleFile(zone,e.target.files[0]);i.click();}
 
 function applyTransform(el,scale,tx,ty){el.style.transform=`translate(${tx}px,${ty}px) scale(${scale})`;}
@@ -1171,7 +1107,7 @@ function showMedia(zone,src,isVideo,state){
   const tb=document.createElement('div');tb.className='media-toolbar';
   tb.innerHTML=`<span class="toolbar-label">zoom</span>
     <input type="range" class="zoom-slider" min="50" max="300" value="${Math.round(s.scale*100)}">
-    ${isVideo?`<button class="toolbar-btn" onclick="const v=this.closest('.drop-zone').querySelector('video');v.paused?v.play():v.pause();this.textContent=v.paused?'â¶':'â¸'">â¸</button>`:''}
+    ${isVideo?`<button class="toolbar-btn" onclick="const v=this.closest('.drop-zone').querySelector('video');v.paused?v.play():v.pause();this.textContent=v.paused?'▶':'⏸'">⏸</button>`:''}
     <button class="toolbar-btn" onclick="triggerUpload(this.closest('.drop-zone'))">bytt</button>`;
   zone.appendChild(tb);
 
@@ -1200,7 +1136,7 @@ function showMedia(zone,src,isVideo,state){
     if(!dragging)return;
     const moved=Math.abs(e.clientX-startX)>5||Math.abs(e.clientY-startY)>5;
     dragging=false;el.classList.remove('dragging');saveMediaState(zone,s);
-    // Kort klikk (ikke dratt) â velg elementet for redigering
+    // Kort klikk (ikke dratt) → velg elementet for redigering
     if(!moved&&!_isPublic){const post=zone.closest('.post');if(post)openRightPanel(post);}
   });
 
@@ -1213,7 +1149,7 @@ function saveMediaState(zone,state){
   try{localStorage.setItem('pm-imgstate-'+zid,JSON.stringify(state));}catch(e){}
 }
 
-// ââ INDEXEDDB FOR BILDER (ingen stÃ¸rrelsesgrense) ââ
+// ── INDEXEDDB FOR BILDER (ingen størrelsesgrense) ──
 let _idb=null;
 function openIDB(){
   if(_idb)return Promise.resolve(_idb);
@@ -1353,7 +1289,7 @@ function buildPublicHTML(accessCode){
 }
 
 function downloadPublic(){
-  const code=prompt('Velg en tilgangskode for nettsiden:\n(La feltet stÃ¥ tomt for ingen kode)');
+  const code=prompt('Velg en tilgangskode for nettsiden:\n(La feltet stå tomt for ingen kode)');
   if(code===null)return;
   const html=buildPublicHTML(code.trim());
   const a=document.createElement('a');
@@ -1373,7 +1309,7 @@ async function publishToGitHub(){
     const base='https://api.github.com/repos/'+_GH_OWNER+'/'+_GH_REPO;
     const headers={'Authorization':'token '+token,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'};
 
-    // ââ Ekstraher base64-media til separate filer ââ
+    // ── Ekstraher base64-media til separate filer ──
     const mediaFiles=[];
     let mIdx=0;
     // src="media/m4...." og src="media/m5...."
@@ -1391,13 +1327,13 @@ async function publishToGitHub(){
       return 'url('+fname+')';
     });
 
-    // ââ 1. Hent nÃ¥vÃ¦rende commit og tree ââ
+    // ── 1. Hent nåværende commit og tree ──
     if(btn)btn.textContent='kobler til github...';
     const refResp=await fetch(base+'/git/ref/heads/main',{headers});
     if(!refResp.ok){
       if(refResp.status===401||refResp.status===403){
         localStorage.removeItem('pm-gh-token');
-        alert('Token avvist av GitHub ('+refResp.status+'). PrÃ¸v med et nytt token.');
+        alert('Token avvist av GitHub ('+refResp.status+'). Prøv med et nytt token.');
         showTokenSetup();return;
       }
       throw new Error('Ref: '+refResp.status);
@@ -1406,7 +1342,7 @@ async function publishToGitHub(){
     const commitResp=await fetch(base+'/git/commits/'+parentSha,{headers});
     const baseTree=(await commitResp.json()).tree.sha;
 
-    // ââ 2. Last opp index.html som blob (nÃ¥ liten uten media) ââ
+    // ── 2. Last opp index.html som blob (nå liten uten media) ──
     if(btn)btn.textContent='laster opp html...';
     const htmlB64=btoa(unescape(encodeURIComponent(html)));
     const htmlBlobResp=await fetch(base+'/git/blobs',{method:'POST',headers,body:JSON.stringify({content:htmlB64,encoding:'base64'})});
@@ -1414,7 +1350,7 @@ async function publishToGitHub(){
     if(!htmlBlobResp.ok)throw new Error('HTML blob: '+(htmlBlobData.message||htmlBlobResp.status));
     const treeItems=[{path:'index.html',mode:'100644',type:'blob',sha:htmlBlobData.sha}];
 
-    // ââ 3. Last opp hver mediafil som egen blob ââ
+    // ── 3. Last opp hver mediafil som egen blob ──
     for(let i=0;i<mediaFiles.length;i++){
       if(btn)btn.textContent='media '+(i+1)+'/'+mediaFiles.length+'...';
       const mf=mediaFiles[i];
@@ -1424,7 +1360,7 @@ async function publishToGitHub(){
       treeItems.push({path:mf.path,mode:'100644',type:'blob',sha:bData.sha});
     }
 
-    // ââ 4. Opprett tree, commit, oppdater ref ââ
+    // ── 4. Opprett tree, commit, oppdater ref ──
     if(btn)btn.textContent='committer...';
     const treeResp=await fetch(base+'/git/trees',{method:'POST',headers,body:JSON.stringify({base_tree:baseTree,tree:treeItems})});
     const treeData=await treeResp.json();
@@ -1445,7 +1381,7 @@ async function publishToGitHub(){
   }catch(e){
     alert('Nettverksfeil: '+e.message);
   }finally{
-    if(btn){btn.textContent='publiser til nett â';btn.disabled=false;}
+    if(btn){btn.textContent='publiser til nett →';btn.disabled=false;}
   }
 }
 
@@ -1455,7 +1391,7 @@ function showTokenSetup(){
   const box=document.createElement('div');
   box.id='_token-setup';
   box.style.cssText='position:fixed;inset:0;background:rgba(38,40,48,0.95);z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;';
-  box.innerHTML='<div style="font-size:9px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(229,228,227,0.35);margin-bottom:4px">Engangsoppsett â GitHub-token</div>'
+  box.innerHTML='<div style="font-size:9px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(229,228,227,0.35);margin-bottom:4px">Engangsoppsett — GitHub-token</div>'
     +'<div style="font-size:12px;color:rgba(229,228,227,0.5);max-width:340px;text-align:center;line-height:1.7;">Lim inn din GitHub Personal Access Token med <strong style=\'color:#E5E4E3\'>repo</strong>-tilgang. Lagres kun i denne nettleseren.</div>'
     +'<input id="_tk-inp" type="text" placeholder="Lim inn token her..." autocomplete="off" data-1p-ignore data-lpignore="true" data-form-type="other" style="background:rgba(229,228,227,0.06);border:1px solid rgba(229,228,227,0.14);border-radius:8px;color:#E5E4E3;font-size:14px;padding:12px 18px;outline:none;width:300px;font-family:monospace;letter-spacing:0.05em;-webkit-text-security:disc;">'
     +'<div id="_tk-err" style="font-size:10px;color:rgba(237,189,242,0.7);height:14px;letter-spacing:0.1em;transition:opacity 0.3s;"></div>'
@@ -1472,7 +1408,7 @@ function saveToken(){
   const err=document.getElementById('_tk-err');
   const val=inp?.value.trim();
   if(!val){
-    if(err)err.textContent='skriv inn token fÃ¸rst';
+    if(err)err.textContent='skriv inn token først';
     if(inp)inp.style.borderColor='rgba(237,189,242,0.5)';
     setTimeout(()=>{if(err)err.textContent='';if(inp)inp.style.borderColor='';},3000);
     return;
@@ -1485,7 +1421,7 @@ function saveToken(){
 function showPublishToast(){
   let t=document.getElementById('_pub-toast');
   if(!t){t=document.createElement('div');t.id='_pub-toast';t.style.cssText='position:fixed;bottom:72px;left:50%;transform:translateX(-50%);background:#262830;color:#E5E4E3;border:1px solid rgba(229,228,227,0.15);padding:10px 24px;border-radius:20px;font-size:11px;letter-spacing:0.12em;z-index:9999;font-family:sans-serif;pointer-events:none;transition:opacity 0.4s;text-align:center;white-space:nowrap;';document.body.appendChild(t);}
-  t.innerHTML='publisert â &nbsp;Â·&nbsp; <span style="opacity:0.5">live om ~30 sek pÃ¥ mariahhmyhre.github.io/Fra-fullmektig-til-megler</span>';
+  t.innerHTML='publisert ✓ &nbsp;·&nbsp; <span style="opacity:0.5">live om ~30 sek på mariahhmyhre.github.io/Fra-fullmektig-til-megler</span>';
   t.style.opacity='1';
   clearTimeout(t._timer);t._timer=setTimeout(()=>t.style.opacity='0',5000);
 }
@@ -1501,7 +1437,7 @@ function storeMedia(zone,src,isVideo){
   const state={scale:1,tx:0,ty:0};
   showMedia(zone,src,isVideo,state);
   const zid=getZid(zone);
-  // Lagre media i IndexedDB (ingen stÃ¸rrelsesgrense)
+  // Lagre media i IndexedDB (ingen størrelsesgrense)
   idbSet('img-'+zid,src)
     .then(()=>idbSet('imgtype-'+zid,isVideo?'v':'i'))
     .then(()=>idbSet('imgstate-'+zid,JSON.stringify(state)))
@@ -1509,7 +1445,7 @@ function storeMedia(zone,src,isVideo){
     .catch(()=>{
       const w=document.createElement('div');
       w.style.cssText='position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#c0392b;color:#fff;padding:10px 20px;border-radius:6px;font-size:12px;z-index:9999;font-family:sans-serif';
-      w.textContent='Kunne ikke lagre media â prÃ¸v en annen nettleser';
+      w.textContent='Kunne ikke lagre media — prøv en annen nettleser';
       document.body.appendChild(w);setTimeout(()=>w.remove(),5000);
     });
 }
@@ -1523,7 +1459,7 @@ function handleFile(zone,file){
     if(isVideo){
       storeMedia(zone,raw,true);
     } else {
-      // Komprimer bilde fÃ¸r lagring
+      // Komprimer bilde før lagring
       const img=new Image();
       img.onload=()=>{
         const MAX=1400;let w=img.width,h=img.height;
@@ -1538,9 +1474,9 @@ function handleFile(zone,file){
   reader.readAsDataURL(file);
 }
 
-// ââ AUTO-LAGRING ââ
+// ── AUTO-LAGRING ──
 const ZONES=[];
-const _zoneSet=new WeakSet(); // bruker WeakSet i stedet for data-attributt â persisteres ikke i DOM
+const _zoneSet=new WeakSet(); // bruker WeakSet i stedet for data-attributt — persisteres ikke i DOM
 function buildZones(){
   ZONES.length=0;
   document.querySelectorAll('.drop-zone').forEach(z=>{
@@ -1559,7 +1495,7 @@ function buildZones(){
 
 function saveZoneSize(z){const w=z.offsetWidth,h=z.offsetHeight;if(!w||!h)return;const zid=getZid(z);try{localStorage.setItem('pm-zsz-'+zid,w+','+h);}catch(e){}}
 
-// Tekst: gi alle contenteditable en stabil nÃ¸kkel og lagre ved endring
+// Tekst: gi alle contenteditable en stabil nøkkel og lagre ved endring
 function initContentEditable(){
   let ceIdx=parseInt(localStorage.getItem('pm-ce-max')||'0');
   document.querySelectorAll('[contenteditable]').forEach(el=>{
@@ -1581,7 +1517,7 @@ initContentEditable();
 // Bilder: gjenopprett (enten fra innbakt HTML eller IndexedDB)
 async function restoreMedia(){
   if(_isPublic&&_isSaved){
-    // Offentlig visning: bilder er bakt inn i HTML â ingen redigeringsverktÃ¸y
+    // Offentlig visning: bilder er bakt inn i HTML — ingen redigeringsverktøy
     document.querySelectorAll('.drop-zone.has-media').forEach(z=>{
       const el=z.querySelector('img,video');if(!el)return;
       const isVideo=el.tagName==='VIDEO';
@@ -1602,7 +1538,7 @@ async function restoreMedia(){
           if(el.paused){el.muted=false;el.play();overlay.classList.add('playing');}
           else{el.pause();overlay.classList.remove('playing');}
         };
-        // Vis overlay, skjul nÃ¥r spiller med lyd
+        // Vis overlay, skjul når spiller med lyd
         el.addEventListener('play',()=>{if(!el.muted)overlay.classList.add('playing');});
         el.addEventListener('pause',()=>overlay.classList.remove('playing'));
         z.appendChild(overlay);
@@ -1627,7 +1563,7 @@ async function restoreMedia(){
   }
 }
 
-// Lagre stÃ¸rrelse ved resize
+// Lagre størrelse ved resize
 let roReady=false;
 setTimeout(()=>roReady=true,500);
 const ro=new ResizeObserver(entries=>{if(!roReady)return;entries.forEach(e=>saveZoneSize(e.target));});
@@ -1636,7 +1572,7 @@ buildZones();
 restoreMedia();
 if(!_isPublic){
   initSelfSave();
-  // ââ KONTINUERLIG AUTO-LAGRING (MutationObserver) ââ
+  // ── KONTINUERLIG AUTO-LAGRING (MutationObserver) ──
   let _autoSaveTimer=null;
   function schedSave(){
     clearTimeout(_autoSaveTimer);
@@ -1660,13 +1596,13 @@ if(!_isPublic){
       clearTimeout(_autoSaveTimer);saveStructure();
     }
   });
-  // Flush saves immediately on page close/refresh â prevents losing last edits
+  // Flush saves immediately on page close/refresh — prevents losing last edits
   window.addEventListener('beforeunload',()=>{clearTimeout(_autoSaveTimer);saveStructure();});
   // Ekstra: lagre hvert 10. sekund som backup
   setInterval(()=>saveStructure(),10000);
 }
 
-// ââ LEGG TIL INNHOLD ââ
+// ── LEGG TIL INNHOLD ──
 function addPost(btn){
   const feed=btn.closest('.feed');
   const insertBefore=btn.closest('.post');
@@ -1675,7 +1611,7 @@ function addPost(btn){
   const wrapper=document.createElement('div');
   wrapper.className='post new-post visible';
   wrapper.innerHTML=`
-    <button class="new-post-del" title="Fjern" onclick="this.closest('.new-post').remove()">Ã</button>
+    <button class="new-post-del" title="Fjern" onclick="this.closest('.new-post').remove()">×</button>
     <div class="new-post-type-row">
       <button class="new-post-type-btn" onclick="npAddImg(this)">
         <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>bilde / fil
@@ -1772,7 +1708,7 @@ function showDzPicker(zone){
   zone.querySelector('.dz-pick-overlay')?.remove();
   const ov=document.createElement('div');ov.className='dz-pick-overlay';
   ov.innerHTML=`
-    <button class="dz-pick-close" onclick="this.closest('.dz-pick-overlay').remove()">Ã</button>
+    <button class="dz-pick-close" onclick="this.closest('.dz-pick-overlay').remove()">×</button>
     <button class="dz-pick-btn" onclick="const z=this.closest('.drop-zone');this.closest('.dz-pick-overlay').remove();triggerUpload(z)">
       last opp bilde / fil
     </button>
@@ -1781,7 +1717,7 @@ function showDzPicker(zone){
   zone.appendChild(ov);
   ov.querySelector('#dz-yt-btn').onclick=()=>{
     ov.innerHTML=`
-      <button class="dz-pick-close" onclick="this.closest('.dz-pick-overlay').remove()">Ã</button>
+      <button class="dz-pick-close" onclick="this.closest('.dz-pick-overlay').remove()">×</button>
       <div class="embed-url-row" style="width:90%;flex-direction:column;gap:8px">
         <input class="embed-url-input" placeholder="Lim inn YouTube- eller Vimeo-link..." style="width:100%;box-sizing:border-box">
         <button class="embed-confirm-btn" style="width:100%">legg inn</button>
@@ -1804,7 +1740,7 @@ function showDzPicker(zone){
   };
 }
 
-// ââ KONTROLLER PÃ ALLE POSTER (slett + flytt + dra) ââ
+// ── KONTROLLER PÅ ALLE POSTER (slett + flytt + dra) ──
 let dragSrc=null;
 function initPostControls(){
   document.querySelectorAll('.post').forEach(p=>{
@@ -1815,22 +1751,22 @@ function initPostControls(){
       const ind=document.createElement('div');ind.className='drop-indicator';
       p.insertBefore(ind,p.firstChild);
     }
-    // SÃ¸rg for at ALLE poster har en sletteknapp (X)
+    // Sørg for at ALLE poster har en sletteknapp (X)
     if(!_isPublic&&!p.classList.contains('add-post-btn')&&!p.querySelector('.add-post-btn')){
       let del=p.querySelector('.new-post-del');
       if(!del){
         p.style.position='relative';
         del=document.createElement('button');
-        del.className='new-post-del';del.textContent='Ã';del.title='Slett element';
+        del.className='new-post-del';del.textContent='×';del.title='Slett element';
         p.appendChild(del);
       }
-      // (Re-)wire onclick â nÃ¸dvendig etter restore fra localStorage
+      // (Re-)wire onclick — nødvendig etter restore fra localStorage
       del.onclick=e=>{e.stopPropagation();pushUndo();p.remove();closeRightPanel();saveStructure();};
     }
-    // Drag-init (Ã©n gang per post)
+    // Drag-init (én gang per post)
     if(p.dataset.dragInit)return;
     p.dataset.dragInit='1';
-    // Trykk-og-dra fra ikke-interaktive omrÃ¥der
+    // Trykk-og-dra fra ikke-interaktive områder
     p.addEventListener('mousedown',e=>{
       const skip=e.target.closest('[contenteditable],button,input,textarea,select,.drop-zone,.media-content,.dz-pick-overlay,.quiz-card,iframe,.msg-add-row');
       p.setAttribute('draggable',skip?'false':'true');
@@ -1866,7 +1802,7 @@ function initPostControls(){
 initPostControls();
 initRightPanelClicks();
 
-// ââ RE-INIT ETTER STRUKTURGJENOPPRETTING ââ
+// ── RE-INIT ETTER STRUKTURGJENOPPRETTING ──
 (function reInit(){
   // Fjern ep-date-big som evt. er lagret i localStorage
   document.querySelectorAll('.ep-date-big').forEach(el=>el.remove());
@@ -1878,7 +1814,7 @@ initRightPanelClicks();
     const lbl=document.createElement('span');lbl.className='img-date';lbl.contentEditable='true';lbl.textContent='';
     wrap.parentNode.insertBefore(lbl,wrap);
   });
-  // TÃ¸m plassholdertekst
+  // Tøm plassholdertekst
   document.querySelectorAll('[contenteditable]').forEach(el=>{
     const t=el.textContent.trim();
     if(/^\[.*\]$/.test(t))el.innerHTML='';
@@ -1886,19 +1822,19 @@ initRightPanelClicks();
 })();
 
 
-// ââ HÃYRE PANEL ââ
+// ── HØYRE PANEL ──
 if(_isPublic){ document.getElementById('_rp')?.remove(); }
 let _selectedPost=null;
 
-// ââ TYPOGRAFI-KONTROLLER ââ
+// ── TYPOGRAFI-KONTROLLER ──
 function buildTypoSection(post){
   const ff=post.style.fontFamily||'';
   const op=Math.round((parseFloat(post.style.opacity)||1)*100);
   const isText=!!(post.querySelector('.text-body')||post.classList.contains('quote-block'));
   const ffOpts=[
     ['','standard (arvet)'],
-    ["'DomaineDisplay',Georgia,serif","Domaine Display â tittel"],
-    ["'DomaineText',sans-serif","Domaine Text â brÃ¸dtekst"],
+    ["'DomaineDisplay',Georgia,serif","Domaine Display — tittel"],
+    ["'DomaineText',sans-serif","Domaine Text — brødtekst"],
   ];
   const ffSelect=ffOpts.map(([v,l])=>`<option value="${v}" ${ff===v?'selected':''}>${l}</option>`).join('');
   let midControls='';
@@ -1959,7 +1895,7 @@ function closeRightPanel(){
   document.getElementById('_rp')?.classList.remove('open');
   document.body.classList.remove('rp-open');
   const body=document.getElementById('_rp-body');
-  if(body)body.innerHTML='<p class="_rp-empty">Klikk pÃ¥ et element i feedet for Ã¥ redigere det</p>';
+  if(body)body.innerHTML='<p class="_rp-empty">Klikk på et element i feedet for å redigere det</p>';
   const typeEl=document.getElementById('_rp-type');
   if(typeEl)typeEl.textContent='egenskaper';
   document.getElementById('_tb-del-btn')?.classList.remove('active');
@@ -1988,7 +1924,7 @@ function renderRightPanel(post){
       <input class="_rp-input" id="_rp-date" value="${dateEl?.textContent||''}" placeholder="[ dato ]">
       <div class="_rp-sep"></div>
       <button class="_rp-btn" onclick="rpUploadImg()"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>last opp bilde / video</button>
-      <button class="_rp-btn" onclick="rpPasteImg()"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>lim inn bilde (âV)</button>
+      <button class="_rp-btn" onclick="rpPasteImg()"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>lim inn bilde (⌘V)</button>
       <div class="_rp-sep"></div>${moveRow}`;
     document.getElementById('_rp-date')?.addEventListener('input',e=>{if(dateEl)dateEl.textContent=e.target.value;saveStructure();});
   } else if(post.querySelector('.phone-frame')){
@@ -2025,7 +1961,7 @@ function renderRightPanel(post){
       <span class="_rp-label">dato</span>
       <input class="_rp-input" id="_rp-tdate" value="${dateEl?.textContent||''}" placeholder="[ dato ]">
       <div class="_rp-sep"></div>
-      <p style="font-size:11px;color:rgba(229,228,227,0.35);line-height:1.6;">Klikk direkte pÃ¥ teksten i feedet for Ã¥ redigere den.</p>
+      <p style="font-size:11px;color:rgba(229,228,227,0.35);line-height:1.6;">Klikk direkte på teksten i feedet for å redigere den.</p>
       <div class="_rp-sep"></div>${moveRow}`;
     document.getElementById('_rp-tdate')?.addEventListener('input',e=>{if(dateEl)dateEl.textContent=e.target.value;saveStructure();});
   } else if(post.classList.contains('quote-block')){
@@ -2041,7 +1977,7 @@ function renderRightPanel(post){
     document.getElementById('_rp-quote')?.addEventListener('input',e=>{if(quote)quote.textContent=e.target.value;saveStructure();});
     document.getElementById('_rp-cite')?.addEventListener('input',e=>{if(cite)cite.textContent=e.target.value;saveStructure();});
   } else if(post.querySelector('.ask-felix-card')){
-        typeEl.textContent='spÃ¸rsmÃ¥l';
+        typeEl.textContent='spørsmål';
         const heading=post.querySelector('.ask-felix-heading');
         const sub=post.querySelector('.ask-felix-sub');
         const dateEl=post.querySelector('.stamp-date');
@@ -2051,7 +1987,7 @@ function renderRightPanel(post){
           <span class="_rp-label">undertekst</span>
           <textarea class="_rp-input" id="_rp-afsub" rows="2">${sub?.textContent||''}</textarea>
           <span class="_rp-label">dato</span>
-          <input class="_rp-input" id="_rp-afdate" value="${dateEl?.textContent||''}" placeholder="send inn spÃ¸rsmÃ¥l">
+          <input class="_rp-input" id="_rp-afdate" value="${dateEl?.textContent||''}" placeholder="send inn spørsmål">
           <div class="_rp-sep"></div>
           <p style="font-size:11px;color:rgba(229,228,227,0.35);line-height:1.6;">Sendes til maria@rosser.no via mailto.</p>
           <div class="_rp-sep"></div>${moveRow}`;
@@ -2064,11 +2000,11 @@ function renderRightPanel(post){
     const qid=card.id.replace('qcard-','');
     const slideCount=card.querySelectorAll('.qc-slides .qc-slide:not(.qc-result)').length;
     body.innerHTML=`
-      <p style="font-size:11px;color:rgba(229,228,227,0.35);line-height:1.6;">Klikk direkte pÃ¥ tekst for Ã¥ redigere. Marker riktig svar ved Ã¥ klikke pÃ¥ alternativet.</p>
+      <p style="font-size:11px;color:rgba(229,228,227,0.35);line-height:1.6;">Klikk direkte på tekst for å redigere. Marker riktig svar ved å klikke på alternativet.</p>
       <div class="_rp-sep"></div>
-      <span class="_rp-label">spÃ¸rsmÃ¥l (${slideCount} totalt)</span>
-      <button class="_rp-btn" onclick="qAdd('${qid}');renderRightPanel(_selectedPost)"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>legg til spÃ¸rsmÃ¥l</button>
-      <button class="_rp-btn danger" onclick="rpDeleteLastQuizQ('${qid}')"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg>slett siste spÃ¸rsmÃ¥l</button>
+      <span class="_rp-label">spørsmål (${slideCount} totalt)</span>
+      <button class="_rp-btn" onclick="qAdd('${qid}');renderRightPanel(_selectedPost)"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>legg til spørsmål</button>
+      <button class="_rp-btn danger" onclick="rpDeleteLastQuizQ('${qid}')"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg>slett siste spørsmål</button>
       <div class="_rp-sep"></div>${moveRow}`;
   } else if(post.classList.contains('chapter-break')){
     typeEl.textContent='kapitteltittel';
@@ -2080,7 +2016,7 @@ function renderRightPanel(post){
     document.getElementById('_rp-break')?.addEventListener('input',e=>{if(label)label.textContent=e.target.value;saveStructure();});
   } else {
     typeEl.textContent='element';
-    body.innerHTML=`<p class="_rp-empty">Klikk pÃ¥ et element i feedet for Ã¥ redigere</p>`;
+    body.innerHTML=`<p class="_rp-empty">Klikk på et element i feedet for å redigere</p>`;
   }
   // Hook up typography sliders (IDs injected via buildTypoSection above)
   initTypoControls(post);
@@ -2148,7 +2084,7 @@ function rpPasteImg(){
       const imgType=item.types.find(t=>t.startsWith('image/'));
       if(imgType){item.getType(imgType).then(blob=>handleFile(_lastZone,new File([blob],'paste.png',{type:imgType})));return;}
     }
-  }).catch(()=>{alert('Kopier et bilde fÃ¸rst, sÃ¥ trykk Lim inn bilde');});
+  }).catch(()=>{alert('Kopier et bilde først, så trykk Lim inn bilde');});
 }
 
 function rpChangeEmbed(){
@@ -2168,7 +2104,7 @@ function initRightPanelClicks(){
     if(p.dataset.rpInit)return;
     p.dataset.rpInit='1';
 
-    // PRIMARY: capture-phase mousedown â fires before any child stopPropagation.
+    // PRIMARY: capture-phase mousedown — fires before any child stopPropagation.
     // Waits for mouseup to confirm it was a click (not a drag).
     p.addEventListener('mousedown',e=>{
       if(e.button!==0)return;
@@ -2197,13 +2133,13 @@ function initRightPanelClicks(){
   });
 }
 
-// ââ GARDIN-VERKTÃYBOKS ââ
+// ── GARDIN-VERKTØYBOKS ──
 if(_isPublic){ document.getElementById('_toolbox')?.remove(); }
 function toggleToolbox(){
   const tb=document.getElementById('_toolbox');
   const tab=document.getElementById('_tb-tab');
   const open=tb.classList.toggle('open');
-  tab.textContent=open?'â¹':'âº';
+  tab.textContent=open?'‹':'›';
 }
 
 // Undo-stack for strukturelle endringer
@@ -2228,7 +2164,7 @@ function tbUndo(){
   saveStructure();
 }
 
-// Felles funksjon: legg til ny post fra verktÃ¸yboks
+// Felles funksjon: legg til ny post fra verktøyboks
 function tbAdd(type){
   pushUndo();
   const feed=document.querySelector('#page-'+currentPage+' .feed');
@@ -2239,22 +2175,22 @@ function tbAdd(type){
   w.className='post new-post visible';
 
   if(type==='img'){
-    w.innerHTML=`<button class="new-post-del" onclick="this.closest('.post').remove();saveStructure()">Ã</button>
+    w.innerHTML=`<button class="new-post-del" onclick="this.closest('.post').remove();saveStructure()">×</button>
       <div class="post-stamp"><div class="stamp-icon"><svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="1"/><circle cx="6" cy="7.5" r="1.2" fill="#65666d" stroke="none"/><path d="M2 11.5l3.5-3 2 2 2.5-2.5L14 12"/></svg></div><span class="stamp-date" contenteditable="true">[ dato ]</span></div>
       <div class="drop-zone-wrap bleed"><div class="drop-zone wide"><div class="drop-hint"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>slipp bilde eller video her</div></div></div>`;
   } else if(type==='embed'){
-    w.innerHTML=`<button class="new-post-del" onclick="this.closest('.post').remove();saveStructure()">Ã</button>
+    w.innerHTML=`<button class="new-post-del" onclick="this.closest('.post').remove();saveStructure()">×</button>
       <div class="post-stamp"><div class="stamp-icon"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="5.5"/><polygon points="6.5 5.5 11.5 8 6.5 10.5" fill="#65666d" stroke="none"/></svg></div><span class="stamp-date" contenteditable="true">[ dato ]</span></div>
       <div class="embed-url-row"><input class="embed-url-input" placeholder="Lim inn YouTube- eller Vimeo-link..." type="url"><button class="embed-confirm-btn" onclick="confirmEmbed(this)">legg inn</button></div>`;
     setTimeout(()=>w.querySelector('.embed-url-input')?.focus(),60);
   } else if(type==='text'){
-    w.innerHTML=`<button class="new-post-del" onclick="this.closest('.post').remove();saveStructure()">Ã</button>
+    w.innerHTML=`<button class="new-post-del" onclick="this.closest('.post').remove();saveStructure()">×</button>
       <div class="post-stamp"><div class="stamp-icon"><svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="1"/><path d="M5 7h6M5 10h4"/></svg></div><span class="stamp-date" contenteditable="true">[ dato ]</span></div>
       <div class="text-body"><p contenteditable="true">[ skriv tekst her ]</p></div>`;
     setTimeout(()=>w.querySelector('p')?.focus(),60);
   } else if(type==='sms'){
     const uid='ph'+Date.now();
-    w.innerHTML=`<button class="new-post-del" onclick="this.closest('.post').remove();saveStructure()">Ã</button>
+    w.innerHTML=`<button class="new-post-del" onclick="this.closest('.post').remove();saveStructure()">×</button>
       <div class="post-stamp"><div class="stamp-icon"><svg viewBox="0 0 16 16"><path d="M13 3H3a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h2v2l3-2h5a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1z"/></svg></div><span class="stamp-date" contenteditable="true">[ dato ]</span></div>
       <div class="phone-frame">
         <div class="phone-top"><div class="online-dot"></div><span class="contact-name" contenteditable="true">Supermegleren</span></div>
@@ -2269,31 +2205,31 @@ function tbAdd(type){
       </div>`;
   } else if(type==='quote'){
     w.className='post quote-block visible';
-    w.innerHTML=`<button class="new-post-del" onclick="this.closest('.post').remove();saveStructure()" style="position:absolute;top:8px;right:8px;background:rgba(26,28,36,0.85);border:1px solid rgba(229,228,227,0.18);border-radius:50%;width:22px;height:22px;color:rgba(229,228,227,0.5);font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;">Ã</button>
+    w.innerHTML=`<button class="new-post-del" onclick="this.closest('.post').remove();saveStructure()" style="position:absolute;top:8px;right:8px;background:rgba(26,28,36,0.85);border:1px solid rgba(229,228,227,0.18);border-radius:50%;width:22px;height:22px;color:rgba(229,228,227,0.5);font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;">×</button>
       <blockquote><span contenteditable="true">[ skriv sitat her ]</span><cite contenteditable="true">Felix Green</cite></blockquote>`;
     setTimeout(()=>w.querySelector('span')?.focus(),60);
   } else if(type==='askfelix'){
-      w.innerHTML=`<button class="new-post-del" onclick="this.closest('.post').remove();saveStructure()">Ã</button>
-        <div class="post-stamp"><div class="stamp-icon"><svg viewBox="0 0 16 16"><path d="M3 3h10c.55 0 1 .45 1 1v7c0 .55-.45 1-1 1H6l-3 3V4c0-.55.45-1 1-1z" stroke-width="1.2"/></svg></div><span class="stamp-date" contenteditable="true">send inn spÃ¸rsmÃ¥l</span></div>
+      w.innerHTML=`<button class="new-post-del" onclick="this.closest('.post').remove();saveStructure()">×</button>
+        <div class="post-stamp"><div class="stamp-icon"><svg viewBox="0 0 16 16"><path d="M3 3h10c.55 0 1 .45 1 1v7c0 .55-.45 1-1 1H6l-3 3V4c0-.55.45-1 1-1z" stroke-width="1.2"/></svg></div><span class="stamp-date" contenteditable="true">send inn spørsmål</span></div>
         <div class="ask-felix-card">
-          <span class="ask-felix-badge">spÃ¸rsmÃ¥l til Felix</span>
-          <div class="ask-felix-heading" contenteditable="true">Har du et spÃ¸rsmÃ¥l til Felix?</div>
-          <div class="ask-felix-sub" contenteditable="true">Send inn spÃ¸rsmÃ¥let ditt, sÃ¥ svarer Felix sÃ¥ fort han kan.</div>
-          <textarea class="ask-felix-input" placeholder="Skriv spÃ¸rsmÃ¥let ditt her..."></textarea>
+          <span class="ask-felix-badge">spørsmål til Felix</span>
+          <div class="ask-felix-heading" contenteditable="true">Har du et spørsmål til Felix?</div>
+          <div class="ask-felix-sub" contenteditable="true">Send inn spørsmålet ditt, så svarer Felix så fort han kan.</div>
+          <textarea class="ask-felix-input" placeholder="Skriv spørsmålet ditt her..."></textarea>
           <button class="ask-felix-send" onclick="askFelixSend(this)"><svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>send</button>
-          <div class="ask-felix-ok">Takk! SpÃ¸rsmÃ¥let ditt er sendt.</div>
+          <div class="ask-felix-ok">Takk! Spørsmålet ditt er sendt.</div>
         </div>`;
     } else if(type==='quiz'){
     const qid='q'+Date.now();
-    w.innerHTML=`<button class="new-post-del" onclick="this.closest('.post').remove();saveStructure()">Ã</button>
+    w.innerHTML=`<button class="new-post-del" onclick="this.closest('.post').remove();saveStructure()">×</button>
       <div class="post-stamp"><div class="stamp-icon"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="5.5" stroke-width="1.2"/><path d="M8 5.5v3l1.5 1.5" stroke-width="1.2"/></svg></div><span class="stamp-date" contenteditable="true">du er Felix</span></div>
       <div class="quiz-card" id="qcard-${qid}" data-ep="${currentPage}" data-cur="0" data-score="0">
-        <div class="qc-top"><span class="qc-badge">episode ${currentPage} Â· quiz</span><span class="qc-counter" id="qcount-${qid}">1 / 1</span></div>
+        <div class="qc-top"><span class="qc-badge">episode ${currentPage} · quiz</span><span class="qc-counter" id="qcount-${qid}">1 / 1</span></div>
         <div class="qc-dots" id="qdots-${qid}"><div class="qc-seg active"></div></div>
         <div class="qc-viewport"><div class="qc-slides" id="qslides-${qid}">
           <div class="qc-slide">
-            <div class="qc-q-num">spÃ¸rsmÃ¥l 1</div>
-            <div class="qc-question" contenteditable="true">[ skriv spÃ¸rsmÃ¥l her ]</div>
+            <div class="qc-q-num">spørsmål 1</div>
+            <div class="qc-question" contenteditable="true">[ skriv spørsmål her ]</div>
             <div class="qc-options">
               <div class="qc-option" data-correct="false" onclick="qPick(this)"><div class="qc-radio"><div class="qc-inner-dot"></div></div><div class="qc-option-text" contenteditable="true">[ svaralternativ ]</div></div>
               <div class="qc-option" data-correct="true" onclick="qPick(this)"><div class="qc-radio"><div class="qc-inner-dot"></div></div><div class="qc-option-text" contenteditable="true">[ riktig svar ]</div></div>
@@ -2301,10 +2237,10 @@ function tbAdd(type){
             </div>
             <div class="qc-reveal"><strong>Felix:</strong> <span contenteditable="true">[ fasitsvar ]</span></div>
           </div>
-          <div class="qc-slide qc-result"><div class="qc-score-big" id="qscore-${qid}">â</div><div class="qc-score-label">riktige svar</div></div>
+          <div class="qc-slide qc-result"><div class="qc-score-big" id="qscore-${qid}">—</div><div class="qc-score-label">riktige svar</div></div>
         </div></div>
         <div class="qc-foot"><button class="qc-next" id="qnext-${qid}" onclick="qNext('${qid}')"><span id="qnext-lbl-${qid}">neste</span><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button></div>
-        <button class="qc-add" onclick="qAdd('${qid}')"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>legg til spÃ¸rsmÃ¥l</button>
+        <button class="qc-add" onclick="qAdd('${qid}')"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>legg til spørsmål</button>
       </div>`;
   }
 
@@ -2313,11 +2249,11 @@ function tbAdd(type){
   buildZones();initPostControls();initRightPanelClicks();initContentEditable();initPhoneFrameDelete();initDzDelete();
   saveStructure();
   w.scrollIntoView({behavior:'smooth',block:'center'});
-  // Auto-Ã¥pne hÃ¸yre panel for ny post
+  // Auto-åpne høyre panel for ny post
   setTimeout(()=>openRightPanel(w),80);
 }
 
-// ââ EPISODE LEGG TIL / FJERN ââ
+// ── EPISODE LEGG TIL / FJERN ──
 function initEpisodeControls(){
   if(_isPublic)return;
   const nav=document.getElementById('main-nav');
@@ -2327,11 +2263,11 @@ function initEpisodeControls(){
     const m=a.getAttribute('onclick')?.match(/goToPage\((\d+)\)/);
     if(!m)return;
     const n=parseInt(m[1]);
-    // Lagre sidetall som data-attributt FÃR onclick fjernes av setupDblEdit
+    // Lagre sidetall som data-attributt FØR onclick fjernes av setupDblEdit
     a.dataset.page=n;
     // Sletteknapp
     const del=document.createElement('button');
-    del.className='ep-nav-del';del.textContent='Ã';del.title='Fjern episode';
+    del.className='ep-nav-del';del.textContent='×';del.title='Fjern episode';
     del.onclick=e=>{e.preventDefault();e.stopPropagation();removeEpisode(n);};
     a.appendChild(del);
     // Dobbeltklikk = rediger tekst
@@ -2341,20 +2277,20 @@ function initEpisodeControls(){
   addBtn.className='ep-nav-add';addBtn.textContent='+';addBtn.title='Legg til episode';
   addBtn.onclick=e=>{e.preventDefault();addEpisode();};
   nav.appendChild(addBtn);
-  // Initial sync: hero-nav â dropdown
+  // Initial sync: hero-nav → dropdown
   syncNavToDropdown();
 }
 
 // Dobbeltklikk-redigering for hero-nav lenker
 function setupDblEdit(a,n){
-  // Fjern inline onclick â vi hÃ¥ndterer klikk selv
+  // Fjern inline onclick — vi håndterer klikk selv
   a.removeAttribute('onclick');
   let _clickTimer=null;
   a.addEventListener('click',e=>{
     e.preventDefault();e.stopPropagation();
     // Hvis vi allerede er i redigeringsmodus, ikke naviger
     if(a.contentEditable==='true')return;
-    // Vent 280ms â hvis ikke dobbeltklikk, naviger
+    // Vent 280ms — hvis ikke dobbeltklikk, naviger
     if(_clickTimer){clearTimeout(_clickTimer);_clickTimer=null;return;}
     _clickTimer=setTimeout(()=>{_clickTimer=null;goToPage(n);},280);
   });
@@ -2378,7 +2314,7 @@ function setupDblEdit(a,n){
   });
 }
 
-// Synk hero-nav tekst â dropdown labels
+// Synk hero-nav tekst → dropdown labels
 function syncNavToDropdown(){
   const nav=document.getElementById('main-nav');
   if(!nav)return;
@@ -2415,7 +2351,7 @@ function addEpisode(){
   const pageDiv=document.createElement('div');
   pageDiv.id='page-'+n;pageDiv.className='page-content';pageDiv.style.display='none';
   pageDiv.innerHTML=`<main class="feed">
-    <div class="chapter-break post"><div class="break-line"></div><span class="break-label" contenteditable="true">episode ${n} Â· 2026</span><div class="break-line"></div></div>
+    <div class="chapter-break post"><div class="break-line"></div><span class="break-label" contenteditable="true">episode ${n} · 2026</span><div class="break-line"></div></div>
     <div class="post">
       <div class="ep-number" contenteditable="true">episode ${n}</div>
       <h2 class="ep-title" contenteditable="true">[ tittel ]</h2>
@@ -2432,7 +2368,7 @@ function addEpisode(){
   a.setAttribute('onclick',`goToPage(${n});return false;`);
   a.dataset.page=n;
   a.textContent='episode '+n;
-  const del=document.createElement('button');del.className='ep-nav-del';del.textContent='Ã';
+  const del=document.createElement('button');del.className='ep-nav-del';del.textContent='×';
   del.onclick=e=>{e.preventDefault();e.stopPropagation();removeEpisode(n);};
   a.appendChild(del);
   setupDblEdit(a,n);
@@ -2444,7 +2380,7 @@ function addEpisode(){
   si.innerHTML=`<span class="sdrop-num">0${n}</span><div><div class="sdrop-label">episode ${n}</div><div class="sdrop-sub"></div></div>`;
   dd.appendChild(si);
   // Legg til i paginering
-  // Legg sidetall inn FÃR neste-pilen (â), ikke etter den
+  // Legg sidetall inn FØR neste-pilen (→), ikke etter den
   const nextArrow=document.getElementById('pb-next')||document.querySelector('.pagination .page-btn.arrow:last-child');
   const pb=document.createElement('a');pb.className='page-btn';pb.id='pb-'+n;
   pb.setAttribute('onclick',`goToPage(${n})`);pb.textContent=n;
@@ -2458,7 +2394,7 @@ function addEpisode(){
 initEpisodeControls();
 restoreNavLabels();
 
-// ââ TOUCH SWIPE (mobil episodenavigasjon) ââ
+// ── TOUCH SWIPE (mobil episodenavigasjon) ──
 let _tX=0,_tY=0;
 document.addEventListener('touchstart',e=>{_tX=e.touches[0].clientX;_tY=e.touches[0].clientY;},{passive:true});
 document.addEventListener('touchend',e=>{
@@ -2466,13 +2402,13 @@ document.addEventListener('touchend',e=>{
   if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)*1.4){changePage(dx<0?1:-1);}
 },{passive:true});
 
-// ââ SLETT-KNAPP PÃ INDIVIDUELLE BILDEBOKSER ââ
+// ── SLETT-KNAPP PÅ INDIVIDUELLE BILDEBOKSER ──
 function initDzDelete(){
   document.querySelectorAll('.drop-zone').forEach(z=>{
     if(z.dataset.delInit)return;
     z.dataset.delInit='1';
     const btn=document.createElement('button');
-    btn.className='dz-del';btn.textContent='Ã';btn.title='Slett bildeboks';
+    btn.className='dz-del';btn.textContent='×';btn.title='Slett bildeboks';
     btn.onclick=e=>{
       e.stopPropagation();
       pushUndo();
@@ -2490,14 +2426,14 @@ function initDzDelete(){
 }
 initDzDelete();
 
-// ââ GJÃR ALLE STATISKE ELEMENTER REDIGERBARE ââ
+// ── GJØR ALLE STATISKE ELEMENTER REDIGERBARE ──
 (function makeAllEditable(){
   if(_isPublic)return;
   // Footer-tekst
   document.querySelectorAll('footer p').forEach(el=>el.contentEditable='true');
   // CTA-tittel (allerede, men sjekk)
   document.querySelectorAll('.cta-label,.cta-title').forEach(el=>el.contentEditable='true');
-  // Break-labels (gjÃ¸res dynamisk i reInit, men sikre dem her ogsÃ¥)
+  // Break-labels (gjøres dynamisk i reInit, men sikre dem her også)
   document.querySelectorAll('.break-label').forEach(el=>el.contentEditable='true');
   // Ep-number
   document.querySelectorAll('.ep-number').forEach(el=>el.contentEditable='true');
@@ -2505,7 +2441,7 @@ initDzDelete();
   document.querySelectorAll('.hero-eyebrow').forEach(el=>el.contentEditable='true');
 })();
 
-// ââ HERO-BILDE BYTT ââ
+// ── HERO-BILDE BYTT ──
 (function(){
   if(_isPublic)return;
   const hero=document.getElementById('hero-section');
@@ -2540,28 +2476,28 @@ function triggerHeroUpload(){
   inp.click();
 }
 
-// ââ HURTIGTASTER (Canva/Adobe-stil) ââ
+// ── HURTIGTASTER (Canva/Adobe-stil) ──
 let _copiedPost=null;
 document.addEventListener('keydown',e=>{
   if(_isPublic)return;
   const active=document.activeElement;
   const isTyping=active&&(active.isContentEditable||['INPUT','TEXTAREA'].includes(active.tagName));
 
-  // Cmd+Z â angre (bare utenfor tekstfelt)
+  // Cmd+Z → angre (bare utenfor tekstfelt)
   if((e.metaKey||e.ctrlKey)&&e.key==='z'&&!e.shiftKey){
     if(!isTyping){e.preventDefault();tbUndo();}
     return;
   }
-  // Escape â fjern markering
+  // Escape → fjern markering
   if(e.key==='Escape'){closeRightPanel();return;}
 
   if(!_selectedPost||isTyping)return;
 
-  // Delete / Backspace â slett markert element
+  // Delete / Backspace → slett markert element
   if(e.key==='Delete'||e.key==='Backspace'){
     e.preventDefault();rpDelete();return;
   }
-  // Cmd+C â kopier
+  // Cmd+C → kopier
   if((e.metaKey||e.ctrlKey)&&e.key==='c'){
     e.preventDefault();
     _copiedPost=_selectedPost.cloneNode(true);
@@ -2573,7 +2509,7 @@ document.addEventListener('keydown',e=>{
     setTimeout(()=>_selectedPost.style.outline=ol,350);
     return;
   }
-  // Cmd+D â dupliser (direkte under)
+  // Cmd+D → dupliser (direkte under)
   if((e.metaKey||e.ctrlKey)&&e.key==='d'){
     e.preventDefault();
     const clone=_selectedPost.cloneNode(true);
@@ -2583,7 +2519,7 @@ document.addEventListener('keydown',e=>{
     buildZones();initPostControls();initRightPanelClicks();initContentEditable();
     saveStructure();openRightPanel(clone);return;
   }
-  // Cmd+V â lim inn kopi
+  // Cmd+V → lim inn kopi
   if((e.metaKey||e.ctrlKey)&&e.key==='v'&&_copiedPost){
     e.preventDefault();
     const clone=_copiedPost.cloneNode(true);
@@ -2591,12 +2527,12 @@ document.addEventListener('keydown',e=>{
     buildZones();initPostControls();initRightPanelClicks();initContentEditable();
     saveStructure();openRightPanel(clone);return;
   }
-  // Pil opp/ned â flytt element
+  // Pil opp/ned → flytt element
   if(e.key==='ArrowUp'&&(e.altKey||e.metaKey)){e.preventDefault();rpMove(-1);return;}
   if(e.key==='ArrowDown'&&(e.altKey||e.metaKey)){e.preventDefault();rpMove(1);return;}
 });
 
-// ââ LENKE-INNSETTING (Cmd+K / Ctrl+K) ââ
+// ── LENKE-INNSETTING (Cmd+K / Ctrl+K) ──
 document.addEventListener('keydown',e=>{
   if((e.metaKey||e.ctrlKey)&&e.key==='k'){
     const sel=window.getSelection();
@@ -2623,7 +2559,7 @@ document.addEventListener('keydown',e=>{
   }
 });
 
-// ââ BILDE-LIMING (Ctrl+V) ââ
+// ── BILDE-LIMING (Ctrl+V) ──
 let _lastZone=null;
 function trackZone(z){z.addEventListener('mouseenter',()=>_lastZone=z);}
 document.querySelectorAll('.drop-zone').forEach(trackZone);
@@ -2637,11 +2573,11 @@ document.addEventListener('paste',e=>{
     }
   }
 });
-// Koble til nye soner nÃ¥r de opprettes
+// Koble til nye soner når de opprettes
 const _origBuildZones=buildZones;
 buildZones=function(){_origBuildZones();document.querySelectorAll('.drop-zone').forEach(z=>{if(!z.dataset.ztrk){z.dataset.ztrk='1';trackZone(z);}});if(typeof initDzDelete==='function')initDzDelete();};
 
-// ââ SLETT-KNAPP PÃ SMS-RAMMER ââ
+// ── SLETT-KNAPP PÅ SMS-RAMMER ──
 function initPhoneFrameDelete(){
   document.querySelectorAll('.phone-frame').forEach(pf=>{
     const post=pf.closest('.post');
@@ -2649,7 +2585,7 @@ function initPhoneFrameDelete(){
     pf.dataset.delInit='1';
     const btn=document.createElement('button');
     btn.style.cssText='position:absolute;top:8px;right:8px;background:rgba(26,28,36,0.85);border:1px solid rgba(229,228,227,0.18);border-radius:50%;width:22px;height:22px;color:rgba(229,228,227,0.5);font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;line-height:1;';
-    btn.title='Slett melding';btn.textContent='Ã';
+    btn.title='Slett melding';btn.textContent='×';
     btn.onclick=()=>{post.remove();saveStructure();};
     post.style.position='relative';
     post.appendChild(btn);
@@ -2657,11 +2593,11 @@ function initPhoneFrameDelete(){
 }
 initPhoneFrameDelete();
 
-// ââ FADE IN ââ
+// ── FADE IN ──
 function initObserver(){const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:0.05});document.querySelectorAll('.post:not(.visible)').forEach(p=>obs.observe(p));}
 initObserver();
 
-// ââ PAGINERING ââ
+// ── PAGINERING ──
 let currentPage=1;
 function goToPage(n){if(!document.getElementById('page-'+n))return;document.getElementById('pb-last')&&(document.getElementById('pb-last').onclick=()=>goToPage(totalPages()));currentPage=n;document.querySelectorAll('.page-content').forEach(p=>p.style.display='none');document.getElementById('page-'+n).style.display='block';for(let i=1;i<=4;i++){document.getElementById('pb-'+i).classList.toggle('active',i===n);const sd=document.getElementById('sdrop-'+i);if(sd)sd.classList.toggle('active',i===n);}document.querySelectorAll('#main-nav a').forEach((a,i)=>a.classList.toggle('active',i+1===n));dropdown.classList.remove('open');burgerBtn.classList.remove('open');window.scrollTo({top:heroEl.offsetHeight,behavior:'smooth'});setTimeout(initObserver,80);}
 function totalPages(){return document.querySelectorAll('.page-content').length;}

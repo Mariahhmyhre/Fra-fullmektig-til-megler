@@ -837,14 +837,12 @@ setTimeout(updateStickyNav,120);
 function toggleMenu(){const o=dropdown.classList.toggle('open');burgerBtn.classList.toggle('open',o);}
 // Hover proximity: show dropdown when mouse enters nav or dropdown, hide on leave
 let _menuHideTimer=null;
-function _showMenu(){clearTimeout(_menuHideTimer);dropdown.classList.add('open');burgerBtn.classList.add('open');}
-function _hideMenu(){_menuHideTimer=setTimeout(()=>{dropdown.classList.remove('open');burgerBtn.classList.remove('open');},180);}
-stickyNav.addEventListener('mouseenter',_showMenu);
-stickyNav.addEventListener('mouseleave',_hideMenu);
-dropdown.addEventListener('mouseenter',_showMenu);
-dropdown.addEventListener('mouseleave',_hideMenu);
+function _showMenu(){clearTimeout(_menuHideTimer);if(dropdown)dropdown.classList.add('open');if(burgerBtn)burgerBtn.classList.add('open');}
+function _hideMenu(){_menuHideTimer=setTimeout(()=>{if(dropdown)dropdown.classList.remove('open');if(burgerBtn)burgerBtn.classList.remove('open');},180);}
+if(stickyNav){stickyNav.addEventListener('mouseenter',_showMenu);stickyNav.addEventListener('mouseleave',_hideMenu);}
+if(dropdown){dropdown.addEventListener('mouseenter',_showMenu);dropdown.addEventListener('mouseleave',_hideMenu);}
 // Keep click-outside close for mobile (no hover events)
-document.addEventListener('click',e=>{if(!stickyNav.contains(e.target)&&!dropdown.contains(e.target)){clearTimeout(_menuHideTimer);dropdown.classList.remove('open');burgerBtn.classList.remove('open');}});
+document.addEventListener('click',e=>{if(stickyNav&&dropdown&&!stickyNav.contains(e.target)&&!dropdown.contains(e.target)){clearTimeout(_menuHideTimer);dropdown.classList.remove('open');burgerBtn.classList.remove('open');}});
 
 // ── SMS ──
 const DEL_BTN=`<button class="msg-delete" onclick="this.closest('.msg').remove()">×</button>`;

@@ -373,7 +373,7 @@
     /* ── SLETT BILDEBOKS (skjult – høyre panel brukes) ── */
     .dz-del { display:none !important; }
   </style>
-<meta name="pm-saved" content="1"><meta name="pm-public" content="1"><script>(function(){
+<style></style><meta name="pm-saved" content="1"><meta name="pm-public" content="1"><script>(function(){
   var C='fullmektigtilmegler2026',K='pm-access-v1';
   if(localStorage.getItem(K)===C)return;
   document.body.style.overflow='hidden';
@@ -391,8 +391,8 @@
     else{err.textContent='feil kode';inp.value='';inp.style.borderColor='rgba(237,189,242,0.4)';setTimeout(function(){err.textContent='';inp.style.borderColor='';},2000);}
   });
 })();</script></head>
-<body class="editor-mode" cz-shortcut-listen="true" data-new-gr-c-s-check-loaded="14.1317.0" data-gr-ext-installed="">
-<div id="progress" style="width: 0%;"></div>
+<body class="editor-mode rp-open" cz-shortcut-listen="true" data-new-gr-c-s-check-loaded="14.1317.0" data-gr-ext-installed="" data-new-gr-c-s-loaded="14.1317.0">
+<div id="progress" style="width: 89.0555%;"></div>
 
 <!-- VERKTØYBOKS (skjules i public) -->
 <div id="_toolbox">
@@ -407,20 +407,37 @@
 <button class="_tb-btn" title="Spørsmål til Felix" onclick="tbAdd('askfelix')"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H8l-4 4V6c0-1.1.9-2 2-2z"></path><path d="M12 11v1"></path><circle cx="12" cy="15" r="0.5"></circle></svg>spørsmål</button>
     <div class="_tb-sep"></div>
     <button class="_tb-btn _tb-undo" title="Angre (⌘Z)" onclick="tbUndo()"><svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 .49-4.5"></path></svg></button>
-    <button class="_tb-btn _tb-del" id="_tb-del-btn" title="Slett valgt (Delete)" onclick="rpDelete()"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6l-1 14H6L5 6"></path><path d="M10 11v6M14 11v6"></path></svg></button>
+    <button class="_tb-btn _tb-del active" id="_tb-del-btn" title="Slett valgt (Delete)" onclick="rpDelete()"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6l-1 14H6L5 6"></path><path d="M10 11v6M14 11v6"></path></svg></button>
   </div>
   <button id="_tb-tab" onclick="toggleToolbox()">›</button>
 </div>
 
 <!-- HØYRE PANEL (skjules i public) -->
-<div id="_rp">
+<div id="_rp" class="open">
   <div id="_rp-head">
-    <span class="_rp-type" id="_rp-type">element</span>
+    <span class="_rp-type" id="_rp-type">tekst</span>
     <!-- close button removed — panel alltid synlig -->
   </div>
   <div id="_rp-body">
-    <p class="_rp-empty">Klikk på et element i feedet for å redigere det</p>
+      <span class="_rp-label">dato</span>
+      <input class="_rp-input" id="_rp-tdate" value="[ dato ]" placeholder="[ dato ]">
+      <div class="_rp-sep"></div>
+      <p style="font-size:11px;color:rgba(229,228,227,0.35);line-height:1.6;">Klikk direkte på teksten i feedet for å redigere den.</p>
+      <div class="_rp-sep"></div><div class="_rp-sep"></div>
+  <span class="_rp-label" style="font-size:8px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(229,228,227,0.3);">typografi</span>
+  <div class="_rp-typo-group">
+    <span class="_rp-sublabel">font</span>
+    <select class="_rp-select" id="_rp-ff"><option value="" selected="">standard (arvet)</option><option value="'DomaineDisplay',Georgia,serif">Domaine Display — tittel</option><option value="'DomaineText',sans-serif">Domaine Text — brødtekst</option></select>
+    <span class="_rp-sublabel">linjeavstand <span id="_rp-lh-v">1.7</span></span>
+    <input type="range" class="_rp-range" id="_rp-lh" min="0.8" max="3.0" step="0.05" value="1.7">
+    <span class="_rp-sublabel">gjennomsiktighet <span id="_rp-op-v">100%</span></span>
+    <input type="range" class="_rp-range" id="_rp-op" min="10" max="100" step="5" value="100">
+  </div><div class="_rp-sep"></div><div class="_rp-row">
+    <button class="_rp-btn" onclick="rpMove(-1)" title="Flytt opp"><svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"></polyline></svg>opp</button>
+    <button class="_rp-btn" onclick="rpMove(1)" title="Flytt ned"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>ned</button>
   </div>
+  <div class="_rp-sep"></div>
+  <button class="_rp-btn danger" onclick="rpDelete()"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6l-1 14H6L5 6"></path><path d="M10 11v6M14 11v6"></path></svg>slett element</button></div>
 </div>
 
 
@@ -462,7 +479,7 @@
 
   <div class="post visible" style="position: relative;" data-drag-init="1" data-rp-init="1">
     <div class="post-stamp"><div class="stamp-icon"><svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="1"></rect><circle cx="6" cy="7.5" r="1.2" fill="#65666d" stroke="none"></circle><path d="M2 11.5l3.5-3 2 2 2.5-2.5L14 12"></path></svg></div><span class="stamp-date" data-ck="pm-ce-3">Onsdag 01.09.2026 kl 08.47</span></div>
-    <span class="img-date"></span>
+    <span class="img-date" data-ck="pm-ce-296"></span>
   <button class="new-post-del" title="Slett element">×</button></div>
 
   <div class="post visible" style="position: relative;" data-drag-init="1" data-rp-init="1">
@@ -488,7 +505,7 @@
 
   <div class="post visible" style="position: relative;" data-drag-init="1" data-rp-init="1">
     <div class="post-stamp"><div class="stamp-icon"><svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="1"></rect><circle cx="6" cy="7.5" r="1.2" fill="#65666d" stroke="none"></circle><path d="M2 11.5l3.5-3 2 2 2.5-2.5L14 12"></path></svg></div><span class="stamp-date" data-ck="pm-ce-18"></span></div>
-    <span class="img-date"></span>
+    <span class="img-date" data-ck="pm-ce-297"></span>
   <button class="new-post-del" title="Slett element">×</button></div>
 
   <div class="post visible" style="position: relative;" data-drag-init="1" data-rp-init="1">
@@ -506,7 +523,7 @@
 
   <div class="post visible" style="position: relative;" data-drag-init="1" data-rp-init="1">
     <div class="post-stamp"><div class="stamp-icon"><svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="1"></rect><circle cx="6" cy="7.5" r="1.2" fill="#65666d" stroke="none"></circle><path d="M2 11.5l3.5-3 2 2 2.5-2.5L14 12"></path></svg></div><span class="stamp-date" data-ck="pm-ce-27"></span></div>
-    <span class="img-date"></span>
+    <span class="img-date" data-ck="pm-ce-298"></span>
   <button class="new-post-del" title="Slett element">×</button></div>
 
   <div class="post quote-block visible" data-drag-init="1" data-rp-init="1" style="position: relative;">
@@ -597,7 +614,7 @@
 
   <div class="post" style="position: relative;" data-drag-init="1" data-rp-init="1">
     <div class="post-stamp"><div class="stamp-icon"><svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="1"></rect><circle cx="6" cy="7.5" r="1.2" fill="#65666d" stroke="none"></circle><path d="M2 11.5l3.5-3 2 2 2.5-2.5L14 12"></path></svg></div><span class="stamp-date" data-ck="pm-ce-66"></span></div>
-    <span class="img-date"></span>
+    <span class="img-date" data-ck="pm-ce-301"></span>
   <button class="new-post-del" title="Slett element">×</button></div>
 
   <div class="post" data-drag-init="1" data-rp-init="1"></div>
@@ -654,7 +671,7 @@
 
   <div class="post" style="position: relative;" data-drag-init="1" data-rp-init="1">
     <div class="post-stamp"><div class="stamp-icon"><svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="1"></rect><circle cx="6" cy="7.5" r="1.2" fill="#65666d" stroke="none"></circle><path d="M2 11.5l3.5-3 2 2 2.5-2.5L14 12"></path></svg></div><span class="stamp-date" data-ck="pm-ce-85"></span></div>
-    <span class="img-date"></span>
+    <span class="img-date" data-ck="pm-ce-302"></span>
   <button class="new-post-del" title="Slett element">×</button></div>
 
   <div class="post" style="position: relative;" data-drag-init="1" data-rp-init="1">
@@ -742,7 +759,7 @@
 
   <div class="post" style="position: relative;" data-drag-init="1" data-rp-init="1">
     <div class="post-stamp"><div class="stamp-icon"><svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="1"></rect><circle cx="6" cy="7.5" r="1.2" fill="#65666d" stroke="none"></circle><path d="M2 11.5l3.5-3 2 2 2.5-2.5L14 12"></path></svg></div><span class="stamp-date" data-ck="pm-ce-122"></span></div>
-    <span class="img-date"></span>
+    <span class="img-date" data-ck="pm-ce-303"></span>
   <button class="new-post-del" title="Slett element">×</button></div>
 
   <div class="post" style="position: relative;" data-drag-init="1" data-rp-init="1">
@@ -798,7 +815,7 @@
   <div class="post quote-block" style="position: relative;" data-drag-init="1" data-rp-init="1"><blockquote><span data-ck="pm-ce-143">"Jeg strekker meg ekstra langt for å oppnå et godt resultat. Det vil aldri forandre seg."</span><cite data-ck="pm-ce-144">Felix Green — Autorisert eiendomsmegler, PrivatMegleren Park</cite></blockquote><button class="new-post-del" title="Slett element">×</button></div>
 </main>
 <section class="cta-section">
-  <p class="cta-label">din tur</p>
+  <p class="cta-label" data-ck="pm-ce-304">din tur</p>
   <h2 class="cta-title" data-ck="pm-ce-293">Er dette veien din?</h2>
   <div class="cta-btns">
     <a href="https://privatmegleren.no/stillinger" class="btn btn-fill" data-href="https://privatmegleren.no/stillinger" data-ck="pm-ce-294">se ledige stillinger</a>
@@ -818,7 +835,7 @@
   <a class="page-btn arrow" id="pb-next" onclick="changePage(1)" title="Neste">&gt;</a>
   <a class="page-btn arrow" id="pb-last" onclick="goToPage(totalPages())" title="Siste">&gt;&gt;</a>
 </div>
-<footer><img src="media/m2.png" alt="PrivatMegleren"><p>© PrivatMegleren Park</p></footer>
+<footer><img src="media/m2.png" alt="PrivatMegleren"><p data-ck="pm-ce-305">© PrivatMegleren Park</p></footer>
 
 <script>
 // ── STICKY NAV ──
@@ -2637,4 +2654,4 @@ function changePage(d){const n=currentPage+d;if(n>=1&&n<=4)goToPage(n);}
 </script>
 
 
-<grammarly-desktop-integration data-grammarly-shadow-root="true" style="visibility: visible !important;"></grammarly-desktop-integration></body></html>
+<div id="_pub-toast" style="position: fixed; bottom: 72px; left: 50%; transform: translateX(-50%); background: rgb(38, 40, 48); color: rgb(229, 228, 227); border: 1px solid rgba(229, 228, 227, 0.15); padding: 10px 24px; border-radius: 20px; font-size: 11px; letter-spacing: 0.12em; z-index: 9999; font-family: sans-serif; pointer-events: none; transition: opacity 0.4s; text-align: center; white-space: nowrap; opacity: 0;">publisert ✓ &nbsp;·&nbsp; <span style="opacity:0.5">live om ~30 sek på mariahhmyhre.github.io/Fra-fullmektig-til-megler</span></div><grammarly-desktop-integration data-grammarly-shadow-root="true" style="visibility: visible !important;"></grammarly-desktop-integration></body></html>

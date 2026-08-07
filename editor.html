@@ -57,9 +57,14 @@
     .hero-eyebrow { font-size:9px; letter-spacing:0.45em; text-transform:uppercase; color:rgba(229,228,227,0.45); margin-bottom:18px; }
     .hero-title { font-family:var(--serif); font-size:clamp(52px,9vw,112px); font-weight:300; line-height:0.92; letter-spacing:-0.025em; color:var(--light); }
     .hero-title-line2 { display:block; }
-    .hero-nav { position:absolute; bottom:0; left:0; right:0; z-index:20; display:flex; align-items:center; justify-content:center; gap:48px; height:48px; background:rgba(30,32,40,0.78); backdrop-filter:blur(18px); border-top:1px solid rgba(229,228,227,0.06); }
-    .hero-nav a { font-size:9px; letter-spacing:0.22em; color:var(--muted); text-decoration:none; transition:color 0.2s; position:relative; }
-    .hero-nav a:hover,.hero-nav a.active { color:var(--light); }
+    .hero-nav { position:absolute; bottom:0; left:0; right:0; z-index:20; display:flex; align-items:center; justify-content:center; gap:0; height:54px; background:rgba(20,22,28,0.84); backdrop-filter:blur(22px); border-top:1px solid rgba(229,228,227,0.04); }
+    .hero-nav a { font-size:9.5px; letter-spacing:0.18em; color:rgba(229,228,227,0.4); text-decoration:none; transition:color 0.25s,background 0.25s; position:relative; display:flex; align-items:center; gap:9px; padding:0 32px; height:100%; }
+    .hero-nav a:hover { color:rgba(229,228,227,0.75); background:rgba(229,228,227,0.03); }
+    .hero-nav a.active { color:var(--light); }
+    .hero-nav a svg.nav-icon { width:13px; height:13px; opacity:0.45; flex-shrink:0; }
+    .hero-nav a.active svg.nav-icon { opacity:0.8; }
+    .hero-nav a::after { content:''; position:absolute; bottom:0; left:50%; transform:translateX(-50%); width:0; height:1.5px; background:var(--light); transition:width 0.3s ease; }
+    .hero-nav a.active::after { width:48%; }
 
     /* ── FEED ── */
     .feed { max-width:660px; margin:0 auto; padding:0 24px 80px; }
@@ -291,7 +296,7 @@
     [contenteditable] { outline:none; border-radius:2px; transition:background 0.2s; cursor:text; }
     [contenteditable]:hover { background:rgba(229,228,227,0.04); }
     [contenteditable]:focus { background:rgba(229,228,227,0.07); box-shadow:0 0 0 1px rgba(229,228,227,0.12); }
-    @media(max-width:600px){.hero-nav{gap:20px}.feed{padding:0 16px 60px}.quote-block{margin:0 -16px}footer{padding:24px}}
+    @media(max-width:600px){.hero-nav a{padding:0 18px;font-size:8.5px;gap:6px}.feed{padding:0 16px 60px}.quote-block{margin:0 -16px}footer{padding:24px}}
     @media(max-width:768px){
       body.editor-mode{padding:0 !important;}
       body.editor-mode .hero,body.editor-mode #sticky-nav,
@@ -432,10 +437,10 @@
   <div class="hero-overlay"></div>
   <button id="hero-img-btn" onclick="triggerHeroUpload()" title="Bytt bakgrunnsbilde" style="position:absolute;top:16px;right:16px;z-index:30;background:rgba(26,28,36,0.82);border:1px solid rgba(229,228,227,0.18);border-radius:20px;color:rgba(229,228,227,0.6);font-size:9px;letter-spacing:0.15em;text-transform:uppercase;padding:6px 14px;cursor:pointer;font-family:inherit;backdrop-filter:blur(8px);display:none;">bytt bilde</button>
   <nav class="hero-nav" id="main-nav">
-    <a href="#" class="active" onclick="goToPage(1);return false;" spellcheck="false">episode 1</a>
-    <a href="#" onclick="goToPage(2);return false;" spellcheck="false">episode 2</a>
-    <a href="#" onclick="goToPage(3);return false;" spellcheck="false">episode 3</a>
-    <a href="#" onclick="goToPage(4);return false;" spellcheck="false">episode 4</a>
+    <a href="#" class="active" data-page="1" onclick="goToPage(1);return false;" spellcheck="false"><svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="8" cy="8" r="2.8"/></svg>episode 1</a>
+    <a href="#" data-page="2" onclick="goToPage(2);return false;" spellcheck="false"><svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="8" cy="8" r="2.8"/></svg>episode 2</a>
+    <a href="#" data-page="3" onclick="goToPage(3);return false;" spellcheck="false"><svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="8" cy="8" r="2.8"/></svg>episode 3</a>
+    <a href="#" data-page="4" onclick="goToPage(4);return false;" spellcheck="false"><svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="8" cy="8" r="2.8"/></svg>episode 4</a>
   </nav>
   <div class="hero-content">
     <p class="hero-eyebrow" contenteditable="true">Felix Green — en fortelling</p>
@@ -1122,7 +1127,8 @@ function saveNavLabels(){
   const labels={};
   nav.querySelectorAll('a[data-page]').forEach(a=>{
     const pg=a.dataset.page;
-    labels[pg]=a.childNodes[0]?.textContent?.trim()||'';
+    const tn=Array.from(a.childNodes).find(n=>n.nodeType===3);
+    labels[pg]=tn?.textContent?.trim()||'';
   });
   try{localStorage.setItem('pm-nav-labels',JSON.stringify(labels));}catch(e){}
 }
@@ -1138,10 +1144,11 @@ function restoreNavLabels(){
       const pg=a.dataset.page;
       const text=labels[pg];
       if(text){
-        if(a.childNodes[0]&&a.childNodes[0].nodeType===3){
-          a.childNodes[0].textContent=text;
+        const tn=Array.from(a.childNodes).find(n=>n.nodeType===3);
+        if(tn){
+          tn.textContent=text;
         }else{
-          a.insertBefore(document.createTextNode(text),a.firstChild);
+          a.appendChild(document.createTextNode(text));
         }
       }
     });
@@ -2399,7 +2406,7 @@ function setupDblEdit(a,n){
     a.contentEditable='true';
     a.focus();
     const range=document.createRange();
-    const textNode=a.childNodes[0];
+    const textNode=Array.from(a.childNodes).find(nd=>nd.nodeType===3);
     if(textNode){range.selectNodeContents(textNode);const sel=window.getSelection();sel.removeAllRanges();sel.addRange(range);}
   });
   a.addEventListener('blur',()=>{
@@ -2421,7 +2428,8 @@ function syncNavToDropdown(){
     const n=parseInt(a.dataset.page);
     const label=document.querySelector('#sdrop-'+n+' .sdrop-label');
     if(label){
-      const text=a.childNodes[0]?.textContent?.trim()||'episode '+n;
+      const tn=Array.from(a.childNodes).find(nd=>nd.nodeType===3);
+      const text=tn?.textContent?.trim()||'episode '+n;
       label.textContent=text;
     }
   });
@@ -2466,7 +2474,7 @@ function addEpisode(){
   a.href='#';a.spellcheck=false;
   a.setAttribute('onclick',`goToPage(${n});return false;`);
   a.dataset.page=n;
-  a.textContent='episode '+n;
+  a.innerHTML='<svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="8" cy="8" r="2.8"/></svg>episode '+n;
   const del=document.createElement('button');del.className='ep-nav-del';del.textContent='×';
   del.onclick=e=>{e.preventDefault();e.stopPropagation();removeEpisode(n);};
   a.appendChild(del);

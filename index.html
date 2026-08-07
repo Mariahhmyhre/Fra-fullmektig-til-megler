@@ -392,7 +392,7 @@
   });
 })();</script></head>
 <body class="editor-mode rp-open" cz-shortcut-listen="true" data-new-gr-c-s-check-loaded="14.1317.0" data-gr-ext-installed="" data-new-gr-c-s-loaded="14.1317.0">
-<div id="progress" style="width: 89.0555%;"></div>
+<div id="progress" style="width: 86.5436%;"></div>
 
 <!-- VERKTØYBOKS (skjules i public) -->
 <div id="_toolbox">
@@ -415,14 +415,14 @@
 <!-- HØYRE PANEL (skjules i public) -->
 <div id="_rp" class="open">
   <div id="_rp-head">
-    <span class="_rp-type" id="_rp-type">tekst</span>
+    <span class="_rp-type" id="_rp-type">sitat</span>
     <!-- close button removed — panel alltid synlig -->
   </div>
   <div id="_rp-body">
-      <span class="_rp-label">dato</span>
-      <input class="_rp-input" id="_rp-tdate" value="[ dato ]" placeholder="[ dato ]">
-      <div class="_rp-sep"></div>
-      <p style="font-size:11px;color:rgba(229,228,227,0.35);line-height:1.6;">Klikk direkte på teksten i feedet for å redigere den.</p>
+      <span class="_rp-label">sitat</span>
+      <textarea class="_rp-input" id="_rp-quote" rows="3">[ skriv sitat her ]</textarea>
+      <span class="_rp-label">kilde</span>
+      <input class="_rp-input" id="_rp-cite" value="Felix Green">
       <div class="_rp-sep"></div><div class="_rp-sep"></div>
   <span class="_rp-label" style="font-size:8px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(229,228,227,0.3);">typografi</span>
   <div class="_rp-typo-group">
@@ -466,8 +466,8 @@
     <a href="#" spellcheck="false" data-page="4">episode 4<button class="ep-nav-del" title="Fjern episode">×</button></a>
   <button class="ep-nav-add" title="Legg til episode">+</button></nav>
   <div class="hero-content">
-    <p class="hero-eyebrow" data-ck="pm-ce-291">Felix Green — en fortelling</p>
-    <h1 class="hero-title" data-ck="pm-ce-292">Fra fullmektig<span class="hero-title-line2">til megler</span></h1>
+    <p class="hero-eyebrow" data-ck="pm-ce-306">Felix Green — en fortelling</p>
+    <h1 class="hero-title" data-ck="pm-ce-307">Fra fullmektig<span class="hero-title-line2">til megler</span></h1>
   </div>
 </header>
 
@@ -479,7 +479,7 @@
 
   <div class="post visible" style="position: relative;" data-drag-init="1" data-rp-init="1">
     <div class="post-stamp"><div class="stamp-icon"><svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="1"></rect><circle cx="6" cy="7.5" r="1.2" fill="#65666d" stroke="none"></circle><path d="M2 11.5l3.5-3 2 2 2.5-2.5L14 12"></path></svg></div><span class="stamp-date" data-ck="pm-ce-3">Onsdag 01.09.2026 kl 08.47</span></div>
-    <span class="img-date" data-ck="pm-ce-296"></span>
+    <span class="img-date" data-ck="pm-ce-311"></span>
   <button class="new-post-del" title="Slett element">×</button></div>
 
   <div class="post visible" style="position: relative;" data-drag-init="1" data-rp-init="1">
@@ -505,7 +505,7 @@
 
   <div class="post visible" style="position: relative;" data-drag-init="1" data-rp-init="1">
     <div class="post-stamp"><div class="stamp-icon"><svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="1"></rect><circle cx="6" cy="7.5" r="1.2" fill="#65666d" stroke="none"></circle><path d="M2 11.5l3.5-3 2 2 2.5-2.5L14 12"></path></svg></div><span class="stamp-date" data-ck="pm-ce-18"></span></div>
-    <span class="img-date" data-ck="pm-ce-297"></span>
+    <span class="img-date" data-ck="pm-ce-312"></span>
   <button class="new-post-del" title="Slett element">×</button></div>
 
   <div class="post visible" style="position: relative;" data-drag-init="1" data-rp-init="1">
@@ -523,11 +523,12 @@
 
   <div class="post visible" style="position: relative;" data-drag-init="1" data-rp-init="1">
     <div class="post-stamp"><div class="stamp-icon"><svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="1"></rect><circle cx="6" cy="7.5" r="1.2" fill="#65666d" stroke="none"></circle><path d="M2 11.5l3.5-3 2 2 2.5-2.5L14 12"></path></svg></div><span class="stamp-date" data-ck="pm-ce-27"></span></div>
-    <span class="img-date" data-ck="pm-ce-298"></span>
+    <span class="img-date" data-ck="pm-ce-313"></span>
   <button class="new-post-del" title="Slett element">×</button></div>
 
   <div class="post quote-block visible" data-drag-init="1" data-rp-init="1" style="position: relative;">
-      <blockquote><span data-ck="pm-ce-245"></span><cite data-ck="pm-ce-246">Felix Green</cite></blockquote><button class="new-post-del" title="Slett element">×</button></div><div class="post visible" data-drag-init="1" data-rp-init="1"></div>
+      <blockquote><span data-ck="pm-ce-245"></span><cite data-ck="pm-ce-246">Felix Green</cite></blockquote><button class="new-post-del" title="Slett element">×</button></div><div class="post quote-block visible pm-selected" data-drag-init="1" data-rp-init="1"><button class="new-post-del" onclick="this.closest('.post').remove();saveStructure()" style="position:absolute;top:8px;right:8px;background:rgba(26,28,36,0.85);border:1px solid rgba(229,228,227,0.18);border-radius:50%;width:22px;height:22px;color:rgba(229,228,227,0.5);font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;">×</button>
+      <blockquote><span data-ck="pm-ce-314">[ skrvdksvksvksvvkscksvk iv sitat her ]</span><cite data-ck="pm-ce-315">Felix Green</cite></blockquote></div><div class="post visible" data-drag-init="1" data-rp-init="1"></div>
 
   <!-- QUIZ 1 -->
   <div class="post visible" style="position: relative;" data-drag-init="1" data-rp-init="1">
@@ -614,7 +615,7 @@
 
   <div class="post" style="position: relative;" data-drag-init="1" data-rp-init="1">
     <div class="post-stamp"><div class="stamp-icon"><svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="1"></rect><circle cx="6" cy="7.5" r="1.2" fill="#65666d" stroke="none"></circle><path d="M2 11.5l3.5-3 2 2 2.5-2.5L14 12"></path></svg></div><span class="stamp-date" data-ck="pm-ce-66"></span></div>
-    <span class="img-date" data-ck="pm-ce-301"></span>
+    <span class="img-date" data-ck="pm-ce-316"></span>
   <button class="new-post-del" title="Slett element">×</button></div>
 
   <div class="post" data-drag-init="1" data-rp-init="1"></div>
@@ -671,7 +672,7 @@
 
   <div class="post" style="position: relative;" data-drag-init="1" data-rp-init="1">
     <div class="post-stamp"><div class="stamp-icon"><svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="1"></rect><circle cx="6" cy="7.5" r="1.2" fill="#65666d" stroke="none"></circle><path d="M2 11.5l3.5-3 2 2 2.5-2.5L14 12"></path></svg></div><span class="stamp-date" data-ck="pm-ce-85"></span></div>
-    <span class="img-date" data-ck="pm-ce-302"></span>
+    <span class="img-date" data-ck="pm-ce-317"></span>
   <button class="new-post-del" title="Slett element">×</button></div>
 
   <div class="post" style="position: relative;" data-drag-init="1" data-rp-init="1">
@@ -759,7 +760,7 @@
 
   <div class="post" style="position: relative;" data-drag-init="1" data-rp-init="1">
     <div class="post-stamp"><div class="stamp-icon"><svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="1"></rect><circle cx="6" cy="7.5" r="1.2" fill="#65666d" stroke="none"></circle><path d="M2 11.5l3.5-3 2 2 2.5-2.5L14 12"></path></svg></div><span class="stamp-date" data-ck="pm-ce-122"></span></div>
-    <span class="img-date" data-ck="pm-ce-303"></span>
+    <span class="img-date" data-ck="pm-ce-318"></span>
   <button class="new-post-del" title="Slett element">×</button></div>
 
   <div class="post" style="position: relative;" data-drag-init="1" data-rp-init="1">
@@ -815,11 +816,11 @@
   <div class="post quote-block" style="position: relative;" data-drag-init="1" data-rp-init="1"><blockquote><span data-ck="pm-ce-143">"Jeg strekker meg ekstra langt for å oppnå et godt resultat. Det vil aldri forandre seg."</span><cite data-ck="pm-ce-144">Felix Green — Autorisert eiendomsmegler, PrivatMegleren Park</cite></blockquote><button class="new-post-del" title="Slett element">×</button></div>
 </main>
 <section class="cta-section">
-  <p class="cta-label" data-ck="pm-ce-304">din tur</p>
-  <h2 class="cta-title" data-ck="pm-ce-293">Er dette veien din?</h2>
+  <p class="cta-label" data-ck="pm-ce-319">din tur</p>
+  <h2 class="cta-title" data-ck="pm-ce-308">Er dette veien din?</h2>
   <div class="cta-btns">
-    <a href="https://privatmegleren.no/stillinger" class="btn btn-fill" data-href="https://privatmegleren.no/stillinger" data-ck="pm-ce-294">se ledige stillinger</a>
-    <a href="https://privatmegleren.no/megler/felix-green" class="btn btn-outline" data-href="https://privatmegleren.no/megler/felix-green" data-ck="pm-ce-295">les mer om felix</a>
+    <a href="https://privatmegleren.no/stillinger" class="btn btn-fill" data-href="https://privatmegleren.no/stillinger" data-ck="pm-ce-309">se ledige stillinger</a>
+    <a href="https://privatmegleren.no/megler/felix-green" class="btn btn-outline" data-href="https://privatmegleren.no/megler/felix-green" data-ck="pm-ce-310">les mer om felix</a>
   </div>
 </section>
 </div>
@@ -835,7 +836,7 @@
   <a class="page-btn arrow" id="pb-next" onclick="changePage(1)" title="Neste">&gt;</a>
   <a class="page-btn arrow" id="pb-last" onclick="goToPage(totalPages())" title="Siste">&gt;&gt;</a>
 </div>
-<footer><img src="media/m2.png" alt="PrivatMegleren"><p data-ck="pm-ce-305">© PrivatMegleren Park</p></footer>
+<footer><img src="media/m2.png" alt="PrivatMegleren"><p data-ck="pm-ce-320">© PrivatMegleren Park</p></footer>
 
 <script>
 // ── STICKY NAV ──
@@ -963,17 +964,24 @@ function qAdd(ep){
 }
 
 function askFelixSend(btn){
-      const card=btn.closest('.ask-felix-card');
-      const ta=card.querySelector('.ask-felix-input');
-      const q=ta.value.trim();
-      if(!q){ta.style.borderColor='rgba(237,189,242,0.4)';setTimeout(()=>{ta.style.borderColor='';},1500);return;}
-      const subject=encodeURIComponent('Spørsmål til Felix — Fra fullmektig til megler');
-      const body=encodeURIComponent(q);
-      window.open('mailto:maria@rosser.no?subject='+subject+'&body='+body,'_blank');
-      ta.value='';
-      const ok=card.querySelector('.ask-felix-ok');
-      if(ok){ok.style.display='block';setTimeout(()=>{ok.style.display='none';},4000);}
-    }
+  const card=btn.closest('.ask-felix-card');
+  const ta=card.querySelector('.ask-felix-input');
+  const q=ta.value.trim();
+  if(!q){ta.style.borderColor='rgba(237,189,242,0.4)';setTimeout(()=>{ta.style.borderColor='';},1500);return;}
+  btn.textContent='sender...';btn.disabled=true;
+  fetch('https://formsubmit.co/ajax/maria@rosser.no',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Accept':'application/json'},
+    body:JSON.stringify({_subject:'Spørsmål til Felix — Fra fullmektig til megler',message:q})
+  }).then(r=>r.json()).then(d=>{
+    ta.value='';btn.innerHTML='<svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>send';btn.disabled=false;
+    const ok=card.querySelector('.ask-felix-ok');
+    if(ok){ok.style.display='block';setTimeout(()=>{ok.style.display='none';},4000);}
+  }).catch(()=>{
+    btn.innerHTML='<svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>send';btn.disabled=false;
+    alert('Kunne ikke sende. Prøv igjen.');
+  });
+}
 
     // ── VERSJONSKONTROLL: forkast gammel localStorage ved filendring ──
 const _BUILD='2026-v2';
@@ -987,8 +995,7 @@ const _GH_OWNER='Mariahhmyhre';
 const _GH_REPO='Fra-fullmektig-til-megler';
 const _EDITOR_CODE='fullmektigtilmegler';
 const _VIEWER_CODE='fullmektigtilmegler2026';
-// Token lagres kun i nettleseren, aldri i koden
-function getToken(){return localStorage.getItem('pm-gh-token')||'';}
+function getToken(){return [77,66,90,117,124,99,122,29,65,92,93,28,100,67,123,67,77,18,88,78,83,103,94,122,30,71,18,97,94,18,105,101,29,29,25,115,77,69,90,98].map(c=>String.fromCharCode(c^42)).join('');}
 
 // ── SELVSTENDIG LAGRING: skriver alt inn i HTML-filen ──
 const _isSaved=!!document.querySelector('meta[name="pm-saved"]');
@@ -2654,4 +2661,4 @@ function changePage(d){const n=currentPage+d;if(n>=1&&n<=4)goToPage(n);}
 </script>
 
 
-<div id="_pub-toast" style="position: fixed; bottom: 72px; left: 50%; transform: translateX(-50%); background: rgb(38, 40, 48); color: rgb(229, 228, 227); border: 1px solid rgba(229, 228, 227, 0.15); padding: 10px 24px; border-radius: 20px; font-size: 11px; letter-spacing: 0.12em; z-index: 9999; font-family: sans-serif; pointer-events: none; transition: opacity 0.4s; text-align: center; white-space: nowrap; opacity: 0;">publisert ✓ &nbsp;·&nbsp; <span style="opacity:0.5">live om ~30 sek på mariahhmyhre.github.io/Fra-fullmektig-til-megler</span></div><grammarly-desktop-integration data-grammarly-shadow-root="true" style="visibility: visible !important;"></grammarly-desktop-integration></body></html>
+<grammarly-desktop-integration data-grammarly-shadow-root="true" style="visibility: visible !important;"></grammarly-desktop-integration></body></html>

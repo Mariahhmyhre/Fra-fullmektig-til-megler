@@ -392,7 +392,7 @@
   });
 })();</script></head>
 <body class="editor-mode rp-open" cz-shortcut-listen="true" data-new-gr-c-s-check-loaded="14.1317.0" data-gr-ext-installed="" data-new-gr-c-s-loaded="14.1317.0">
-<div id="progress" style="width: 86.5436%;"></div>
+<div id="progress" style="width: 84.3973%;"></div>
 
 <!-- VERKTØYBOKS (skjules i public) -->
 <div id="_toolbox">
@@ -415,21 +415,22 @@
 <!-- HØYRE PANEL (skjules i public) -->
 <div id="_rp" class="open">
   <div id="_rp-head">
-    <span class="_rp-type" id="_rp-type">sitat</span>
+    <span class="_rp-type" id="_rp-type">bildeboks</span>
     <!-- close button removed — panel alltid synlig -->
   </div>
   <div id="_rp-body">
-      <span class="_rp-label">sitat</span>
-      <textarea class="_rp-input" id="_rp-quote" rows="3">[ skriv sitat her ]</textarea>
-      <span class="_rp-label">kilde</span>
-      <input class="_rp-input" id="_rp-cite" value="Felix Green">
+      <span class="_rp-label">dato</span>
+      <input class="_rp-input" id="_rp-date" value="[ dato ]" placeholder="[ dato ]">
+      <div class="_rp-sep"></div>
+      <button class="_rp-btn" onclick="rpUploadImg()"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>last opp bilde / video</button>
+      <button class="_rp-btn" onclick="rpPasteImg()"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>lim inn bilde (⌘V)</button>
       <div class="_rp-sep"></div><div class="_rp-sep"></div>
   <span class="_rp-label" style="font-size:8px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(229,228,227,0.3);">typografi</span>
   <div class="_rp-typo-group">
     <span class="_rp-sublabel">font</span>
     <select class="_rp-select" id="_rp-ff"><option value="" selected="">standard (arvet)</option><option value="'DomaineDisplay',Georgia,serif">Domaine Display — tittel</option><option value="'DomaineText',sans-serif">Domaine Text — brødtekst</option></select>
-    <span class="_rp-sublabel">linjeavstand <span id="_rp-lh-v">1.7</span></span>
-    <input type="range" class="_rp-range" id="_rp-lh" min="0.8" max="3.0" step="0.05" value="1.7">
+    <span class="_rp-sublabel">avstand under <span id="_rp-sp-v">0px</span></span>
+    <input type="range" class="_rp-range" id="_rp-sp" min="0" max="80" step="4" value="0">
     <span class="_rp-sublabel">gjennomsiktighet <span id="_rp-op-v">100%</span></span>
     <input type="range" class="_rp-range" id="_rp-op" min="10" max="100" step="5" value="100">
   </div><div class="_rp-sep"></div><div class="_rp-row">
@@ -526,8 +527,7 @@
     <span class="img-date" data-ck="pm-ce-313"></span>
   <button class="new-post-del" title="Slett element">×</button></div>
 
-  <div class="post quote-block visible" data-drag-init="1" data-rp-init="1" style="position: relative;">
-      <blockquote><span data-ck="pm-ce-245"></span><cite data-ck="pm-ce-246">Felix Green</cite></blockquote><button class="new-post-del" title="Slett element">×</button></div><div class="post quote-block visible pm-selected" data-drag-init="1" data-rp-init="1"><button class="new-post-del" onclick="this.closest('.post').remove();saveStructure()" style="position:absolute;top:8px;right:8px;background:rgba(26,28,36,0.85);border:1px solid rgba(229,228,227,0.18);border-radius:50%;width:22px;height:22px;color:rgba(229,228,227,0.5);font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;">×</button>
+  <div class="post quote-block visible" data-drag-init="1" data-rp-init="1"><button class="new-post-del" onclick="this.closest('.post').remove();saveStructure()" style="position:absolute;top:8px;right:8px;background:rgba(26,28,36,0.85);border:1px solid rgba(229,228,227,0.18);border-radius:50%;width:22px;height:22px;color:rgba(229,228,227,0.5);font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;">×</button>
       <blockquote><span data-ck="pm-ce-314">[ skrvdksvksvksvvkscksvk iv sitat her ]</span><cite data-ck="pm-ce-315">Felix Green</cite></blockquote></div><div class="post visible" data-drag-init="1" data-rp-init="1"></div>
 
   <!-- QUIZ 1 -->
@@ -2661,4 +2661,4 @@ function changePage(d){const n=currentPage+d;if(n>=1&&n<=4)goToPage(n);}
 </script>
 
 
-<grammarly-desktop-integration data-grammarly-shadow-root="true" style="visibility: visible !important;"></grammarly-desktop-integration></body></html>
+<div id="_pub-toast" style="position: fixed; bottom: 72px; left: 50%; transform: translateX(-50%); background: rgb(38, 40, 48); color: rgb(229, 228, 227); border: 1px solid rgba(229, 228, 227, 0.15); padding: 10px 24px; border-radius: 20px; font-size: 11px; letter-spacing: 0.12em; z-index: 9999; font-family: sans-serif; pointer-events: none; transition: opacity 0.4s; text-align: center; white-space: nowrap; opacity: 0;">publisert ✓ &nbsp;·&nbsp; <span style="opacity:0.5">live om ~30 sek på mariahhmyhre.github.io/Fra-fullmektig-til-megler</span></div><grammarly-desktop-integration data-grammarly-shadow-root="true" style="visibility: visible !important;"></grammarly-desktop-integration></body></html>

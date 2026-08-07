@@ -1292,6 +1292,7 @@ function buildPublicHTML(accessCode){
   d.querySelectorAll('.msg-delete').forEach(el=>el.remove());  // × på meldinger
   d.querySelectorAll('.msg-add-row').forEach(el=>el.remove()); // legg-til-melding-knapper
   d.querySelectorAll('.qc-add').forEach(el=>el.remove());      // legg-til-spørsmål-knapp i quiz
+  d.querySelectorAll('.post > button').forEach(b=>{if(b.textContent.trim()==='×')b.remove();}); // × slett-post-knapper uten klasse
   // Fjern poster som KUN inneholder add-post-btn (nå tomme etter fjerning)
   d.querySelectorAll('.post').forEach(p=>{if(!p.children.length||!p.textContent.trim())p.remove();});
 
@@ -1372,6 +1373,7 @@ function buildPublicHTML(accessCode){
     +'document.querySelectorAll("[contenteditable]").forEach(function(e){e.removeAttribute("contenteditable");});'
     +'document.querySelectorAll("[spellcheck]").forEach(function(e){e.removeAttribute("spellcheck");});'
     +'document.querySelectorAll("[draggable]").forEach(function(e){e.removeAttribute("draggable");});'
+    +'document.querySelectorAll(".post > button").forEach(function(b){if(b.textContent.trim()==="×")b.remove();});'
     +'document.querySelectorAll("video").forEach(function(v){v.controls=true;v.autoplay=false;v.muted=false;v.preload="metadata";try{v.pause();}catch(x){}});'
     +'document.querySelectorAll(".drop-zone.has-media").forEach(function(z){z.style.cursor="default";z.onclick=null;z.style.resize="none";});'
     +'document.querySelectorAll(".hero-nav a, #main-nav a").forEach(function(a){'

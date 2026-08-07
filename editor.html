@@ -1288,13 +1288,14 @@ function buildPublicHTML(accessCode){
   d.querySelector('#hero-img-btn')?.remove();      // bytt-bilde-knapp
   d.querySelectorAll('.ep-nav-add').forEach(el=>el.remove());  // + episode-knapp
   d.querySelectorAll('.ep-nav-del').forEach(el=>el.remove());  // × slett-episode-knapp
-  d.querySelectorAll('.post-controls,.add-post-btn,.new-post,.drop-indicator,.drop-hint,.dz-pick-overlay,.media-toolbar,.new-post-del,.img-date').forEach(el=>el.remove());
+  d.querySelectorAll('.post-controls,.add-post-btn,.drop-indicator,.drop-hint,.dz-pick-overlay,.media-toolbar,.new-post-del,.img-date').forEach(el=>el.remove());
+  d.querySelectorAll('.new-post').forEach(el=>el.classList.remove('new-post')); // behold innhold, fjern bare klassen
   d.querySelectorAll('.msg-delete').forEach(el=>el.remove());  // × på meldinger
   d.querySelectorAll('.msg-add-row').forEach(el=>el.remove()); // legg-til-melding-knapper
   d.querySelectorAll('.qc-add').forEach(el=>el.remove());      // legg-til-spørsmål-knapp i quiz
   d.querySelectorAll('.post > button').forEach(b=>{if(b.textContent.trim()==='×')b.remove();}); // × slett-post-knapper uten klasse
   // Fjern poster som KUN inneholder add-post-btn (nå tomme etter fjerning)
-  d.querySelectorAll('.post').forEach(p=>{if(!p.children.length||!p.textContent.trim())p.remove();});
+  d.querySelectorAll('.post').forEach(p=>{if(!p.children.length)p.remove();});
 
   // ── Fjern redigerbarhet ──
   d.querySelectorAll('[contenteditable]').forEach(el=>el.removeAttribute('contenteditable'));
@@ -1369,7 +1370,7 @@ function buildPublicHTML(accessCode){
   const cleanupScript=d.createElement('script');
   cleanupScript.textContent='document.addEventListener("DOMContentLoaded",function(){'
     +'if(!document.querySelector("meta[name=pm-public]"))return;'
-    +'document.querySelectorAll(".edit-bar,.ep-nav-add,.ep-nav-del,.post-controls,.add-post-btn,.new-post,.drop-indicator,.drop-hint,.dz-pick-overlay,.media-toolbar,.new-post-del,.msg-delete,.msg-add-row,.qc-add,.img-date,#hero-img-btn,#_rp,#_toolbox,#_perm-bar,#_save-toast").forEach(function(e){e.remove();});'
+    +'document.querySelectorAll(".edit-bar,.ep-nav-add,.ep-nav-del,.post-controls,.add-post-btn,.drop-indicator,.drop-hint,.dz-pick-overlay,.media-toolbar,.new-post-del,.msg-delete,.msg-add-row,.qc-add,.img-date,#hero-img-btn,#_rp,#_toolbox,#_perm-bar,#_save-toast").forEach(function(e){e.remove();});'
     +'document.querySelectorAll("[contenteditable]").forEach(function(e){e.removeAttribute("contenteditable");});'
     +'document.querySelectorAll("[spellcheck]").forEach(function(e){e.removeAttribute("spellcheck");});'
     +'document.querySelectorAll("[draggable]").forEach(function(e){e.removeAttribute("draggable");});'

@@ -418,8 +418,8 @@
     <a href="#" data-page="4" onclick="goToPage(4);toggleEpOverlay();return false;">episode 4</a>
   </div>
   <div class="hero-content">
-    <p class="hero-eyebrow" data-ck="pm-ce-424">Felix Green — en fortelling</p>
-    <h1 class="hero-title" data-ck="pm-ce-425">Fra fullmektig<span class="hero-title-line2">til megler</span></h1>
+    <p class="hero-eyebrow" data-ck="pm-ce-475">Felix Green — en fortelling</p>
+    <h1 class="hero-title" data-ck="pm-ce-476">Fra fullmektig<span class="hero-title-line2">til megler</span></h1>
   </div>
 </header>
 
@@ -431,7 +431,7 @@
 
   <div class="post visible" style="position: relative;" data-drag-init="1" data-rp-init="1">
     <div class="post-stamp"><div class="stamp-icon"><svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="1"></rect><circle cx="6" cy="7.5" r="1.2" fill="#65666d" stroke="none"></circle><path d="M2 11.5l3.5-3 2 2 2.5-2.5L14 12"></path></svg></div><span class="stamp-date" data-ck="pm-ce-3">Onsdag 01.09.2026 kl 08.47</span></div>
-    <div class="drop-zone-wrap bleed"><div class="drop-zone wide has-media" data-zid="z1785918473240n03ik" data-del-init="1" style="width: 575px; height: 360px; resize: none; cursor: default;" data-ztrk="1"><video src="media/m2.mp4" playsinline="" class="media-content" style="transform: translate(0px, 0px) scale(1);" controls="" preload="metadata"></video></div></div>
+    <div class="drop-zone-wrap bleed"><div class="drop-zone wide has-media" data-zid="z1785918473240n03ik" data-del-init="1" style="width: 418px; height: 513px; resize: none; cursor: default;" data-ztrk="1"><video src="media/m2.mp4" playsinline="" class="media-content" style="transform: translate(0px, 0px) scale(1);" controls="" preload="metadata"></video></div></div>
   </div>
 
   <div class="post visible" style="position: relative;" data-drag-init="1" data-rp-init="1">
@@ -830,10 +830,10 @@
 </main>
 <section class="cta-section">
   <p class="cta-label">din tur</p>
-  <h2 class="cta-title" data-ck="pm-ce-426">Er dette veien din?</h2>
+  <h2 class="cta-title" data-ck="pm-ce-477">Er dette veien din?</h2>
   <div class="cta-btns">
-    <a href="https://privatmegleren.no/stillinger" class="btn btn-fill" data-href="https://privatmegleren.no/stillinger" data-ck="pm-ce-427">se ledige stillinger</a>
-    <a href="https://privatmegleren.no/megler/felix-green" class="btn btn-outline" data-href="https://privatmegleren.no/megler/felix-green" data-ck="pm-ce-428">les mer om felix</a>
+    <a href="https://privatmegleren.no/stillinger" class="btn btn-fill" data-href="https://privatmegleren.no/stillinger" data-ck="pm-ce-478">se ledige stillinger</a>
+    <a href="https://privatmegleren.no/megler/felix-green" class="btn btn-outline" data-href="https://privatmegleren.no/megler/felix-green" data-ck="pm-ce-479">les mer om felix</a>
   </div>
 </section>
 </div>
@@ -2739,7 +2739,7 @@ function initObserver(){const obs=new IntersectionObserver(entries=>entries.forE
 initObserver();
 
 // ── PAGINERING ──
-let currentPage=1;
+var currentPage=1;
 function toggleEpOverlay(){const o=document.getElementById('ep-overlay');if(o)o.classList.toggle('open');}
 function goToPage(n){if(!document.getElementById('page-'+n))return;document.getElementById('pb-last')&&(document.getElementById('pb-last').onclick=()=>goToPage(totalPages()));currentPage=n;document.querySelectorAll('.page-content').forEach(p=>p.style.display='none');document.getElementById('page-'+n).style.display='block';for(let i=1;i<=4;i++){document.getElementById('pb-'+i).classList.toggle('active',i===n);const sd=document.getElementById('sdrop-'+i);if(sd)sd.classList.toggle('active',i===n);}document.querySelectorAll('#ep-overlay a[data-page]').forEach(a=>a.classList.toggle('active',parseInt(a.dataset.page)===n));dropdown.classList.remove('open');burgerBtn.classList.remove('open');window.scrollTo({top:heroEl.offsetHeight,behavior:'smooth'});setTimeout(initObserver,80);}
 function totalPages(){return document.querySelectorAll('.page-content').length;}
@@ -2747,4 +2747,4 @@ function changePage(d){const n=currentPage+d;if(n>=1&&n<=4)goToPage(n);}
 </script>
 
 
-<div id="_pub-toast" style="position: fixed; bottom: 72px; left: 50%; transform: translateX(-50%); background: rgb(38, 40, 48); color: rgb(229, 228, 227); border: 1px solid rgba(229, 228, 227, 0.15); padding: 10px 24px; border-radius: 20px; font-size: 11px; letter-spacing: 0.12em; z-index: 9999; font-family: sans-serif; pointer-events: none; transition: opacity 0.4s; text-align: center; white-space: nowrap; opacity: 0;">publisert ✓ &nbsp;·&nbsp; <span style="opacity:0.5">live om ~30 sek på mariahhmyhre.github.io/Fra-fullmektig-til-megler</span></div><grammarly-desktop-integration data-grammarly-shadow-root="true" style="visibility: visible !important;"></grammarly-desktop-integration></body></html>
+<grammarly-desktop-integration data-grammarly-shadow-root="true" style="visibility: visible !important;"></grammarly-desktop-integration></body></html>

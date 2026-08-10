@@ -1298,8 +1298,7 @@ function buildPublicHTML(accessCode){
   d.querySelector('#_toolbox')?.remove();          // verktøyboks
   d.querySelector('#_perm-bar')?.remove();         // perm-bar
   d.querySelector('#_save-toast')?.remove();       // lagre-toast
-  d.querySelector('#snav-dropdown')?.remove();     // dropdown-meny
-  d.querySelector('#burger-btn')?.remove();        // hamburger-knapp
+  // snav-dropdown og burger-btn beholdes for navigasjon på publisert side
   d.querySelector('#hero-img-btn')?.remove();      // bytt-bilde-knapp
   d.querySelectorAll('.ep-nav-add').forEach(el=>el.remove());  // + episode-knapp
   d.querySelectorAll('.ep-nav-del').forEach(el=>el.remove());  // × slett-episode-knapp

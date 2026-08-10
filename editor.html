@@ -58,7 +58,7 @@
     .hero-title { font-family:var(--serif); font-size:clamp(52px,9vw,112px); font-weight:300; line-height:0.92; letter-spacing:-0.025em; color:var(--light); }
     .hero-title-line2 { display:block; }
     .hero-nav { position:absolute; bottom:0; left:0; right:0; z-index:20; display:flex; align-items:center; justify-content:center; gap:0; height:62px; background:rgba(20,22,28,0.88); backdrop-filter:blur(22px); border-top:1px solid rgba(229,228,227,0.04); }
-    .hero-nav a.hn-btn { font-size:15px; font-weight:500; letter-spacing:0.04em; color:var(--light); text-decoration:none; transition:opacity 0.25s; position:relative; display:flex; align-items:center; gap:12px; padding:0 40px; height:100%; cursor:pointer; }
+    .hero-nav a.hn-btn { font-size:15px; font-weight:500; letter-spacing:0.04em; color:var(--light); text-decoration:none; transition:opacity 0.25s; position:relative; display:flex; align-items:center; gap:10px; padding:0 28px; height:100%; cursor:pointer; }
     .hero-nav a.hn-btn:hover { opacity:0.7; }
     .hero-nav a.hn-btn svg { width:22px; height:22px; flex-shrink:0; }
     .ep-overlay { display:none; position:fixed; inset:0; z-index:200; background:rgba(20,22,28,0.92); backdrop-filter:blur(30px); flex-direction:column; align-items:center; justify-content:center; gap:0; }
@@ -299,7 +299,7 @@
     [contenteditable] { outline:none; border-radius:2px; transition:background 0.2s; cursor:text; }
     [contenteditable]:hover { background:rgba(229,228,227,0.04); }
     [contenteditable]:focus { background:rgba(229,228,227,0.07); box-shadow:0 0 0 1px rgba(229,228,227,0.12); }
-    @media(max-width:600px){.hero-nav a.hn-btn{padding:0 20px;font-size:13px;gap:8px}.hero-nav a.hn-btn svg{width:18px;height:18px}.feed{padding:0 16px 60px}.quote-block{margin:0 -16px}footer{padding:24px}}
+    @media(max-width:600px){.hero-nav a.hn-btn{padding:0 12px;font-size:12px;gap:6px}.hero-nav a.hn-btn svg{width:16px;height:16px}.feed{padding:0 16px 60px}.quote-block{margin:0 -16px}footer{padding:24px}}
     @media(max-width:768px){
       body.editor-mode{padding:0 !important;}
       body.editor-mode .hero,body.editor-mode #sticky-nav,
@@ -441,6 +441,7 @@
   <button id="hero-img-btn" onclick="triggerHeroUpload()" title="Bytt bakgrunnsbilde" style="position:absolute;top:16px;right:16px;z-index:30;background:rgba(26,28,36,0.82);border:1px solid rgba(229,228,227,0.18);border-radius:20px;color:rgba(229,228,227,0.6);font-size:9px;letter-spacing:0.15em;text-transform:uppercase;padding:6px 14px;cursor:pointer;font-family:inherit;backdrop-filter:blur(8px);display:none;">bytt bilde</button>
   <nav class="hero-nav" id="main-nav">
     <a href="#" class="hn-btn" onclick="goToPage(1);return false;"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 14l5-5 5 5z"/><path d="M7 10l5 5 5-5z" transform="translate(0,8)"/></svg>Første</a>
+    <a href="#" class="hn-btn" onclick="goToPage(totalPages());return false;"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/><path d="M7 14l5-5 5 5z" transform="translate(0,-8)"/></svg>Siste</a>
     <a href="#" class="hn-btn" onclick="toggleEpOverlay();return false;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Episoder</a>
     <a href="#" class="hn-btn" onclick="document.querySelector('.feed')?.scrollIntoView({behavior:'smooth'});return false;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>Meny</a>
   </nav>

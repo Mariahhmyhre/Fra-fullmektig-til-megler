@@ -2401,7 +2401,7 @@ function setupDblEdit(a,n){
     if(a.contentEditable==='true')return;
     // Vent 280ms — hvis ikke dobbeltklikk, naviger
     if(_clickTimer){clearTimeout(_clickTimer);_clickTimer=null;return;}
-    _clickTimer=setTimeout(()=>{_clickTimer=null;goToPage(n);},280);
+    _clickTimer=setTimeout(()=>{_clickTimer=null;goToPage(n);toggleEpOverlay();},280);
   });
   a.addEventListener('dblclick',e=>{
     e.preventDefault();e.stopPropagation();

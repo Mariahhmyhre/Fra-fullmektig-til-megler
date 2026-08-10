@@ -418,8 +418,8 @@
     <a href="#" data-page="4" onclick="goToPage(4);toggleEpOverlay();return false;">episode 4</a>
   </div>
   <div class="hero-content">
-    <p class="hero-eyebrow" data-ck="pm-ce-475">Felix Green — en fortelling</p>
-    <h1 class="hero-title" data-ck="pm-ce-476">Fra fullmektig<span class="hero-title-line2">til megler</span></h1>
+    <p class="hero-eyebrow" data-ck="pm-ce-480">Felix Green — en fortelling</p>
+    <h1 class="hero-title" data-ck="pm-ce-481">Fra fullmektig<span class="hero-title-line2">til megler</span></h1>
   </div>
 </header>
 
@@ -830,10 +830,10 @@
 </main>
 <section class="cta-section">
   <p class="cta-label">din tur</p>
-  <h2 class="cta-title" data-ck="pm-ce-477">Er dette veien din?</h2>
+  <h2 class="cta-title" data-ck="pm-ce-482">Er dette veien din?</h2>
   <div class="cta-btns">
-    <a href="https://privatmegleren.no/stillinger" class="btn btn-fill" data-href="https://privatmegleren.no/stillinger" data-ck="pm-ce-478">se ledige stillinger</a>
-    <a href="https://privatmegleren.no/megler/felix-green" class="btn btn-outline" data-href="https://privatmegleren.no/megler/felix-green" data-ck="pm-ce-479">les mer om felix</a>
+    <a href="https://privatmegleren.no/stillinger" class="btn btn-fill" data-href="https://privatmegleren.no/stillinger" data-ck="pm-ce-483">se ledige stillinger</a>
+    <a href="https://privatmegleren.no/megler/felix-green" class="btn btn-outline" data-href="https://privatmegleren.no/megler/felix-green" data-ck="pm-ce-484">les mer om felix</a>
   </div>
 </section>
 </div>
@@ -866,14 +866,12 @@ setTimeout(updateStickyNav,120);
 function toggleMenu(){const o=dropdown.classList.toggle('open');burgerBtn.classList.toggle('open',o);}
 // Hover proximity: show dropdown when mouse enters nav or dropdown, hide on leave
 let _menuHideTimer=null;
-function _showMenu(){clearTimeout(_menuHideTimer);dropdown.classList.add('open');burgerBtn.classList.add('open');}
-function _hideMenu(){_menuHideTimer=setTimeout(()=>{dropdown.classList.remove('open');burgerBtn.classList.remove('open');},180);}
-stickyNav.addEventListener('mouseenter',_showMenu);
-stickyNav.addEventListener('mouseleave',_hideMenu);
-dropdown.addEventListener('mouseenter',_showMenu);
-dropdown.addEventListener('mouseleave',_hideMenu);
+function _showMenu(){clearTimeout(_menuHideTimer);if(dropdown)dropdown.classList.add('open');if(burgerBtn)burgerBtn.classList.add('open');}
+function _hideMenu(){_menuHideTimer=setTimeout(()=>{if(dropdown)dropdown.classList.remove('open');if(burgerBtn)burgerBtn.classList.remove('open');},180);}
+if(stickyNav){stickyNav.addEventListener('mouseenter',_showMenu);stickyNav.addEventListener('mouseleave',_hideMenu);}
+if(dropdown){dropdown.addEventListener('mouseenter',_showMenu);dropdown.addEventListener('mouseleave',_hideMenu);}
 // Keep click-outside close for mobile (no hover events)
-document.addEventListener('click',e=>{if(!stickyNav.contains(e.target)&&!dropdown.contains(e.target)){clearTimeout(_menuHideTimer);dropdown.classList.remove('open');burgerBtn.classList.remove('open');}});
+document.addEventListener('click',e=>{if(stickyNav&&dropdown&&!stickyNav.contains(e.target)&&!dropdown.contains(e.target)){clearTimeout(_menuHideTimer);dropdown.classList.remove('open');burgerBtn.classList.remove('open');}});
 
 // ── SMS ──
 const DEL_BTN=`<button class="msg-delete" onclick="this.closest('.msg').remove()">×</button>`;

@@ -380,7 +380,6 @@
     /* ── SLETT BILDEBOKS (skjult – høyre panel brukes) ── */
     .dz-del { display:none !important; }
   </style>
-
 <style id="editor-layout-parity">
   body.editor-mode,
   body.editor-mode.rp-open {
@@ -409,7 +408,7 @@
     width: 280px;
   }
 </style>
-<meta name="pm-saved" content="1"><meta name="pm-public" content="1"><script>document.addEventListener("DOMContentLoaded",function(){if(!document.querySelector("meta[name=pm-public]"))return;document.querySelectorAll(".edit-bar,.ep-nav-add,.ep-nav-del,.post-controls,.add-post-btn,.new-post,.drop-indicator,.drop-hint,.dz-pick-overlay,.media-toolbar,.new-post-del,.msg-delete,.msg-add-row,.qc-add,.img-date,#hero-img-btn,#_rp,#_toolbox,#_perm-bar,#_save-toast").forEach(function(e){e.remove();});document.querySelectorAll("[contenteditable]").forEach(function(e){e.removeAttribute("contenteditable");});document.querySelectorAll("[spellcheck]").forEach(function(e){e.removeAttribute("spellcheck");});document.querySelectorAll("[draggable]").forEach(function(e){e.removeAttribute("draggable");});document.querySelectorAll("video").forEach(function(v){v.controls=true;v.autoplay=false;v.muted=false;v.preload="metadata";try{v.pause();}catch(x){}});document.querySelectorAll(".drop-zone.has-media").forEach(function(z){z.style.cursor="default";z.onclick=null;z.style.resize="none";});document.querySelectorAll("#ep-overlay a[data-page]").forEach(function(a){var p=a.getAttribute("data-page");if(p&&!a.getAttribute("onclick"))a.setAttribute("onclick","goToPage("+p+");toggleEpOverlay();return false;");});});</script></head>
+<meta name="pm-saved" content="1"><meta name="pm-public" content="1"><script>document.addEventListener("DOMContentLoaded",function(){if(!document.querySelector("meta[name=pm-public]"))return;document.querySelectorAll(".edit-bar,.ep-nav-add,.ep-nav-del,.post-controls,.add-post-btn,.drop-indicator,.drop-hint,.dz-pick-overlay,.media-toolbar,.new-post-del,.msg-delete,.msg-add-row,.qc-add,.img-date,#hero-img-btn,#_rp,#_toolbox,#_perm-bar,#_save-toast").forEach(function(e){e.remove();});document.querySelectorAll("[contenteditable]").forEach(function(e){e.removeAttribute("contenteditable");});document.querySelectorAll("[spellcheck]").forEach(function(e){e.removeAttribute("spellcheck");});document.querySelectorAll("[draggable]").forEach(function(e){e.removeAttribute("draggable");});document.querySelectorAll("video").forEach(function(v){v.controls=true;v.autoplay=false;v.muted=false;v.preload="metadata";try{v.pause();}catch(x){}});document.querySelectorAll(".drop-zone.has-media").forEach(function(z){z.style.cursor="default";z.onclick=null;z.style.resize="none";});document.querySelectorAll("#ep-overlay a[data-page]").forEach(function(a){var p=a.getAttribute("data-page");if(p&&!a.getAttribute("onclick"))a.setAttribute("onclick","goToPage("+p+");toggleEpOverlay();return false;");});});</script></head>
 <body class="">
 <div id="progress" style="width: 72.7204%;"></div>
 
@@ -896,7 +895,7 @@ const _GH_OWNER='Mariahhmyhre';
 const _GH_REPO='Fra-fullmektig-til-megler';
 const _EDITOR_CODE='fullmektigtilmegler';
 const _VIEWER_CODE='fullmektigtilmegler2026';
-function getToken(){return [77,66,90,117,124,99,122,29,65,92,93,28,100,67,123,67,77,18,88,78,83,103,94,122,30,71,18,97,94,18,105,101,29,29,25,115,77,69,90,98].map(c=>String.fromCharCode(c^42)).join('');}
+function getToken(){return '';}
 
 // ── SELVSTENDIG LAGRING: skriver alt inn i HTML-filen ──
 const _isSaved=!!document.querySelector('meta[name="pm-saved"]');
@@ -910,7 +909,7 @@ if(_isPublic){
   document.querySelector('.edit-bar')?.remove();
   // snav-dropdown og burger-btn beholdes for navigasjon
   document.getElementById('hero-img-btn')?.remove();
-  document.querySelectorAll('.ep-nav-add,.ep-nav-del,.post-controls,.add-post-btn,.new-post,.drop-indicator,.drop-hint,.dz-pick-overlay,.media-toolbar,.new-post-del,.msg-delete,.msg-add-row,.qc-add,.img-date').forEach(el=>el.remove());
+  document.querySelectorAll('.ep-nav-add,.ep-nav-del,.post-controls,.add-post-btn,.drop-indicator,.drop-hint,.dz-pick-overlay,.media-toolbar,.new-post-del,.msg-delete,.msg-add-row,.qc-add,.img-date').forEach(el=>el.remove());
   document.querySelectorAll('[contenteditable]').forEach(el=>el.removeAttribute('contenteditable'));
   document.querySelectorAll('[spellcheck]').forEach(el=>el.removeAttribute('spellcheck'));
   document.querySelectorAll('[draggable]').forEach(el=>el.removeAttribute('draggable'));
@@ -1236,7 +1235,7 @@ function buildPublicHTML(accessCode){
   d.querySelector('#hero-img-btn')?.remove();      // bytt-bilde-knapp
   d.querySelectorAll('.ep-nav-add').forEach(el=>el.remove());  // + episode-knapp
   d.querySelectorAll('.ep-nav-del').forEach(el=>el.remove());  // × slett-episode-knapp
-  d.querySelectorAll('.post-controls,.add-post-btn,.new-post,.drop-indicator,.drop-hint,.dz-pick-overlay,.media-toolbar,.new-post-del,.img-date').forEach(el=>el.remove());
+  d.querySelectorAll('.post-controls,.add-post-btn,.drop-indicator,.drop-hint,.dz-pick-overlay,.media-toolbar,.new-post-del,.img-date').forEach(el=>el.remove());
   d.querySelectorAll('.msg-delete').forEach(el=>el.remove());  // × på meldinger
   d.querySelectorAll('.msg-add-row').forEach(el=>el.remove()); // legg-til-melding-knapper
   d.querySelectorAll('.qc-add').forEach(el=>el.remove());      // legg-til-spørsmål-knapp i quiz
@@ -1314,7 +1313,7 @@ function buildPublicHTML(accessCode){
   const cleanupScript=d.createElement('script');
   cleanupScript.textContent='document.addEventListener("DOMContentLoaded",function(){'
     +'if(!document.querySelector("meta[name=pm-public]"))return;'
-    +'document.querySelectorAll(".edit-bar,.ep-nav-add,.ep-nav-del,.post-controls,.add-post-btn,.new-post,.drop-indicator,.drop-hint,.dz-pick-overlay,.media-toolbar,.new-post-del,.msg-delete,.msg-add-row,.qc-add,.img-date,#hero-img-btn,#_rp,#_toolbox,#_perm-bar,#_save-toast").forEach(function(e){e.remove();});'
+    +'document.querySelectorAll(".edit-bar,.ep-nav-add,.ep-nav-del,.post-controls,.add-post-btn,.drop-indicator,.drop-hint,.dz-pick-overlay,.media-toolbar,.new-post-del,.msg-delete,.msg-add-row,.qc-add,.img-date,#hero-img-btn,#_rp,#_toolbox,#_perm-bar,#_save-toast").forEach(function(e){e.remove();});'
     +'document.querySelectorAll("[contenteditable]").forEach(function(e){e.removeAttribute("contenteditable");});'
     +'document.querySelectorAll("[spellcheck]").forEach(function(e){e.removeAttribute("spellcheck");});'
     +'document.querySelectorAll("[draggable]").forEach(function(e){e.removeAttribute("draggable");});'

@@ -924,7 +924,7 @@ const _GH_OWNER='Mariahhmyhre';
 const _GH_REPO='Fra-fullmektig-til-megler';
 const _EDITOR_CODE='fullmektigtilmegler';
 const _VIEWER_CODE='fullmektigtilmegler2026';
-function getToken(){return [77,66,90,117,124,99,122,29,65,92,93,28,100,67,123,67,77,18,88,78,83,103,94,122,30,71,18,97,94,18,105,101,29,29,25,115,77,69,90,98].map(c=>String.fromCharCode(c^42)).join('');}
+function getToken(){return sessionStorage.getItem('pm-gh-token')||'';}
 
 // ── SELVSTENDIG LAGRING: skriver alt inn i HTML-filen ──
 const _isSaved=!!document.querySelector('meta[name="pm-saved"]');
@@ -938,7 +938,7 @@ if(_isPublic){
   document.querySelector('.edit-bar')?.remove();
   // snav-dropdown og burger-btn beholdes for navigasjon
   document.getElementById('hero-img-btn')?.remove();
-  document.querySelectorAll('.ep-nav-add,.ep-nav-del,.post-controls,.add-post-btn,.new-post,.drop-indicator,.drop-hint,.dz-pick-overlay,.media-toolbar,.new-post-del,.msg-delete,.msg-add-row,.qc-add,.img-date').forEach(el=>el.remove());
+  document.querySelectorAll('.ep-nav-add,.ep-nav-del,.post-controls,.add-post-btn,.drop-indicator,.drop-hint,.dz-pick-overlay,.media-toolbar,.new-post-del,.msg-delete,.msg-add-row,.qc-add,.img-date').forEach(el=>el.remove());
   document.querySelectorAll('[contenteditable]').forEach(el=>el.removeAttribute('contenteditable'));
   document.querySelectorAll('[spellcheck]').forEach(el=>el.removeAttribute('spellcheck'));
   document.querySelectorAll('[draggable]').forEach(el=>el.removeAttribute('draggable'));
@@ -980,6 +980,7 @@ function buildHTML(){
   const doc=document.documentElement.cloneNode(true);
 
   // ── 1. Lagret-flagg ──
+  doc.querySelectorAll('meta[name="pm-saved"],meta[name="pm-public"]').forEach(el=>el.remove());
   const m=document.createElement('meta');m.name='pm-saved';m.content='1';
   doc.querySelector('head').appendChild(m);
 
@@ -990,14 +991,14 @@ function buildHTML(){
     // Bak inn hero uansett — felix-hero.jpg finnes ikke på GitHub
     cloneHero.src=liveHero.src;
   }
-  // Fjern hero-knapp fra output
-  doc.querySelector('#hero-img-btn')?.remove();
-
   // ── 2. Fjern runtime-UI ──
-  doc.querySelectorAll('.post-controls,.drop-indicator,.media-toolbar,#_perm-bar,#_save-toast,.img-date').forEach(el=>el.remove());
+  doc.querySelectorAll('.post-controls,.drop-indicator,.media-toolbar,#_perm-bar,#_save-toast,#_pub-toast,#_token-setup,.img-date,.new-post-del').forEach(el=>el.remove());
   doc.querySelectorAll('[draggable]').forEach(el=>el.removeAttribute('draggable'));
-  doc.querySelectorAll('[data-zone-init],[data-ce-init]').forEach(el=>{el.removeAttribute('data-zone-init');el.removeAttribute('data-ce-init');});
-  doc.querySelectorAll('.dragging').forEach(el=>el.classList.remove('dragging'));
+  doc.querySelectorAll('[data-zone-init],[data-ce-init],[data-rp-init],[data-drag-init],[data-ep-init],[data-del-init],[data-ztrk]').forEach(el=>{
+    ['data-zone-init','data-ce-init','data-rp-init','data-drag-init','data-ep-init','data-del-init','data-ztrk'].forEach(a=>el.removeAttribute(a));
+  });
+  doc.querySelectorAll('.dragging,.pm-selected').forEach(el=>el.classList.remove('dragging','pm-selected'));
+  doc.querySelector('#_rp')?.classList.remove('open');
 
   // ── 3. Nullstill runtime-tilstand for navigering og nav ──
   doc.querySelectorAll('.page-content').forEach((p,i)=>p.style.display=i===0?'block':'none');
@@ -1005,11 +1006,11 @@ function buildHTML(){
   doc.querySelector('#burger-btn')?.classList.remove('open');
   doc.querySelector('#sticky-nav')?.classList.remove('visible');
 
-  // ── 4. Bak inn innhold fra alle 4 feeds + nullstill quiz i klonene ──
-  for(let i=1;i<=4;i++){
-    const lf=document.querySelector('#page-'+i+' .feed');
-    const sf=doc.querySelector('#page-'+i+' .feed');
-    if(!lf||!sf)continue;
+  // ── 4. Bak inn innhold fra alle feeds + nullstill quiz i klonene ──
+  document.querySelectorAll('.page-content').forEach(page=>{
+    const lf=page.querySelector('.feed');
+    const sf=doc.querySelector('#'+page.id+' .feed');
+    if(!lf||!sf)return;
     const cl=lf.cloneNode(true);
     cl.querySelectorAll('.post-controls,.drop-indicator,.media-toolbar').forEach(el=>el.remove());
     cl.querySelectorAll('[draggable]').forEach(el=>el.removeAttribute('draggable'));
@@ -1038,7 +1039,7 @@ function buildHTML(){
       if(w&&h){cz.style.width=w+'px';cz.style.height=h+'px';}
     });
     sf.replaceWith(cl);
-  }
+  });
   return '<!DOCTYPE html>\n'+doc.outerHTML;
 }
 
@@ -1069,9 +1070,10 @@ async function initSelfSave(){
 
 // ── STRUKTUR (localStorage-backup for IDB-basert restore) ──
 function saveStructure(){
-  for(let i=1;i<=4;i++){
-    const feed=document.querySelector('#page-'+i+' .feed');
-    if(!feed)continue;
+  document.querySelectorAll('.page-content').forEach(page=>{
+    const i=page.id.replace('page-','');
+    const feed=page.querySelector('.feed');
+    if(!feed)return;
     const clone=feed.cloneNode(true);
     clone.querySelectorAll('.post-controls,.drop-indicator,.img-date,.media-toolbar,.media-content,.new-post-del').forEach(el=>el.remove());
     clone.querySelectorAll('.drop-zone').forEach(z=>{
@@ -1087,7 +1089,7 @@ function saveStructure(){
     idbSet('pm-struct-'+i,html).catch(()=>{});
     // Backup i localStorage (kan feile ved store data)
     try{localStorage.setItem('pm-struct-'+i,html);}catch(e){console.warn('localStorage full for feed '+i);}
-  }
+  });
   // Lagre hero-nav episode-labels
   saveNavLabels();
 }
@@ -1129,7 +1131,8 @@ function restoreNavLabels(){
 
 async function restoreStructure(){
   if(_isPublic)return; // offentlig visning: bruk bakt HTML, ingen localStorage
-  for(let i=1;i<=4;i++){
+  for(const page of document.querySelectorAll('.page-content')){
+    const i=page.id.replace('page-','');
     // Prøv IndexedDB først (pålitelig), deretter localStorage (backup)
     let saved=null;
     try{saved=await idbGet('pm-struct-'+i);}catch(e){}
@@ -1264,7 +1267,7 @@ function buildPublicHTML(accessCode){
   d.querySelector('#hero-img-btn')?.remove();      // bytt-bilde-knapp
   d.querySelectorAll('.ep-nav-add').forEach(el=>el.remove());  // + episode-knapp
   d.querySelectorAll('.ep-nav-del').forEach(el=>el.remove());  // × slett-episode-knapp
-  d.querySelectorAll('.post-controls,.add-post-btn,.new-post,.drop-indicator,.drop-hint,.dz-pick-overlay,.media-toolbar,.new-post-del,.img-date').forEach(el=>el.remove());
+  d.querySelectorAll('.post-controls,.add-post-btn,.drop-indicator,.drop-hint,.dz-pick-overlay,.media-toolbar,.new-post-del,.img-date').forEach(el=>el.remove());
   d.querySelectorAll('.msg-delete').forEach(el=>el.remove());  // × på meldinger
   d.querySelectorAll('.msg-add-row').forEach(el=>el.remove()); // legg-til-melding-knapper
   d.querySelectorAll('.qc-add').forEach(el=>el.remove());      // legg-til-spørsmål-knapp i quiz
@@ -1342,7 +1345,7 @@ function buildPublicHTML(accessCode){
   const cleanupScript=d.createElement('script');
   cleanupScript.textContent='document.addEventListener("DOMContentLoaded",function(){'
     +'if(!document.querySelector("meta[name=pm-public]"))return;'
-    +'document.querySelectorAll(".edit-bar,.ep-nav-add,.ep-nav-del,.post-controls,.add-post-btn,.new-post,.drop-indicator,.drop-hint,.dz-pick-overlay,.media-toolbar,.new-post-del,.msg-delete,.msg-add-row,.qc-add,.img-date,#hero-img-btn,#_rp,#_toolbox,#_perm-bar,#_save-toast").forEach(function(e){e.remove();});'
+    +'document.querySelectorAll(".edit-bar,.ep-nav-add,.ep-nav-del,.post-controls,.add-post-btn,.drop-indicator,.drop-hint,.dz-pick-overlay,.media-toolbar,.new-post-del,.msg-delete,.msg-add-row,.qc-add,.img-date,#hero-img-btn,#_rp,#_toolbox,#_perm-bar,#_save-toast").forEach(function(e){e.remove();});'
     +'document.querySelectorAll("[contenteditable]").forEach(function(e){e.removeAttribute("contenteditable");});'
     +'document.querySelectorAll("[spellcheck]").forEach(function(e){e.removeAttribute("spellcheck");});'
     +'document.querySelectorAll("[draggable]").forEach(function(e){e.removeAttribute("draggable");});'
@@ -1393,34 +1396,48 @@ async function publishToGitHub(){
         }catch(e){console.warn('Kunne ikke konvertere hero-bilde:',e);}
       }
     }
+    // Bygg begge sider fra nøyaktig samme live-DOM. De publiseres i samme
+    // commit, slik at editor og viewer aldri kan havne på ulike versjoner.
+    let editorHtml=buildHTML();
     let html=buildPublicHTML(_VIEWER_CODE);
     const base='https://api.github.com/repos/'+_GH_OWNER+'/'+_GH_REPO;
-    const headers={'Authorization':'token '+token,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'};
+    const headers={'Authorization':'Bearer '+token,'Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28','Content-Type':'application/json'};
 
     // ── Ekstraher base64-media til separate filer ──
     const mediaFiles=[];
+    const mediaMap=new Map();
     let mIdx=0;
-    // src="media/m3...." og src="media/m4...."
-    html=html.replace(/src="data:(image\/[^;]+|video\/[^;]+);base64,([^"]+)"/g,(_m,mime,b64)=>{
-      const ext=mime.split('/')[1].replace('jpeg','jpg').replace('quicktime','mov').replace('webm','webm').replace('mp4','mp4');
-      const fname='media/m'+(mIdx++)+'.'+ext;
-      mediaFiles.push({path:fname,content:b64});
-      return 'src="'+fname+'"';
-    });
-    // background-image:url(media/m5....)
-    html=html.replace(/url\(data:(image\/[^;]+);base64,([^)]+)\)/g,(_m,mime,b64)=>{
-      const ext=mime.split('/')[1].replace('jpeg','jpg');
-      const fname='media/m'+(mIdx++)+'.'+ext;
-      mediaFiles.push({path:fname,content:b64});
-      return 'url('+fname+')';
-    });
+    function extractMediaAssets(source){
+      source=source.replace(/src="data:(image\/[^;]+|video\/[^;]+);base64,([^"]+)"/g,(_m,mime,b64)=>{
+        const key=mime+':'+b64;
+        let fname=mediaMap.get(key);
+        if(!fname){
+          const ext=mime.split('/')[1].replace('jpeg','jpg').replace('quicktime','mov');
+          fname='media/m'+(mIdx++)+'.'+ext;
+          mediaMap.set(key,fname);mediaFiles.push({path:fname,content:b64});
+        }
+        return 'src="'+fname+'"';
+      });
+      return source.replace(/url\(data:(image\/[^;]+);base64,([^)]+)\)/g,(_m,mime,b64)=>{
+        const key=mime+':'+b64;
+        let fname=mediaMap.get(key);
+        if(!fname){
+          const ext=mime.split('/')[1].replace('jpeg','jpg');
+          fname='media/m'+(mIdx++)+'.'+ext;
+          mediaMap.set(key,fname);mediaFiles.push({path:fname,content:b64});
+        }
+        return 'url('+fname+')';
+      });
+    }
+    editorHtml=extractMediaAssets(editorHtml);
+    html=extractMediaAssets(html);
 
     // ── 1. Hent nåværende commit og tree ──
     if(btn)btn.textContent='kobler til github...';
     const refResp=await fetch(base+'/git/ref/heads/main',{headers});
     if(!refResp.ok){
       if(refResp.status===401||refResp.status===403){
-        localStorage.removeItem('pm-gh-token');
+        sessionStorage.removeItem('pm-gh-token');
         alert('Token avvist av GitHub ('+refResp.status+'). Prøv med et nytt token.');
         showTokenSetup();return;
       }
@@ -1430,13 +1447,20 @@ async function publishToGitHub(){
     const commitResp=await fetch(base+'/git/commits/'+parentSha,{headers});
     const baseTree=(await commitResp.json()).tree.sha;
 
-    // ── 2. Last opp index.html som blob (nå liten uten media) ──
-    if(btn)btn.textContent='laster opp html...';
+    // ── 2. Last opp viewer og editor som ett konsistent par ──
+    if(btn)btn.textContent='laster opp sider...';
     const htmlB64=btoa(unescape(encodeURIComponent(html)));
     const htmlBlobResp=await fetch(base+'/git/blobs',{method:'POST',headers,body:JSON.stringify({content:htmlB64,encoding:'base64'})});
     const htmlBlobData=await htmlBlobResp.json();
     if(!htmlBlobResp.ok)throw new Error('HTML blob: '+(htmlBlobData.message||htmlBlobResp.status));
-    const treeItems=[{path:'index.html',mode:'100644',type:'blob',sha:htmlBlobData.sha}];
+    const editorB64=btoa(unescape(encodeURIComponent(editorHtml)));
+    const editorBlobResp=await fetch(base+'/git/blobs',{method:'POST',headers,body:JSON.stringify({content:editorB64,encoding:'base64'})});
+    const editorBlobData=await editorBlobResp.json();
+    if(!editorBlobResp.ok)throw new Error('Editor blob: '+(editorBlobData.message||editorBlobResp.status));
+    const treeItems=[
+      {path:'index.html',mode:'100644',type:'blob',sha:htmlBlobData.sha},
+      {path:'editor.html',mode:'100644',type:'blob',sha:editorBlobData.sha}
+    ];
 
     // ── 3. Last opp hver mediafil som egen blob ──
     for(let i=0;i<mediaFiles.length;i++){
@@ -1454,7 +1478,7 @@ async function publishToGitHub(){
     const treeData=await treeResp.json();
     if(!treeResp.ok)throw new Error('Tree: '+(treeData.message||treeResp.status));
 
-    const newCommitResp=await fetch(base+'/git/commits',{method:'POST',headers,body:JSON.stringify({message:'Oppdater nettside',tree:treeData.sha,parents:[parentSha]})});
+    const newCommitResp=await fetch(base+'/git/commits',{method:'POST',headers,body:JSON.stringify({message:'Publiser editor og viewer',tree:treeData.sha,parents:[parentSha]})});
     const newCommitData=await newCommitResp.json();
     if(!newCommitResp.ok)throw new Error('Commit: '+(newCommitData.message||newCommitResp.status));
     const newCommitSha=newCommitData.sha;
@@ -1480,7 +1504,7 @@ function showTokenSetup(){
   box.id='_token-setup';
   box.style.cssText='position:fixed;inset:0;background:rgba(38,40,48,0.95);z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;';
   box.innerHTML='<div style="font-size:9px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(229,228,227,0.35);margin-bottom:4px">Engangsoppsett — GitHub-token</div>'
-    +'<div style="font-size:12px;color:rgba(229,228,227,0.5);max-width:340px;text-align:center;line-height:1.7;">Lim inn din GitHub Personal Access Token med <strong style=\'color:#E5E4E3\'>repo</strong>-tilgang. Lagres kun i denne nettleseren.</div>'
+    +'<div style="font-size:12px;color:rgba(229,228,227,0.5);max-width:340px;text-align:center;line-height:1.7;">Lim inn et GitHub-token med skrivetilgang til repoet. Tokenet beholdes bare i denne fanen og fjernes når fanen lukkes.</div>'
     +'<input id="_tk-inp" type="text" placeholder="Lim inn token her..." autocomplete="off" data-1p-ignore data-lpignore="true" data-form-type="other" style="background:rgba(229,228,227,0.06);border:1px solid rgba(229,228,227,0.14);border-radius:8px;color:#E5E4E3;font-size:14px;padding:12px 18px;outline:none;width:300px;font-family:monospace;letter-spacing:0.05em;-webkit-text-security:disc;">'
     +'<div id="_tk-err" style="font-size:10px;color:rgba(237,189,242,0.7);height:14px;letter-spacing:0.1em;transition:opacity 0.3s;"></div>'
     +'<button onclick="saveToken()" style="background:#E5E4E3;color:#262830;border:none;border-radius:8px;padding:10px 24px;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;cursor:pointer;font-weight:600;position:relative;z-index:100000;">lagre og publiser</button>'
@@ -1501,7 +1525,7 @@ function saveToken(){
     setTimeout(()=>{if(err)err.textContent='';if(inp)inp.style.borderColor='';},3000);
     return;
   }
-  localStorage.setItem('pm-gh-token',val);
+  sessionStorage.setItem('pm-gh-token',val);
   document.getElementById('_token-setup')?.remove();
   publishToGitHub();
 }
@@ -2213,17 +2237,18 @@ function toggleToolbox(){
 const _undoStack=[];
 function pushUndo(){
   const snap={};
-  for(let i=1;i<=4;i++){
-    const f=document.querySelector('#page-'+i+' .feed');
+  document.querySelectorAll('.page-content').forEach(page=>{
+    const i=page.id.replace('page-','');
+    const f=page.querySelector('.feed');
     if(f)snap[i]=f.innerHTML;
-  }
+  });
   _undoStack.push(snap);
   if(_undoStack.length>20)_undoStack.shift();
 }
 function tbUndo(){
   if(_undoStack.length===0){document.execCommand('undo');return;}
   const snap=_undoStack.pop();
-  for(let i=1;i<=4;i++){
+  for(const i of Object.keys(snap)){
     if(!snap[i])continue;
     const f=document.querySelector('#page-'+i+' .feed');
     if(f){f.innerHTML=snap[i];buildZones();initPostControls();initContentEditable();initPhoneFrameDelete();initDzDelete();}
@@ -2667,9 +2692,9 @@ initObserver();
 // ── PAGINERING ──
 var currentPage=1;
 function toggleEpOverlay(){const o=document.getElementById('ep-overlay');if(o)o.classList.toggle('open');}
-function goToPage(n){if(!document.getElementById('page-'+n))return;document.getElementById('pb-last')&&(document.getElementById('pb-last').onclick=()=>goToPage(totalPages()));currentPage=n;document.querySelectorAll('.page-content').forEach(p=>p.style.display='none');document.getElementById('page-'+n).style.display='block';for(let i=1;i<=4;i++){const pb=document.getElementById('pb-'+i);if(pb)pb.classList.toggle('active',i===n);const sd=document.getElementById('sdrop-'+i);if(sd)sd.classList.toggle('active',i===n);}document.querySelectorAll('#ep-overlay a[data-page]').forEach(a=>a.classList.toggle('active',parseInt(a.dataset.page)===n));if(dropdown)dropdown.classList.remove('open');if(burgerBtn)burgerBtn.classList.remove('open');window.scrollTo({top:heroEl?heroEl.offsetHeight:0,behavior:'smooth'});setTimeout(initObserver,80);}
+function goToPage(n){if(!document.getElementById('page-'+n))return;document.getElementById('pb-last')&&(document.getElementById('pb-last').onclick=()=>goToPage(totalPages()));currentPage=n;document.querySelectorAll('.page-content').forEach(p=>p.style.display='none');document.getElementById('page-'+n).style.display='block';document.querySelectorAll('[id^="pb-"],[id^="sdrop-"]').forEach(el=>el.classList.toggle('active',el.id.endsWith('-'+n)));document.querySelectorAll('#ep-overlay a[data-page]').forEach(a=>a.classList.toggle('active',parseInt(a.dataset.page)===n));if(dropdown)dropdown.classList.remove('open');if(burgerBtn)burgerBtn.classList.remove('open');window.scrollTo({top:heroEl?heroEl.offsetHeight:0,behavior:'smooth'});setTimeout(initObserver,80);}
 function totalPages(){return document.querySelectorAll('.page-content').length;}
-function changePage(d){const n=currentPage+d;if(n>=1&&n<=4)goToPage(n);}
+function changePage(d){const n=currentPage+d;if(n>=1&&n<=totalPages())goToPage(n);}
 </script>
 
 

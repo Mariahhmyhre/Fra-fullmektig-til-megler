@@ -1467,6 +1467,47 @@ async function getSecureSession(){
   }catch(e){sessionStorage.removeItem('pm-secure-session');return null;}
 }
 
+function readSecureAuthCallback(){
+  if(!securePublishingConfigured()||!location.hash)return null;
+  const params=new URLSearchParams(location.hash.slice(1));
+  const accessToken=params.get('access_token'),refreshToken=params.get('refresh_token');
+  if(!accessToken)return null;
+  const expiresIn=parseInt(params.get('expires_in')||'3600',10);
+  const session={access_token:accessToken,refresh_token:refreshToken||'',expires_at:Math.floor(Date.now()/1000)+expiresIn,token_type:'bearer'};
+  sessionStorage.setItem('pm-secure-session',JSON.stringify(session));
+  history.replaceState(null,'',location.pathname+location.search);
+  return {session,type:params.get('type')||''};
+}
+
+function showSecurePasswordSetup(session){
+  document.getElementById('_secure-password-setup')?.remove();
+  const box=document.createElement('div');box.id='_secure-password-setup';
+  box.style.cssText='position:fixed;inset:0;background:rgba(38,40,48,0.98);z-index:100000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:24px;';
+  box.innerHTML='<div style="font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:rgba(229,228,227,.35);margin-bottom:4px">Aktiver redaktørkonto</div>'
+    +'<div style="font-family:serif;font-size:27px;color:#E5E4E3;margin-bottom:8px">Velg et sikkert passord</div>'
+    +'<input id="_secure-new-password" type="password" placeholder="minst 12 tegn" autocomplete="new-password" minlength="12" style="background:rgba(229,228,227,.06);border:1px solid rgba(229,228,227,.14);border-radius:8px;color:#E5E4E3;font-size:14px;padding:12px 18px;outline:none;width:300px;font-family:inherit">'
+    +'<input id="_secure-new-password-confirm" type="password" placeholder="gjenta passord" autocomplete="new-password" minlength="12" style="background:rgba(229,228,227,.06);border:1px solid rgba(229,228,227,.14);border-radius:8px;color:#E5E4E3;font-size:14px;padding:12px 18px;outline:none;width:300px;font-family:inherit">'
+    +'<div id="_secure-password-error" style="font-size:10px;color:rgba(237,189,242,.75);height:16px;letter-spacing:.08em"></div>'
+    +'<button id="_secure-password-save" style="background:#E5E4E3;color:#262830;border:0;border-radius:8px;padding:11px 24px;font-size:10px;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;font-weight:600">lagre passord</button>';
+  document.body.appendChild(box);
+  const saveButton=box.querySelector('#_secure-password-save');
+  const savePassword=async()=>{
+    const first=document.getElementById('_secure-new-password')?.value||'',second=document.getElementById('_secure-new-password-confirm')?.value||'',errorEl=document.getElementById('_secure-password-error');
+    if(first.length<12){errorEl.textContent='passordet må ha minst 12 tegn';return;}
+    if(first!==second){errorEl.textContent='passordene er ikke like';return;}
+    const cfg=window.PM_PRODUCTION||{};saveButton.disabled=true;saveButton.textContent='lagrer...';
+    try{
+      const resp=await fetch(cfg.supabaseUrl+'/auth/v1/user',{method:'PUT',headers:{'Authorization':'Bearer '+session.access_token,'apikey':cfg.publishableKey,'Content-Type':'application/json'},body:JSON.stringify({password:first})});
+      const data=await resp.json().catch(()=>({}));if(!resp.ok)throw new Error(data.msg||data.message||'Kunne ikke lagre passordet');
+      box.remove();alert('Redaktørkontoen er aktivert. Du kan nå publisere sikkert.');
+    }catch(e){errorEl.textContent=e.message;saveButton.disabled=false;saveButton.textContent='lagre passord';}
+  };
+  saveButton.addEventListener('click',savePassword);box.addEventListener('keydown',e=>{if(e.key==='Enter')saveButton.click();});setTimeout(()=>document.getElementById('_secure-new-password')?.focus(),50);
+}
+
+const secureAuthCallback=readSecureAuthCallback();
+if(secureAuthCallback&&['invite','recovery','signup'].includes(secureAuthCallback.type))showSecurePasswordSetup(secureAuthCallback.session);
+
 function showSecureLogin(){
   document.getElementById('_secure-login')?.remove();
   const box=document.createElement('div');box.id='_secure-login';

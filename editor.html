@@ -368,38 +368,100 @@ body{background:var(--dark);color:var(--light);font-family:var(--sans);font-weig
   var activeAddMenu = null;
   var isPublishing = false;
 
-  /* ── INIT ── */
-  document.addEventListener('DOMContentLoaded', function(){
-    var draft = localStorage.getItem(DRAFT_KEY);
-    if(draft){
-      try {
-        content = JSON.parse(draft);
-        lastSaved = localStorage.getItem(DRAFT_KEY + '-timestamp');
-        updateStatus();
-        renderEditor();
-        showToast('Utkast lastet fra lokal lagring');
-      } catch(e){
-        loadFromFile();
-      }
-    } else {
-      loadFromFile();
-    }
-  });
+/* ── INIT ── */
+document.addEventListener('DOMContentLoaded', function(){
+  loadPublishedContent();
+});
 
-  function loadFromFile(){
-    fetch('./content/published.json?v=' + Date.now())
-      .then(function(r){ return r.json(); })
-      .then(function(json){
-        content = json;
-        renderEditor();
-        updateStatus();
-      })
-      .catch(function(err){
-        console.error('Kunne ikke laste innhold:', err);
-        content = createEmptyContent();
-        renderEditor();
-      });
+function loadPublishedContent(){
+  var publishedUrl =
+    'https://mariahhmyhre.github.io/Fra-fullmektig-til-megler/content/published.json?v='
+    + Date.now();
+
+  fetch(publishedUrl, {
+    cache: 'no-store'
+  })
+    .then(function(response){
+      if(!response.ok){
+        throw new Error(
+          'Kunne ikke hente publisert innhold. HTTP ' + response.status
+        );
+      }
+
+      return response.json();
+    })
+    .then(function(publishedContent){
+      content = publishedContent;
+      lastPublished = publishedContent.publishedAt || null;
+      lastSaved = localStorage.getItem(DRAFT_KEY + '-timestamp');
+
+      renderEditor();
+      updateStatus();
+
+var draft = localStorage.getItem(DRAFT_KEY);
+
+if(draft && lastSaved){
+  var useDraft = confirm(
+    'Du har et lokalt utkast som ikke nødvendigvis er publisert.\n\n' +
+    'Trykk OK for å fortsette med lokalt utkast.\n' +
+    'Trykk Avbryt for å bruke siste publiserte versjon.'
+  );
+
+  if(useDraft){
+    try {
+      content = JSON.parse(draft);
+      renderEditor();
+      updateStatus();
+      showToast('Lokalt utkast lastet');
+    } catch(e){
+      console.error('Lokalt utkast kunne ikke leses:', e);
+      showToast('Siste publiserte versjon lastet');
+    }
+  } else {
+    showToast('Siste publiserte versjon lastet');
   }
+} else {
+  showToast('Siste publiserte versjon lastet');
+}
+
+startAutosave();
+      
+    })
+    .catch(function(err){
+      console.error('Kunne ikke laste publisert innhold:', err);
+
+      var draft = localStorage.getItem(DRAFT_KEY);
+
+      if(draft){
+        try {
+          content = JSON.parse(draft);
+          lastSaved = localStorage.getItem(DRAFT_KEY + '-timestamp');
+
+          renderEditor();
+          updateStatus();
+          startAutosave();
+
+          showToast(
+            'Kunne ikke hente live-versjonen. Lokalt utkast er lastet.'
+          );
+
+          return;
+        } catch(draftError){
+          console.error('Lokalt utkast kunne ikke leses:', draftError);
+        }
+      }
+
+      content = createEmptyContent();
+      renderEditor();
+      updateStatus();
+      startAutosave();
+
+      showModal(
+        'Kunne ikke laste innhold',
+        'Editoren fikk ikke kontakt med den publiserte versjonen.'
+      );
+    });
+}
 
   function createEmptyContent(){
     return {

@@ -380,6 +380,35 @@
     /* ── SLETT BILDEBOKS (skjult – høyre panel brukes) ── */
     .dz-del { display:none !important; }
   </style>
+
+<style id="editor-layout-parity">
+  body.editor-mode,
+  body.editor-mode.rp-open {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  body.editor-mode .hero,
+  body.editor-mode #sticky-nav,
+  body.editor-mode footer,
+  body.editor-mode #progress,
+  body.editor-mode.rp-open .hero,
+  body.editor-mode.rp-open #sticky-nav,
+  body.editor-mode.rp-open footer,
+  body.editor-mode.rp-open #progress {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  body.editor-mode #sticky-nav,
+  body.editor-mode.rp-open #sticky-nav {
+    left: 0 !important;
+    right: 0 !important;
+  }
+  body.editor-mode #snav-dropdown,
+  body.editor-mode.rp-open #snav-dropdown {
+    right: 0 !important;
+    width: 280px;
+  }
+</style>
 </head>
 <body>
 <div id="progress" style="width: 88.8941%;"></div>
@@ -903,8 +932,6 @@ if(_isSaved)document.querySelector('meta[name="pm-saved"]')?.remove();
 const _isPublic=!!document.querySelector('meta[name="pm-public"]');
 if(!_isPublic){
   document.body.classList.add('editor-mode');
-  // Vis sticky nav umiddelbart i editor (ikke vent på scroll)
-  document.getElementById('sticky-nav')?.classList.add('visible');
 }
 if(_isPublic){
   // Fjern ALLE editor-elementer ved runtime (sikkerhetsnett)

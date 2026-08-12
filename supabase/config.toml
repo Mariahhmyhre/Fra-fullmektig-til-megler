@@ -1,0 +1,6 @@
+project_id = "fra-fullmektig-til-megler"
+
+[functions.publish-site]
+# Funksjonen validerer brukerens JWT og e-post eksplisitt, og gir derfor
+# tydeligere feilmeldinger enn gatewayens eldre JWT-sjekk.
+verify_jwt = false

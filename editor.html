@@ -409,6 +409,7 @@
     width: 280px;
   }
 </style>
+<script src="production-config.js"></script>
 </head>
 <body>
 <div id="progress" style="width: 88.8941%;"></div>
@@ -445,6 +446,7 @@
 <div class="edit-bar">
   <div class="edit-dot"></div>
   <span>klikk for å redigere · slipp filer på bildefelt · <span style="opacity:0.45">merk tekst + ⌘K = lenke</span></span>
+  <button onclick="runLaunchCheck()" style="background:rgba(229,228,227,0.06);color:#E5E4E3;border:1px solid rgba(229,228,227,0.14);border-radius:20px;padding:5px 14px;font-size:9px;letter-spacing:0.15em;text-transform:uppercase;cursor:pointer;font-family:inherit">sjekk side</button>
   <button onclick="downloadPage()" style="background:rgba(229,228,227,0.12);color:#E5E4E3;border:1px solid rgba(229,228,227,0.18);border-radius:20px;padding:5px 14px;font-size:9px;letter-spacing:0.15em;text-transform:uppercase;cursor:pointer;font-family:inherit">last ned</button>
   <button id="_pub-btn" onclick="publishToGitHub()" style="background:#E5E4E3;color:#262830;border:none;border-radius:20px;padding:5px 14px;font-size:9px;letter-spacing:0.15em;text-transform:uppercase;cursor:pointer;font-family:inherit;font-weight:600">publiser til nett →</button>
 </div>
@@ -992,7 +994,7 @@ function buildHTML(){
     cloneHero.src=liveHero.src;
   }
   // ── 2. Fjern runtime-UI ──
-  doc.querySelectorAll('.post-controls,.drop-indicator,.media-toolbar,#_perm-bar,#_save-toast,#_pub-toast,#_token-setup,.img-date,.new-post-del').forEach(el=>el.remove());
+  doc.querySelectorAll('.post-controls,.drop-indicator,.media-toolbar,#_perm-bar,#_save-toast,#_pub-toast,#_token-setup,#_secure-login,#_preflight-report,.img-date,.new-post-del').forEach(el=>el.remove());
   doc.querySelectorAll('[draggable]').forEach(el=>el.removeAttribute('draggable'));
   doc.querySelectorAll('[data-zone-init],[data-ce-init],[data-rp-init],[data-drag-init],[data-ep-init],[data-del-init],[data-ztrk]').forEach(el=>{
     ['data-zone-init','data-ce-init','data-rp-init','data-drag-init','data-ep-init','data-del-init','data-ztrk'].forEach(a=>el.removeAttribute(a));
@@ -1263,6 +1265,7 @@ function buildPublicHTML(accessCode){
   d.querySelector('#_toolbox')?.remove();          // verktøyboks
   d.querySelector('#_perm-bar')?.remove();         // perm-bar
   d.querySelector('#_save-toast')?.remove();       // lagre-toast
+  d.querySelector('script[src="production-config.js"]')?.remove(); // kun for editorinnlogging
   // snav-dropdown og burger-btn beholdes for navigasjon på publisert side
   d.querySelector('#hero-img-btn')?.remove();      // bytt-bilde-knapp
   d.querySelectorAll('.ep-nav-add').forEach(el=>el.remove());  // + episode-knapp
@@ -1372,7 +1375,132 @@ function downloadPublic(){
   setTimeout(()=>URL.revokeObjectURL(a.href),5000);
 }
 
+function runLaunchCheck(){
+  document.getElementById('_preflight-report')?.remove();
+  const editable=[...document.querySelectorAll('[data-ck]')];
+  const required=[...document.querySelectorAll('.quote-block blockquote>span,.qc-reveal span[data-ck],.qc-fasit-a[data-ck]')];
+  const empty=required.filter(el=>!el.textContent.trim());
+  const placeholders=editable.filter(el=>/\[[^\]]*\]/.test(el.textContent));
+  const keys=editable.map(el=>el.dataset.ck).filter(Boolean);
+  const duplicateKeys=keys.filter((key,index)=>keys.indexOf(key)!==index);
+  const brokenImages=[...document.images].filter(img=>img.complete&&img.naturalWidth===0);
+  const issues=[];
+  if(empty.length)issues.push(empty.length+' tomme sitat-/quiz-/fasitfelt');
+  if(placeholders.length)issues.push(placeholders.length+' felt med klammetekst som må erstattes');
+  if(duplicateKeys.length)issues.push(new Set(duplicateKeys).size+' dupliserte lagringsnøkler');
+  if(brokenImages.length)issues.push(brokenImages.length+' bilder som ikke kan lastes');
+  const box=document.createElement('div');box.id='_preflight-report';
+  box.style.cssText='position:fixed;inset:0;background:rgba(38,40,48,0.97);z-index:99999;display:flex;align-items:center;justify-content:center;padding:24px;font-family:sans-serif;color:#E5E4E3;';
+  const status=issues.length?'Ikke helt lanseringsklar':'Klar for publiseringskontroll';
+  const color=issues.length?'#edbdf2':'#bde8c4';
+  box.innerHTML='<div style="width:min(520px,100%);background:#1f2128;border:1px solid rgba(229,228,227,0.14);border-radius:14px;padding:28px">'
+    +'<div style="font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:rgba(229,228,227,.38);margin-bottom:10px">forhåndssjekk</div>'
+    +'<h2 style="font-family:serif;font-weight:300;font-size:28px;margin:0 0 18px;color:'+color+'">'+status+'</h2>'
+    +'<div style="font-size:13px;line-height:1.8;color:rgba(229,228,227,.68)">✓ '+document.querySelectorAll('.page-content').length+' episoder<br>✓ '+editable.length+' lagrede innholdsfelt<br>✓ '+document.images.length+' aktive bilder kontrollert</div>'
+    +(issues.length?'<div style="margin-top:18px;padding:14px;border-radius:8px;background:rgba(237,189,242,.06);font-size:12px;line-height:1.8">'+issues.map(i=>'• '+i).join('<br>')+'</div>':'')
+    +'<p style="font-size:10px;line-height:1.6;color:rgba(229,228,227,.38);margin:18px 0">Kontrollen endrer ikke innholdet og blokkerer ikke arbeids-publisering.</p>'
+    +'<button onclick="document.getElementById(\'_preflight-report\').remove()" style="background:#E5E4E3;color:#262830;border:0;border-radius:8px;padding:10px 20px;cursor:pointer">lukk</button></div>';
+  document.body.appendChild(box);
+}
+
+function securePublishingConfigured(){
+  const cfg=window.PM_PRODUCTION||{};
+  return cfg.enabled===true&&/^https:\/\//.test(cfg.supabaseUrl||'')&&!!cfg.publishableKey;
+}
+
+async function getSecureSession(){
+  const cfg=window.PM_PRODUCTION||{};
+  let session=null;
+  try{session=JSON.parse(sessionStorage.getItem('pm-secure-session')||'null');}catch(e){}
+  if(!session)return null;
+  if(session.expires_at&&session.expires_at*1000>Date.now()+60000)return session;
+  if(!session.refresh_token)return null;
+  try{
+    const resp=await fetch(cfg.supabaseUrl+'/auth/v1/token?grant_type=refresh_token',{
+      method:'POST',headers:{'apikey':cfg.publishableKey,'Content-Type':'application/json'},
+      body:JSON.stringify({refresh_token:session.refresh_token})
+    });
+    if(!resp.ok)throw new Error('refresh');
+    session=await resp.json();sessionStorage.setItem('pm-secure-session',JSON.stringify(session));return session;
+  }catch(e){sessionStorage.removeItem('pm-secure-session');return null;}
+}
+
+function showSecureLogin(){
+  document.getElementById('_secure-login')?.remove();
+  const box=document.createElement('div');box.id='_secure-login';
+  box.style.cssText='position:fixed;inset:0;background:rgba(38,40,48,0.97);z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;';
+  box.innerHTML='<div style="font-size:9px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(229,228,227,0.35);margin-bottom:4px">Sikker redaktørinnlogging</div>'
+    +'<input id="_secure-email" type="email" placeholder="e-post" autocomplete="username" style="background:rgba(229,228,227,0.06);border:1px solid rgba(229,228,227,0.14);border-radius:8px;color:#E5E4E3;font-size:14px;padding:12px 18px;outline:none;width:300px;font-family:inherit;">'
+    +'<input id="_secure-password" type="password" placeholder="passord" autocomplete="current-password" style="background:rgba(229,228,227,0.06);border:1px solid rgba(229,228,227,0.14);border-radius:8px;color:#E5E4E3;font-size:14px;padding:12px 18px;outline:none;width:300px;font-family:inherit;">'
+    +'<div id="_secure-error" style="font-size:10px;color:rgba(237,189,242,0.75);height:16px;letter-spacing:0.08em"></div>'
+    +'<button onclick="secureLoginAndPublish()" style="background:#E5E4E3;color:#262830;border:none;border-radius:8px;padding:11px 24px;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;cursor:pointer;font-weight:600">logg inn og publiser</button>'
+    +'<button onclick="document.getElementById(\'_secure-login\').remove()" style="background:none;border:none;color:rgba(229,228,227,0.35);font-size:11px;cursor:pointer">avbryt</button>';
+  document.body.appendChild(box);setTimeout(()=>document.getElementById('_secure-email')?.focus(),50);
+  box.addEventListener('keydown',e=>{if(e.key==='Enter')secureLoginAndPublish();});
+}
+
+async function secureLoginAndPublish(){
+  const cfg=window.PM_PRODUCTION||{};
+  const email=document.getElementById('_secure-email')?.value.trim();
+  const password=document.getElementById('_secure-password')?.value||'';
+  const errorEl=document.getElementById('_secure-error');
+  if(!email||!password){if(errorEl)errorEl.textContent='skriv inn e-post og passord';return;}
+  try{
+    const resp=await fetch(cfg.supabaseUrl+'/auth/v1/token?grant_type=password',{
+      method:'POST',headers:{'apikey':cfg.publishableKey,'Content-Type':'application/json'},
+      body:JSON.stringify({email,password})
+    });
+    const data=await resp.json();
+    if(!resp.ok)throw new Error(data.error_description||data.msg||'Innlogging feilet');
+    sessionStorage.setItem('pm-secure-session',JSON.stringify(data));
+    document.getElementById('_secure-login')?.remove();
+    publishSecurely();
+  }catch(e){if(errorEl)errorEl.textContent=e.message;}
+}
+
+function prepareSecurePublishPackage(){
+  let editorHtml=buildHTML(),viewerHtml=buildPublicHTML(_VIEWER_CODE);
+  const media=[],mediaMap=new Map();let index=0;
+  function extract(source){
+    source=source.replace(/src="data:(image\/[^;]+|video\/[^;]+);base64,([^"]+)"/g,(_m,mime,content)=>{
+      const key=mime+':'+content;let path=mediaMap.get(key);
+      if(!path){const ext=mime.split('/')[1].replace('jpeg','jpg').replace('quicktime','mov');path='media/m'+(index++)+'.'+ext;mediaMap.set(key,path);media.push({path,content});}
+      return 'src="'+path+'"';
+    });
+    return source.replace(/url\(data:(image\/[^;]+);base64,([^)]+)\)/g,(_m,mime,content)=>{
+      const key=mime+':'+content;let path=mediaMap.get(key);
+      if(!path){const ext=mime.split('/')[1].replace('jpeg','jpg');path='media/m'+(index++)+'.'+ext;mediaMap.set(key,path);media.push({path,content});}
+      return 'url('+path+')';
+    });
+  }
+  editorHtml=extract(editorHtml);viewerHtml=extract(viewerHtml);
+  return {editorHtml,viewerHtml,media};
+}
+
+async function publishSecurely(){
+  const session=await getSecureSession();
+  if(!session){showSecureLogin();return;}
+  const cfg=window.PM_PRODUCTION||{},btn=document.getElementById('_pub-btn');
+  if(btn){btn.textContent='publiserer sikkert...';btn.disabled=true;}
+  try{
+    const payload=prepareSecurePublishPackage();
+    const resp=await fetch(cfg.supabaseUrl+'/functions/v1/publish-site',{
+      method:'POST',headers:{'Authorization':'Bearer '+session.access_token,'apikey':cfg.publishableKey,'Content-Type':'application/json'},
+      body:JSON.stringify(payload)
+    });
+    const data=await resp.json().catch(()=>({}));
+    if(!resp.ok){if(resp.status===401)sessionStorage.removeItem('pm-secure-session');throw new Error(data.error||'Publisering feilet');}
+    showPublishToast();
+  }catch(e){alert('Publisering feilet: '+e.message);}
+  finally{if(btn){btn.textContent='publiser til nett →';btn.disabled=false;}}
+}
+
 async function publishToGitHub(){
+  if(securePublishingConfigured())return publishSecurely();
+  return publishWithBrowserToken();
+}
+
+async function publishWithBrowserToken(){
   const token=getToken();
   if(!token){showTokenSetup();return;}
   const btn=document.getElementById('_pub-btn');

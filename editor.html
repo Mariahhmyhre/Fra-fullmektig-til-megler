@@ -31,9 +31,13 @@
     #progress { position:fixed; top:0; left:0; height:1px; background:var(--light); z-index:999; width:0; opacity:0.3; }
 
     /* ── STICKY NAV ── */
-    #sticky-nav { position:fixed; top:0; left:0; right:0; z-index:300; height:56px; display:flex; align-items:center; justify-content:space-between; padding:0 28px; background:rgba(26,28,36,0.92); backdrop-filter:blur(24px); border-bottom:1px solid rgba(229,228,227,0.07); transform:translateY(-100%); transition:transform 0.38s cubic-bezier(0.22,1,0.36,1); }
+    #sticky-nav { position:fixed; top:0; left:0; right:0; z-index:300; height:56px; display:flex; align-items:center; justify-content:space-between; padding:0 28px; background:rgba(26,28,36,0.68); backdrop-filter:blur(24px); -webkit-backdrop-filter:blur(24px); border-bottom:1px solid rgba(229,228,227,0.09); transform:translateY(-100%); transition:transform 0.38s cubic-bezier(0.22,1,0.36,1); }
     #sticky-nav.visible { transform:translateY(0); }
     .snav-logo img { height:44px; width:auto; display:block; opacity:0.95; }
+    .snav-actions { display:flex; align-items:center; gap:24px; height:100%; }
+    .snav-episodes { display:flex; align-items:center; gap:8px; color:var(--light); text-decoration:none; font-size:12px; letter-spacing:0.06em; opacity:0.88; transition:opacity 0.2s; }
+    .snav-episodes:hover { opacity:0.6; }
+    .snav-episodes svg { width:18px; height:18px; }
     .snav-burger { background:none; border:none; cursor:pointer; display:flex; flex-direction:column; justify-content:space-between; width:28px; height:20px; padding:0; }
     .snav-burger span { display:block; height:1px; background:var(--light); transition:opacity 0.2s, transform 0.25s; transform-origin:center; }
     .snav-burger.open span:nth-child(1) { transform:translateY(6.5px) rotate(45deg); }
@@ -58,10 +62,12 @@
     .hero-eyebrow { font-size:9px; letter-spacing:0.45em; text-transform:uppercase; color:rgba(229,228,227,0.45); margin-bottom:18px; }
     .hero-title { font-family:var(--serif); font-size:clamp(52px,9vw,112px); font-weight:300; line-height:0.92; letter-spacing:-0.025em; color:var(--light); }
     .hero-title-line2 { display:block; }
-    .hero-nav { position:absolute; bottom:0; left:0; right:0; z-index:20; display:flex; align-items:center; justify-content:center; gap:0; height:62px; background:rgba(20,22,28,0.88); backdrop-filter:blur(22px); border-top:1px solid rgba(229,228,227,0.04); }
+    .hero-nav { position:absolute; bottom:18px; left:50%; z-index:20; display:flex; align-items:center; justify-content:center; gap:0; width:max-content; max-width:calc(100% - 32px); height:62px; padding:0 8px; transform:translateX(-50%); background:rgba(20,22,28,0.54); backdrop-filter:blur(22px); -webkit-backdrop-filter:blur(22px); border:1px solid rgba(229,228,227,0.11); border-radius:2px; box-shadow:0 12px 34px rgba(0,0,0,0.16); }
     .hero-nav a.hn-btn { font-size:15px; font-weight:500; letter-spacing:0.04em; color:var(--light); text-decoration:none; transition:opacity 0.25s; position:relative; display:flex; align-items:center; gap:10px; padding:0 28px; height:100%; cursor:pointer; }
     .hero-nav a.hn-btn:hover { opacity:0.7; }
     .hero-nav a.hn-btn svg { width:22px; height:22px; flex-shrink:0; }
+    #edge-nav-btn svg { transition:transform 0.3s ease; }
+    #edge-nav-btn.is-first svg { transform:rotate(180deg); }
     .ep-overlay { display:none; position:fixed; inset:0; z-index:200; background:rgba(20,22,28,0.92); backdrop-filter:blur(30px); flex-direction:column; align-items:center; justify-content:center; gap:0; }
     .ep-overlay.open { display:flex; }
     .ep-overlay-close { position:absolute; top:28px; right:32px; background:none; border:none; color:var(--light); font-size:28px; cursor:pointer; opacity:0.5; transition:opacity 0.2s; }
@@ -300,7 +306,7 @@
     [contenteditable] { outline:none; border-radius:2px; transition:background 0.2s; cursor:text; }
     [contenteditable]:hover { background:rgba(229,228,227,0.04); }
     [contenteditable]:focus { background:rgba(229,228,227,0.07); box-shadow:0 0 0 1px rgba(229,228,227,0.12); }
-    @media(max-width:600px){.hero-nav a.hn-btn{padding:0 12px;font-size:12px;gap:6px}.hero-nav a.hn-btn svg{width:16px;height:16px}.feed{padding:0 16px 60px}.quote-block{margin:0 -16px}footer{padding:24px}}
+    @media(max-width:600px){#sticky-nav{padding:0 18px}.snav-actions{gap:17px}.snav-episodes{font-size:11px}.hero-nav{bottom:12px;height:56px;padding:0 4px}.hero-nav a.hn-btn{padding:0 12px;font-size:12px;gap:6px}.hero-nav a.hn-btn svg{width:16px;height:16px}.feed{padding:0 16px 60px}.quote-block{margin:0 -16px}footer{padding:24px}}
     @media(max-width:768px){
       body.editor-mode{padding:0 !important;}
       body.editor-mode .hero,body.editor-mode #sticky-nav,
@@ -460,7 +466,10 @@
 <!-- STICKY NAV -->
 <nav id="sticky-nav" class="">
   <div class="snav-logo"><img src="media/m0.png" alt="PrivatMegleren"></div>
-  <button class="snav-burger" id="burger-btn" onclick="toggleMenu()" aria-label="Åpne meny"><span></span><span></span><span></span><span></span></button>
+  <div class="snav-actions">
+    <a href="#" class="snav-episodes" onclick="toggleEpOverlay();return false;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="3" width="7" height="7" rx="1"></rect><rect x="3" y="14" width="7" height="7" rx="1"></rect><rect x="14" y="14" width="7" height="7" rx="1"></rect></svg><span>Episoder</span></a>
+    <button class="snav-burger" id="burger-btn" onclick="toggleMenu()" aria-label="Åpne meny"><span></span><span></span><span></span><span></span></button>
+  </div>
 </nav>
 <div id="snav-dropdown" class="">
   <a class="sdrop-item active" id="sdrop-1" onclick="goToPage(1);return false;" href="#"><span class="sdrop-num">01</span><div><div class="sdrop-label">August</div><div class="sdrop-sub"></div></div></a>
@@ -476,8 +485,7 @@
   <button id="hero-img-btn" onclick="triggerHeroUpload()" title="Bytt bakgrunnsbilde" style="position:absolute;top:16px;right:16px;z-index:30;background:rgba(26,28,36,0.82);border:1px solid rgba(229,228,227,0.18);border-radius:20px;color:rgba(229,228,227,0.6);font-size:9px;letter-spacing:0.15em;text-transform:uppercase;padding:6px 14px;cursor:pointer;font-family:inherit;backdrop-filter:blur(8px);display:none;">bytt bilde</button>
 
   <nav class="hero-nav" id="main-nav">
-    <a href="#" class="hn-btn" onclick="goToPage(1);return false;"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 14l5-5 5 5z"></path><path d="M7 10l5 5 5-5z" transform="translate(0,8)"></path></svg>Første</a>
-    <a href="#" class="hn-btn" onclick="goToPage(totalPages());return false;"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"></path><path d="M7 14l5-5 5 5z" transform="translate(0,-8)"></path></svg>Siste</a>
+    <a href="#" class="hn-btn" id="edge-nav-btn" onclick="goToEdgePage();return false;" aria-label="Gå til siste side"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 8l5 5 5-5z"></path><path d="M7 13l5 5 5-5z"></path></svg><span class="edge-label">Siste</span></a>
     <a href="#" class="hn-btn" onclick="toggleEpOverlay();return false;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="3" width="7" height="7" rx="1"></rect><rect x="3" y="14" width="7" height="7" rx="1"></rect><rect x="14" y="14" width="7" height="7" rx="1"></rect></svg>Episoder</a>
     <a href="#" class="hn-btn" onclick="document.querySelector('.feed')?.scrollIntoView({behavior:'smooth'});return false;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>Meny</a>
   </nav>
@@ -2852,11 +2860,15 @@ function initObserver(){const obs=new IntersectionObserver(entries=>entries.forE
 initObserver();
 
 // ── PAGINERING ──
-var currentPage=1;
+var currentPage=parseInt((Array.from(document.querySelectorAll('.page-content')).find(p=>getComputedStyle(p).display!=='none')?.id||'page-1').replace('page-',''),10)||1;
 function toggleEpOverlay(){const o=document.getElementById('ep-overlay');if(o)o.classList.toggle('open');}
-function goToPage(n){if(!document.getElementById('page-'+n))return;document.getElementById('pb-last')&&(document.getElementById('pb-last').onclick=()=>goToPage(totalPages()));currentPage=n;document.querySelectorAll('.page-content').forEach(p=>p.style.display='none');document.getElementById('page-'+n).style.display='block';document.querySelectorAll('[id^="pb-"],[id^="sdrop-"]').forEach(el=>el.classList.toggle('active',el.id.endsWith('-'+n)));document.querySelectorAll('#ep-overlay a[data-page]').forEach(a=>a.classList.toggle('active',parseInt(a.dataset.page)===n));if(dropdown)dropdown.classList.remove('open');if(burgerBtn)burgerBtn.classList.remove('open');window.scrollTo({top:heroEl?heroEl.offsetHeight:0,behavior:'smooth'});setTimeout(initObserver,80);}
 function totalPages(){return document.querySelectorAll('.page-content').length;}
+function updateEdgeNav(){const btn=document.getElementById('edge-nav-btn');if(!btn)return;const atLast=currentPage===totalPages();btn.classList.toggle('is-first',atLast);btn.querySelector('.edge-label').textContent=atLast?'Første':'Siste';btn.setAttribute('aria-label',atLast?'Gå til første side':'Gå til siste side');}
+function syncPageNavState(){document.querySelectorAll('[id^="pb-"],[id^="sdrop-"]').forEach(el=>el.classList.toggle('active',el.id.endsWith('-'+currentPage)));document.querySelectorAll('#ep-overlay a[data-page]').forEach(a=>a.classList.toggle('active',parseInt(a.dataset.page)===currentPage));updateEdgeNav();}
+function goToEdgePage(){goToPage(currentPage===totalPages()?1:totalPages());}
+function goToPage(n){if(!document.getElementById('page-'+n))return;document.getElementById('pb-last')&&(document.getElementById('pb-last').onclick=()=>goToPage(totalPages()));currentPage=n;document.querySelectorAll('.page-content').forEach(p=>p.style.display='none');document.getElementById('page-'+n).style.display='block';document.querySelectorAll('[id^="pb-"],[id^="sdrop-"]').forEach(el=>el.classList.toggle('active',el.id.endsWith('-'+n)));document.querySelectorAll('#ep-overlay a[data-page]').forEach(a=>a.classList.toggle('active',parseInt(a.dataset.page)===n));updateEdgeNav();if(dropdown)dropdown.classList.remove('open');if(burgerBtn)burgerBtn.classList.remove('open');window.scrollTo({top:heroEl?heroEl.offsetHeight:0,behavior:'smooth'});setTimeout(initObserver,80);}
 function changePage(d){const n=currentPage+d;if(n>=1&&n<=totalPages())goToPage(n);}
+syncPageNavState();
 </script>
 
 

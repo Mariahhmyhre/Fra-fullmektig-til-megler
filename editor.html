@@ -256,6 +256,36 @@ body{background:var(--dark);color:var(--light);font-family:var(--sans);font-weig
   .cta-btn-editor{flex-direction:column;align-items:stretch}
   .cta-btn-editor input.cta-btn-text,.cta-btn-editor input.cta-btn-url{width:100%}
 }
+
+/* ── GITHUB AUTH MODAL ── */
+.gh-overlay{display:none;position:fixed;inset:0;z-index:6000;background:rgba(20,22,28,0.88);backdrop-filter:blur(24px);align-items:center;justify-content:center}
+.gh-overlay.open{display:flex}
+.gh-box{background:var(--dark-2);border:1px solid var(--mid);border-radius:10px;padding:36px;max-width:440px;width:90%;color:var(--light)}
+.gh-box h3{font-family:var(--serif);font-size:22px;font-weight:300;margin:0 0 8px}
+.gh-box p{font-size:13px;color:rgba(229,228,227,0.55);margin:0 0 20px;line-height:1.5}
+.gh-box input{width:100%;box-sizing:border-box;padding:11px 14px;background:var(--dark);border:1px solid var(--mid);border-radius:6px;color:var(--light);font-size:14px;font-family:var(--sans);outline:none}
+.gh-box input:focus{border-color:var(--accent)}
+.gh-box input::placeholder{color:rgba(229,228,227,0.25)}
+.gh-btns{display:flex;gap:10px;margin-top:20px;justify-content:flex-end}
+.gh-btns button{padding:10px 22px;border:none;border-radius:6px;font-size:12px;letter-spacing:0.08em;cursor:pointer;font-family:var(--sans)}
+.gh-btn-cancel{background:transparent;color:rgba(229,228,227,0.5);border:1px solid var(--mid) !important}
+.gh-btn-cancel:hover{color:var(--light)}
+.gh-btn-connect{background:var(--accent);color:var(--dark)}
+.gh-btn-connect:hover{opacity:0.85}
+.gh-status{font-size:12px;margin-top:12px;color:rgba(229,228,227,0.4)}
+.gh-status.error{color:#e57373}
+.gh-status.ok{color:#81c784}
+
+/* ── PUBLISH OVERLAY ── */
+.publish-overlay{display:none;position:fixed;inset:0;z-index:7000;background:rgba(20,22,28,0.92);backdrop-filter:blur(30px);align-items:center;justify-content:center;flex-direction:column;gap:16px;color:var(--light)}
+.publish-overlay.open{display:flex}
+.publish-spinner{width:32px;height:32px;border:2px solid rgba(229,228,227,0.15);border-top-color:var(--accent);border-radius:50%;animation:spin 0.8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.publish-msg{font-family:var(--serif);font-size:20px;font-weight:300}
+
+/* ── DISCONNECT BTN ── */
+.gh-disconnect{display:inline-block;margin-top:12px;padding:6px 14px;font-size:11px;letter-spacing:0.06em;background:transparent;border:1px solid var(--mid);border-radius:5px;color:rgba(229,228,227,0.4);cursor:pointer;font-family:var(--sans)}
+.gh-disconnect:hover{color:var(--light);border-color:rgba(229,228,227,0.3)}
 </style>
 </head>
 <body>
@@ -300,17 +330,43 @@ body{background:var(--dark);color:var(--light);font-family:var(--sans);font-weig
 <!-- ════════ TOAST ════════ -->
 <div class="toast" id="toast"></div>
 
+<!-- ════════ GITHUB AUTH MODAL ════════ -->
+<div class="gh-overlay" id="gh-overlay">
+  <div class="gh-box">
+    <h3>Koble til GitHub</h3>
+    <p>Lim inn en Personal Access Token med <strong>repo</strong>-tilgang. Token lagres kun i nettleseren din — aldri i kildekoden.</p>
+    <input type="password" id="gh-token-input" placeholder="ghp_xxxxxxxxxxxx" autocomplete="off" spellcheck="false">
+    <div class="gh-status" id="gh-status"></div>
+    <div class="gh-btns">
+      <button class="gh-btn-cancel" id="gh-cancel">Avbryt</button>
+      <button class="gh-btn-connect" id="gh-connect">Koble til</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ PUBLISH OVERLAY ════════ -->
+<div class="publish-overlay" id="publish-overlay">
+  <div class="publish-spinner"></div>
+  <div class="publish-msg" id="publish-msg">Publiserer...</div>
+</div>
+
 <script>
 (function(){
   'use strict';
 
   var DRAFT_KEY = 'pm-editor-draft';
   var AUTOSAVE_INTERVAL = 30000;
+  var GH_TOKEN_KEY = 'pm-gh-token';
+  var GH_OWNER = 'Mariahhmyhre';
+  var GH_REPO = 'Fra-fullmektig-til-megler';
+  var GH_BRANCH = 'main';
+  var GH_FILE_PATH = 'content/published.json';
   var content = null;
   var lastSaved = null;
   var lastPublished = null;
   var autosaveTimer = null;
   var activeAddMenu = null;
+  var isPublishing = false;
 
   /* ── INIT ── */
   document.addEventListener('DOMContentLoaded', function(){
@@ -453,8 +509,102 @@ body{background:var(--dark);color:var(--light);font-family:var(--sans);font-weig
     if(!silent) showToast('Utkast lagret');
   }
 
+  /* ── GITHUB TOKEN MANAGEMENT ── */
+  function getGitHubToken(){
+    return localStorage.getItem(GH_TOKEN_KEY) || '';
+  }
+  function setGitHubToken(token){
+    localStorage.setItem(GH_TOKEN_KEY, token.trim());
+  }
+  function clearGitHubToken(){
+    localStorage.removeItem(GH_TOKEN_KEY);
+  }
+
+  /* ── GITHUB AUTH MODAL ── */
+  function showGitHubConnect(onConnected){
+    var overlay = document.getElementById('gh-overlay');
+    var input = document.getElementById('gh-token-input');
+    var status = document.getElementById('gh-status');
+    input.value = '';
+    status.textContent = '';
+    status.className = 'gh-status';
+    overlay.classList.add('open');
+    setTimeout(function(){ input.focus(); }, 100);
+
+    var connectBtn = document.getElementById('gh-connect');
+    var cancelBtn = document.getElementById('gh-cancel');
+
+    function cleanup(){
+      connectBtn.replaceWith(connectBtn.cloneNode(true));
+      cancelBtn.replaceWith(cancelBtn.cloneNode(true));
+      document.getElementById('gh-cancel').addEventListener('click', function(){
+        document.getElementById('gh-overlay').classList.remove('open');
+      });
+    }
+
+    cancelBtn.addEventListener('click', function(){
+      overlay.classList.remove('open');
+      cleanup();
+    });
+
+    connectBtn.addEventListener('click', function(){
+      var token = input.value.trim();
+      if(!token){
+        status.textContent = 'Lim inn en token';
+        status.className = 'gh-status error';
+        return;
+      }
+      status.textContent = 'Verifiserer...';
+      status.className = 'gh-status';
+
+      fetch('https://api.github.com/repos/' + GH_OWNER + '/' + GH_REPO, {
+        headers: { 'Authorization': 'token ' + token }
+      })
+      .then(function(r){
+        if(!r.ok) throw new Error(r.status === 401 ? 'Ugyldig token' : 'Ingen tilgang til repo (HTTP ' + r.status + ')');
+        return r.json();
+      })
+      .then(function(repo){
+        if(!repo.permissions || !repo.permissions.push){
+          throw new Error('Token har ikke skrivetilgang til dette repoet');
+        }
+        setGitHubToken(token);
+        status.textContent = 'Tilkoblet!';
+        status.className = 'gh-status ok';
+        setTimeout(function(){
+          overlay.classList.remove('open');
+          cleanup();
+          if(onConnected) onConnected();
+        }, 600);
+      })
+      .catch(function(err){
+        status.textContent = err.message;
+        status.className = 'gh-status error';
+      });
+    });
+  }
+
+  document.getElementById('gh-cancel').addEventListener('click', function(){
+    document.getElementById('gh-overlay').classList.remove('open');
+  });
+  document.getElementById('gh-overlay').addEventListener('click', function(e){
+    if(e.target === this) this.classList.remove('open');
+  });
+
+  /* ── PUBLISH OVERLAY ── */
+  function showPublishOverlay(msg){
+    var el = document.getElementById('publish-overlay');
+    document.getElementById('publish-msg').textContent = msg || 'Publiserer...';
+    el.classList.add('open');
+  }
+  function hidePublishOverlay(){
+    document.getElementById('publish-overlay').classList.remove('open');
+  }
+
   /* ── PUBLISH ── */
   function publish(){
+    if(isPublishing) return;
+
     var collected = collectContent();
     if(!collected) return;
 
@@ -464,7 +614,144 @@ body{background:var(--dark);color:var(--light);font-family:var(--sans);font-weig
       return;
     }
 
-    showModal('Koble til GitHub for a publisere', 'GitHub OAuth er ikke koblet til enna. Konfigurer tilkobling i prosjektinnstillingene for a publisere innhold direkte til GitHub.');
+    var token = getGitHubToken();
+    if(!token){
+      showGitHubConnect(function(){ publish(); });
+      return;
+    }
+
+    isPublishing = true;
+    showPublishOverlay('Publiserer...');
+
+    collected.publishedAt = new Date().toISOString();
+    var jsonStr = JSON.stringify(collected, null, 2);
+
+    publishToGitHub(token, jsonStr)
+      .then(function(){
+        content = collected;
+        lastPublished = content.publishedAt;
+        localStorage.setItem(DRAFT_KEY, JSON.stringify(content));
+        localStorage.setItem(DRAFT_KEY + '-timestamp', new Date().toISOString());
+        lastSaved = new Date().toISOString();
+        updateStatus();
+        hidePublishOverlay();
+        showToast('Publisert ✓ — ' + formatTime(content.publishedAt));
+      })
+      .catch(function(err){
+        console.error('Publisering feilet:', err);
+        hidePublishOverlay();
+        if(err.message && err.message.indexOf('401') !== -1){
+          clearGitHubToken();
+          showModal('Autentisering feilet', 'GitHub-tokenet er ugyldig eller utlopt. Koble til pa nytt.');
+        } else {
+          showModal('Publisering feilet', err.message || 'Ukjent feil. Eksisterende publisert versjon er urort.');
+        }
+      })
+      .finally(function(){
+        isPublishing = false;
+      });
+  }
+
+  /* ── GIT DATA API PUSH ── */
+  function publishToGitHub(token, jsonContent){
+    var api = 'https://api.github.com/repos/' + GH_OWNER + '/' + GH_REPO;
+    var headers = {
+      'Authorization': 'token ' + token,
+      'Content-Type': 'application/json',
+      'Accept': 'application/vnd.github.v3+json'
+    };
+
+    // Step 1: Get current ref
+    return fetch(api + '/git/ref/heads/' + GH_BRANCH, { headers: headers })
+      .then(function(r){
+        if(!r.ok) throw new Error('Kunne ikke hente branch-ref (HTTP ' + r.status + ')');
+        return r.json();
+      })
+      .then(function(ref){
+        var currentSha = ref.object.sha;
+
+        // Step 2: Get current commit to find tree sha
+        return fetch(api + '/git/commits/' + currentSha, { headers: headers })
+          .then(function(r){
+            if(!r.ok) throw new Error('Kunne ikke hente commit (HTTP ' + r.status + ')');
+            return r.json();
+          })
+          .then(function(commit){
+            return { commitSha: currentSha, treeSha: commit.tree.sha };
+          });
+      })
+      .then(function(info){
+        // Step 3: Create blob with new JSON
+        return fetch(api + '/git/blobs', {
+          method: 'POST',
+          headers: headers,
+          body: JSON.stringify({ content: jsonContent, encoding: 'utf-8' })
+        })
+        .then(function(r){
+          if(!r.ok) throw new Error('Kunne ikke opprette blob (HTTP ' + r.status + ')');
+          return r.json();
+        })
+        .then(function(blob){
+          info.blobSha = blob.sha;
+          return info;
+        });
+      })
+      .then(function(info){
+        // Step 4: Create new tree
+        return fetch(api + '/git/trees', {
+          method: 'POST',
+          headers: headers,
+          body: JSON.stringify({
+            base_tree: info.treeSha,
+            tree: [{
+              path: GH_FILE_PATH,
+              mode: '100644',
+              type: 'blob',
+              sha: info.blobSha
+            }]
+          })
+        })
+        .then(function(r){
+          if(!r.ok) throw new Error('Kunne ikke opprette tree (HTTP ' + r.status + ')');
+          return r.json();
+        })
+        .then(function(tree){
+          info.newTreeSha = tree.sha;
+          return info;
+        });
+      })
+      .then(function(info){
+        // Step 5: Create commit
+        return fetch(api + '/git/commits', {
+          method: 'POST',
+          headers: headers,
+          body: JSON.stringify({
+            message: 'Publiser innhold — ' + new Date().toLocaleString('nb-NO'),
+            tree: info.newTreeSha,
+            parents: [info.commitSha]
+          })
+        })
+        .then(function(r){
+          if(!r.ok) throw new Error('Kunne ikke opprette commit (HTTP ' + r.status + ')');
+          return r.json();
+        })
+        .then(function(commit){
+          info.newCommitSha = commit.sha;
+          return info;
+        });
+      })
+      .then(function(info){
+        // Step 6: Update ref to point to new commit
+        return fetch(api + '/git/refs/heads/' + GH_BRANCH, {
+          method: 'PATCH',
+          headers: headers,
+          body: JSON.stringify({ sha: info.newCommitSha })
+        })
+        .then(function(r){
+          if(!r.ok) throw new Error('Kunne ikke oppdatere branch (HTTP ' + r.status + ')');
+          return r.json();
+        });
+      });
   }
 
   /* ── VALIDATE ── */
@@ -506,6 +793,12 @@ body{background:var(--dark);color:var(--light);font-family:var(--sans);font-weig
       '<div class="editor-meta-row">' +
         '<div class="editor-field"><label>Heltebildebane</label><input type="text" id="meta-hero" value="' + esc(content.heroImage) + '"></div>' +
         '<div class="editor-field"><label>Tilgangskode</label><input type="text" id="meta-access" value="' + esc(content.accessCode) + '"></div>' +
+      '</div>' +
+      '<div class="editor-meta-row">' +
+        '<div class="editor-field"><label>GitHub-tilkobling</label>' +
+        '<div id="gh-connection-status">' + (getGitHubToken() ? '<span style="color:#81c784;font-size:13px">Tilkoblet</span> ' : '<span style="color:rgba(229,228,227,0.4);font-size:13px">Ikke tilkoblet</span> ') +
+        (getGitHubToken() ? '<button class="gh-disconnect" onclick="document.dispatchEvent(new Event(\'gh-disconnect\'))">Koble fra</button>' : '<button class="gh-disconnect" onclick="document.dispatchEvent(new Event(\'gh-reconnect\'))">Koble til</button>') +
+        '</div></div>' +
       '</div>';
     main.appendChild(meta);
 
@@ -1296,6 +1589,19 @@ body{background:var(--dark);color:var(--light);font-family:var(--sans);font-weig
       '<div class="cta-btns">' + btns + '</div>';
     return div;
   }
+
+  /* ── GITHUB DISCONNECT/RECONNECT ── */
+  document.addEventListener('gh-disconnect', function(){
+    clearGitHubToken();
+    showToast('GitHub frakoblet');
+    renderEditor();
+  });
+  document.addEventListener('gh-reconnect', function(){
+    showGitHubConnect(function(){
+      showToast('GitHub tilkoblet');
+      renderEditor();
+    });
+  });
 
   /* ── DEBOUNCE ── */
   function debounce(fn, delay){

@@ -2,12 +2,15 @@
   "version": 1,
   "title": "Fra fullmektig til megler",
   "subtitle": "Felix Green — en fortelling",
-  "publishedAt": null,
+  "publishedAt": "2026-08-12T08:28:25.674Z",
   "heroImage": "media/img/felix-hero.jpg",
   "accessCode": "fullmektigtilmegler2026",
   "episodes": [
     {
       "id": 1,
+      "chapterLabel": "episode 1 · september 2026",
+      "episodeNumber": "episode 1",
+      "episodeTitle": "Jeg visste ikke\nhva jeg gikk til",
       "posts": [
         {
           "type": "media",
@@ -128,13 +131,13 @@
           "text": "For mange er dette den største investeringen de gjør i livet. Det ansvaret tar jeg aldri lett på.",
           "cite": "Felix Green"
         }
-      ],
-      "chapterLabel": "episode 1 · september 2026",
-      "episodeNumber": "episode 1",
-      "episodeTitle": "Jeg visste ikke\nhva jeg gikk til"
+      ]
     },
     {
       "id": 2,
+      "chapterLabel": "episode 2 · 2026",
+      "episodeNumber": "episode 2",
+      "episodeTitle": "Ingen forteller deg\nhva det egentlig er",
       "posts": [
         {
           "type": "text",
@@ -201,13 +204,13 @@
           "text": "Jeg er svært bevisst på ansvaret det innebærer — å forvalte denne investeringen på best mulig måte.",
           "cite": "Felix Green"
         }
-      ],
-      "chapterLabel": "episode 2 · 2026",
-      "episodeNumber": "episode 2",
-      "episodeTitle": "Ingen forteller deg\nhva det egentlig er"
+      ]
     },
     {
       "id": 3,
+      "chapterLabel": "episode 3 · eksamen 2026",
+      "episodeNumber": "episode 3",
+      "episodeTitle": "Den testen\nsom teller",
       "posts": [
         {
           "type": "media",
@@ -269,13 +272,13 @@
           ],
           "feedback": null
         }
-      ],
-      "chapterLabel": "episode 3 · eksamen 2026",
-      "episodeNumber": "episode 3",
-      "episodeTitle": "Den testen\nsom teller"
+      ]
     },
     {
       "id": 4,
+      "chapterLabel": "episode 4 · megler 2026",
+      "episodeNumber": "episode 4",
+      "episodeTitle": "Nå er jeg\nmegler",
       "posts": [
         {
           "type": "chat",
@@ -348,21 +351,18 @@
           "title": "Er dette veien din?",
           "buttons": [
             {
-              "style": "btn-fill",
               "text": "se ledige stillinger",
-              "url": ""
+              "url": "",
+              "style": "btn-fill"
             },
             {
-              "style": "btn-outline",
               "text": "les mer om felix",
-              "url": ""
+              "url": "",
+              "style": "btn-outline"
             }
           ]
         }
-      ],
-      "chapterLabel": "episode 4 · megler 2026",
-      "episodeNumber": "episode 4",
-      "episodeTitle": "Nå er jeg\nmegler"
+      ]
     }
   ]
 }

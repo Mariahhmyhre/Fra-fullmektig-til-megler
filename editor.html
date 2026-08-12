@@ -989,7 +989,22 @@ if(!_isPublic){
   // Vis sticky nav umiddelbart i editor (ikke vent på scroll)
   document.getElementById('sticky-nav')?.classList.add('visible');
 }
-if(_isPublic){document.querySelector('.edit-bar')?.remove();}
+if(_isPublic){
+  document.querySelector('.edit-bar')?.remove();
+  // snav-dropdown og burger-btn beholdes for navigasjon
+  document.getElementById('hero-img-btn')?.remove();
+  document.querySelectorAll('.ep-nav-add,.ep-nav-del,.post-controls,.add-post-btn,.new-post,.drop-indicator,.drop-hint,.dz-pick-overlay,.media-toolbar,.new-post-del,.msg-delete,.msg-add-row,.qc-add,.img-date').forEach(el=>el.remove());
+  document.querySelectorAll('[contenteditable]').forEach(el=>el.removeAttribute('contenteditable'));
+  document.querySelectorAll('[spellcheck]').forEach(el=>el.removeAttribute('spellcheck'));
+  document.querySelectorAll('[draggable]').forEach(el=>el.removeAttribute('draggable'));
+  // Sørg for at episode-nav fungerer (onclick fra data-page)
+  document.querySelectorAll('#ep-overlay a[data-page]').forEach(a=>{
+    const page=a.dataset.page;
+    if(page&&!a.getAttribute('onclick')){
+      a.setAttribute('onclick','goToPage('+page+');toggleEpOverlay();return false;');
+    }
+  });
+}
 
 // ── REDAKTØRGATE ──
 if(!_isPublic){
